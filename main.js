@@ -13,7 +13,7 @@ function augerOn(err) {
     if (err) throw err;
     gpio.write(7, true, function(err) {
         if (err) throw err;
-        if (process.env.DEBUG) console.log('Auger turned on.');
+        if (process.env.DEBUG == "true") console.log('Auger turned on.');
     });
 }
 
@@ -22,7 +22,7 @@ function augerOff(err) {
     if (err) throw err;
     gpio.write(7, false, function(err) {
         if (err) throw err;
-        if (process.env.DEBUG) console.log('Auger turned off.');
+        if (process.env.DEBUG == "true") console.log('Auger turned off.');
     });
 }
 
@@ -39,7 +39,7 @@ function augerOff(err) {
 function sleep(ms) {
     return new Promise((resolve) => {
         setTimeout(resolve, ms);
-        if (process.env.DEBUG) console.log(`Slept for ${ms}ms`);
+        if (process.env.DEBUG == "true") console.log(`Slept for ${ms}ms`);
     });
 }
 
