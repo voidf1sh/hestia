@@ -30,7 +30,7 @@ function augerOn() {
 function sleep(ms) {
     return new Promise((resolve) => {
         setTimeout(resolve, ms);
-        console.log('Slept for ${ms}ms');
+        console.log("Slept for ${ms}ms");
     });
 }
 
