@@ -1,4 +1,6 @@
 var gpio = require('rpi-gpio');
+var dotenv = require('dotenv').config();
+
 gpio.setup(7, gpio.DIR_OUT, cycleAuger);
 
 function augerOn(err) {
@@ -35,11 +37,9 @@ function sleep(ms) {
 
 async function cycleAuger(err) {
     if (err) throw err;
-    const offTime = 1000; //ms
-    const onTime = 500;   //ms
     augerOn();
-    await sleep(onTime);
+    await sleep(process.env.ONTIME);
     augerOff();
-    await sleep(offTime);
+    await sleep(process.env.OFFTIME);
     cycleAuger();
 }
