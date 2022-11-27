@@ -11,13 +11,13 @@ Three GPIO pins are used along with a common ground to control three relays, sup
 For ease of adaption, connection, and prototyping I've decided to use Cat 5 ethernet cabling and RJ45 connectors to connect the Raspberry Pi to the stove, and to a breadboard mockup of the sensors and switches for testing.
 
 # Environment Variables
-ONTIME - How long to turn the auger on, in milliseconds.  
-OFFTIME - How long to wait between turning the auger on, in milliseconds.  
-PAUSETIME - How long to pause when a `pause` file is detected, in milliseconds.  
-DEBUG - Displays extra log information when set to `true`
+* ONTIME - How long to turn the auger on, in milliseconds.  
+* OFFTIME - How long to wait between turning the auger on, in milliseconds.  
+* PAUSETIME - How long to pause when a `pause` file is detected, in milliseconds.  
+* DEBUG - Displays extra log information when set to `true`
 
 # Controls
-Run with `node main.js > log.txt &` to launch it in the background, piping output to a file `log.txt` which can be read from later.  
-Pause the script by creating a file named `pause` in the root directory.  
-Reload the environment variables by creating a file named `reload` in the root directory.  
-Quit the script by creating a file named `quit` in the root directory.
+* Run with `node main.js > log.txt &` to launch it in the background, piping output to a file `log.txt` which can be read from later.  
+* Pause the script by creating a file named `pause` in the root directory.  
+* Reload the environment variables by creating a file named `reload` in the root directory.  
+* Quit the script by creating a file named `quit` in the root directory.
