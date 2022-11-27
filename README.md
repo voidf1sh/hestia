@@ -7,6 +7,17 @@ This project seeks to replace the OEM control panel on a Lennox Winslow PS40 pel
 # GPIO
 Three GPIO pins are used along with a common ground to control three relays, supplying 120VAC power to the igniter and combustion blower when appropriate, and supplying power to the auger motor in pulses. Two more GPIO pins are used to detect open/closed status of a temperature-controlled snap switch and a vacuum switch. Another temperature-controlled snap switch is used to supply power to the convection motor when the pellet stove has reached a suitable temperature. A final temperature-controlled snap switch us used to interrupt the circuit for the auger motor to shut the stove off when an over-temperature condition is met. I will be utilizing a OneWire DS18B20 temperature sensor to detect the temperature of air exiting the stove vents.
 
+| Pi Pin | Function | Direction |
+| ------:| -------- | --------- |
+7 | Auger Relay | Out
+13 | Igniter Relay | Out
+15 | Combustion Blower Relay | Out
+16 | Proof of Fire Switch | In
+18 | OneWire Temp Sensor | In
+22 | Vacuum Switch | In
+4 | +5VDC for Switches | Out
+6 | GND for Relays | In
+
 # Oddities
 For ease of adaption, connection, and prototyping I've decided to use Cat 5 ethernet cabling and RJ45 connectors to connect the Raspberry Pi to the stove, and to a breadboard mockup of the sensors and switches for testing.
 
