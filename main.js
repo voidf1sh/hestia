@@ -55,6 +55,7 @@ async function cycleAuger(err) {
 
     // Check for reload file existing, then reload environment variables, then delete the file.
     if (fs.existsSync('./reload')) {
+        var dotenv = require('dotenv');
         dotenv.config({ override: true })
         fs.unlink('./reload', (err) => {
             if (err) throw err;
