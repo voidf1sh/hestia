@@ -33,15 +33,6 @@ function augerOff(err) {
     });
 }
 
-// Identical functions as above for debugging without gpio
-// function augerOff() {
-//     console.log('Auger turned off.');
-// }
-
-// function augerOn() {
-//     console.log('Auger turned on.');
-// }
-
 // Sleeps for any given milliseconds, call with await
 function sleep(ms) {
     return new Promise((resolve) => {
