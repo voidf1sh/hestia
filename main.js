@@ -5,6 +5,10 @@ var dotenv = require('dotenv').config();
 // Module for working with files
 var fs = require('fs');
 
+// Write the current env vars to console
+console.log('Environment variables:');
+console.log(`ONTIME=${process.env.ONTIME}\nOFFTIME=${process.env.OFFTIME}\nPAUSETIME=${process.env.PAUSETIME}\nDEBUG=${process.env.DEBUG}`);
+
 // Set up GPIO 4 (pysical pin 7) as output, then call cycleAuger()
 gpio.setup(7, gpio.DIR_OUT, cycleAuger);
 
@@ -63,6 +67,7 @@ async function cycleAuger(err) {
             console.log('Deleted reload file.');
         });
         console.log('Reloaded environment variables.');
+        console.log(`ONTIME=${process.env.ONTIME}\nOFFTIME=${process.env.OFFTIME}\nPAUSETIME=${process.env.PAUSETIME}\nDEBUG=${process.env.DEBUG}`);
     }
 
     // Check for quit file existing, then delete it, then quit the program
