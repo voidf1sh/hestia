@@ -38,9 +38,9 @@ async function cycleAuger() {
     const offTime = 1500; //ms
     const onTime = 500;   //ms
     augerOn();
-    await sleep($onTime);
+    await sleep(onTime);
     augerOff();
-    await sleep($offTime);
+    await sleep(offTime);
     cycleAuger();
 }
 
