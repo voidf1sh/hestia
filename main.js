@@ -1,6 +1,9 @@
 //This example shows how to setup the pin for write mode with the default state as "on". Why do this? It can sometimes be useful to reverse the default initial state due to wiring or uncontrollable circumstances.
 //var gpio = require('rpi-gpio');
 
+const offTime = 1500; //ms
+const onTime = 500;   //ms
+
 //gpio.setup(7, gpio.DIR_OUT, write);
 
 // function augerOn(err) {
@@ -30,15 +33,15 @@ function augerOn() {
 function sleep(ms) {
     return new Promise((resolve) => {
         setTimeout(resolve, ms);
-        console.log("Slept for ${ms}ms");
+        console.log(`Slept for ${ms}ms`);
     });
 }
 
 async function cycleAuger() {
     augerOn();
-    await sleep(500);
+    await sleep($onTime);
     augerOff();
-    await sleep(800);
+    await sleep($offTime);
     cycleAuger();
 }
 
