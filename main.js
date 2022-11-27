@@ -12,6 +12,9 @@ console.log(`ONTIME=${process.env.ONTIME}\nOFFTIME=${process.env.OFFTIME}\nPAUSE
 // Set up GPIO 4 (pysical pin 7) as output, then call cycleAuger()
 gpio.setup(7, gpio.DIR_OUT, cycleAuger);
 
+// TODO Move functions to another file for cleaner code
+// TODO Add logic for other sensors
+
 // Turns the auger on (Pin 7 high)
 function augerOn(err) {
     if (err) throw err;
