@@ -34,9 +34,13 @@ function sleep(ms) {
     });
 }
 
-while (true) {
+async function cycleAuger() {
     augerOn();
     await sleep(500);
     augerOff();
     await sleep(800);
+}
+
+while (true) {
+    cycleAuger();
 }
