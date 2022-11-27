@@ -51,6 +51,7 @@ async function cycleAuger(err) {
         console.log('Paused...');
         await sleep(process.env.PAUSETIME);
         cycleAuger();
+        return;
     }
 
     // Check for reload file existing, then reload environment variables, then delete the file.
