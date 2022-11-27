@@ -39,8 +39,7 @@ async function cycleAuger() {
     await sleep(500);
     augerOff();
     await sleep(800);
-}
-
-while (true) {
     cycleAuger();
 }
+
+cycleAuger();
