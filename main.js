@@ -35,7 +35,7 @@ function sleep(ms) {
 
 async function cycleAuger(err) {
     if (err) throw err;
-    const offTime = 1200; //ms
+    const offTime = 1000; //ms
     const onTime = 500;   //ms
     augerOn();
     await sleep(onTime);
