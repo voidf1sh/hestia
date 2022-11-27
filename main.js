@@ -1,5 +1,5 @@
 var gpio = require('rpi-gpio');
-gpio.setup(7, gpio.DIR_OUT, write);
+gpio.setup(7, gpio.DIR_OUT, cycleAuger);
 
 function augerOn(err) {
     if (err) throw err;
@@ -33,7 +33,8 @@ function sleep(ms) {
     });
 }
 
-async function cycleAuger() {
+async function cycleAuger(err) {
+    if (err) throw err;
     const offTime = 1500; //ms
     const onTime = 500;   //ms
     augerOn();
@@ -42,5 +43,3 @@ async function cycleAuger() {
     await sleep(offTime);
     cycleAuger();
 }
-
-cycleAuger();
