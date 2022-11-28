@@ -18,6 +18,13 @@ Three GPIO pins are used along with a common ground to control three relays, sup
 4 | +5VDC for Switches | N/A | Green
 6 | GND for Relays | N/A | Green/White
 
+# Schematics
+## The Current Setup
+*[Current Schematic](/assets/currentschem.png)
+
+## The End Goal
+*[Future Schematic](/assets/futureschem.png)
+
 # Oddities
 For ease of adaption, connection, and prototyping I've decided to use Cat 5 ethernet cabling and RJ45 connectors to connect the Raspberry Pi to the stove, and to a breadboard mockup of the sensors and switches for testing.
 
