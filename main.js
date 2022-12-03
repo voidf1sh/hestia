@@ -1,4 +1,8 @@
+// Custom functions module to keep main script clean
 const fn = require('./functions').functions;
+
+// Environment Variables Importing
+const dotenv = require('dotenv').config();
 
 // TODO Add logic for other sensors
 
