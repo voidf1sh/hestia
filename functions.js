@@ -15,7 +15,7 @@ const functions = {
             if (err) throw err;
             console.log('Auger GPIO Ready');
             return;
-        }
+        },
         // Turns the auger on (Pin 7 high)
         on() {
             gpio.write(7, true, function(err) {
@@ -63,7 +63,7 @@ const functions = {
     commands: {
         pause() {
             console.log('Paused...');
-            await this.sleep(process.env.PAUSETIME);
+            this.sleep(process.env.PAUSETIME).then(() => { return; });
             return;
         },
         reload() {
@@ -97,9 +97,8 @@ const functions = {
         console.log('Environment variables:');
         console.log(`ONTIME=${process.env.ONTIME}\nOFFTIME=${process.env.OFFTIME}\nPAUSETIME=${process.env.PAUSETIME}\nDEBUG=${process.env.DEBUG}`);
         return true;
-    }
+    },
 }
 
-}
 
 module.exports = { functions }
