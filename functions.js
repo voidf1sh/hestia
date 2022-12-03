@@ -6,7 +6,7 @@ const fs = require('fs');
 const gpio = require('rpi-gpio');
 
 // Set up GPIO 4 (pysical pin 7) as output, then call functions.auger.ready()
-gpio.setup(7, gpio.DIR_OUT, this.functions.auger.ready);
+gpio.setup(7, gpio.DIR_OUT, functions.auger.ready());
 
 // The functions we'll export to be used in other files
 const functions = {
