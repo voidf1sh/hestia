@@ -12,8 +12,6 @@ while (true) {
 
 // Main function, turns the auger on, sleeps for the time given in environment variables, then turns the auger off, sleeps, repeats.
 async function main() {
-    fn.files.check();
-
     switch (fn.files.check()) {
         case "pause":
             fn.commands.pause();
