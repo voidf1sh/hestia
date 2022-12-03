@@ -7,7 +7,7 @@ const dotenv = require('dotenv').config();
 // TODO Add logic for other sensors
 
 while (true) {
-    await main();
+    main();
 }
 
 // Main function, turns the auger on, sleeps for the time given in environment variables, then turns the auger off, sleeps, repeats.
