@@ -45,11 +45,11 @@ const functions = {
         },
         // Cycles the auger using the two functions above this one (functions.auger.on() and functions.auger.off())
         // Sleeps in between cycles using functions.sleep()
-        cycle() {
+        cycle(gpio) {
             return new Promise((resolve) => {
-                this.on().then(() => {
+                this.on(gpio).then(() => {
                     functions.sleep(process.env.ONTIME).then(() => {
-                        this.off().then(() => {
+                        this.off(gpio).then(() => {
                             functions.sleep(process.env.OFFTIME).then(() => {
                                 resolve("Cycle complete.");
                             });
