@@ -42,12 +42,12 @@ async function main(fn, gpio) {
         switch (res) {
             case "pause":
                 fn.commands.pause().then(() => {
-                    main(fn);
+                    main(fn, gpio);
                 });
                 break;
             case "reload":
                 fn.commands.reload().then(() => {
-                    main(fn);
+                    main(fn, gpio);
                 });
                 break;
             case "quit":
@@ -56,12 +56,12 @@ async function main(fn, gpio) {
             case "none":
                 fn.auger.cycle(gpio).then((res) => {
                     if (process.env.DEBUG == 'true') console.log(res);
-                    main(fn);
+                    main(fn, gpio);
                 });
                 break;
         
             default:
-            main(fn);
+            main(fn, gpio);
             break;
         }
     });
