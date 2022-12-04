@@ -54,7 +54,8 @@ async function main(fn, gpio) {
                 fn.commands.quit();
                 break;
             case "none":
-                fn.auger.cycle(gpio).then(() => {
+                fn.auger.cycle(gpio).then((res) => {
+                    if (process.env.DEBUG == 'true') console.log(res);
                     main(fn);
                 });
                 break;

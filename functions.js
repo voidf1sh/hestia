@@ -19,7 +19,7 @@ const functions = {
                 if (process.env.ONPI == 'true') {
                     gpio.write(7, true, function(err) {
                         if (err) throw err;
-                        if (process.env.DEBUG == "true") console.log('Auger turned on.');
+                        resolve('Auger turned on.');
                     });
                 } else {
                     console.log('NOPI Auger turned on.');
@@ -34,7 +34,8 @@ const functions = {
                 if (process.env.ONPI == 'true') {
                     gpio.write(7, false, function(err) {
                         if (err) throw err;
-                        if (process.env.DEBUG == "true") console.log('Auger turned off.');
+                        resolve('Auger turned on.');
+
                     });
                 } else {
                     console.log('NOPI Auger turned off.');
@@ -47,10 +48,14 @@ const functions = {
         // Sleeps in between cycles using functions.sleep()
         cycle(gpio) {
             return new Promise((resolve) => {
-                this.on(gpio).then(() => {
-                    functions.sleep(process.env.ONTIME).then(() => {
-                        this.off(gpio).then(() => {
-                            functions.sleep(process.env.OFFTIME).then(() => {
+                this.on(gpio).then((res) => {
+                    if (process.env.DEBUG == 'true') console.log(res);
+                    functions.sleep(process.env.ONTIME).then((res) => {
+                        if (process.env.DEBUG == 'true') console.log(res);
+                        this.off(gpio).then((res) => {
+                            if (process.env.DEBUG == 'true') console.log(res);
+                            functions.sleep(process.env.OFFTIME).then((res) => {
+                                if (process.env.DEBUG == 'true') console.log(res);
                                 resolve("Cycle complete.");
                             });
                         });
@@ -114,11 +119,9 @@ const functions = {
         return new Promise((resolve) => {
             if (process.env.DEBUG == "true") console.log(`Sleeping for ${ms}ms`);
             const finish = () => {
-                if (process.env.DEBUG == "true") console.log(`Slept for ${ms}ms`);
-                resolve();
+                resolve(`Slept for ${ms}ms`);
             }
             setTimeout(finish, ms);
-            
         });
     },
     init(gpio) {
