@@ -1,5 +1,6 @@
 {
     "name": "pscontrolpanel",
+    "version": "0.1.0",
     "requires": true,
     "packages": {},
     "dependencies": {
