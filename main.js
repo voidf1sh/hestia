@@ -4,12 +4,39 @@ const fn = require('./functions.js').functions;
 // Environment Variables Importing
 const dotenv = require('dotenv').config();
 
+// Setup for use with the Pi's GPIO pins
+if (process.env.ONPI == 'true') {
+    console.log('Running on a Raspberry Pi.');
+    const gpio = require('rpi-gpio');
+    fn.init(gpio).then((res, rej) => {
+        if (res != undefined) {
+            console.log(res);
+            main(fn, gpio);
+        } else {
+            console.error(rej);
+        }
+    });
+} else if (process.env.ONPI == 'false') {
+    console.log('Not running on a Raspberry Pi.');
+    const gpio = 'gpio';
+    fn.init(gpio).then((res, rej) => {
+        if (res != undefined) {
+            console.log(res);
+            main(fn, gpio);
+        } else {
+            console.error(rej);
+        }
+    });
+} else {
+    console.log('Problem with ENV file.');
+}
+
 // TODO Add logic for other sensors
 
-main(fn);
+
 
 // Main function, turns the auger on, sleeps for the time given in environment variables, then turns the auger off, sleeps, repeats.
-async function main(fn) {
+async function main(fn, gpio) {
     fn.files.check().then((res,rej) => {
         console.log('File Check: ' + res);
         switch (res) {
@@ -27,7 +54,7 @@ async function main(fn) {
                 fn.commands.quit();
                 break;
             case "none":
-                fn.auger.cycle().then(() => {
+                fn.auger.cycle(gpio).then(() => {
                     main(fn);
                 });
                 break;

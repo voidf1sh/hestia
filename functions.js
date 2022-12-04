@@ -3,15 +3,7 @@ const dotenv = require('dotenv').config();
 // Module for working with files
 const fs = require('fs');
 const { resolve } = require('path');
-// Setup for use with the Pi's GPIO pins
-if (process.env.ONPI == 'true') {
-    console.log('Running on a Raspberry Pi.');
-    const gpio = require('rpi-gpio');
-} else if (process.env.ONPI == 'false') {
-    console.log('Not running on a Raspberry Pi.');
-} else {
-    console.log('Problem with ENV file.');
-}
+
 
 // The functions we'll export to be used in other files
 const functions = {
@@ -22,7 +14,7 @@ const functions = {
             return;
         },
         // Turns the auger on (Pin 7 high)
-        on() {
+        on(gpio) {
             return new Promise((resolve) => {
                 if (process.env.ONPI == 'true') {
                     gpio.write(7, true, function(err) {
@@ -129,17 +121,22 @@ const functions = {
             
         });
     },
-    init() {
-        // Write the current env vars to console
-        console.log('Environment variables:');
-        console.log(`ONTIME=${process.env.ONTIME}\nOFFTIME=${process.env.OFFTIME}\nPAUSETIME=${process.env.PAUSETIME}\nDEBUG=${process.env.DEBUG}\nONPI=${process.env.ONPI}`);
-        return true;
+    init(gpio) {
+        return new Promise((resolve, reject) => {
+            // Write the current env vars to console
+            console.log('Environment variables:');
+            console.log(`ONTIME=${process.env.ONTIME}\nOFFTIME=${process.env.OFFTIME}\nPAUSETIME=${process.env.PAUSETIME}\nDEBUG=${process.env.DEBUG}\nONPI=${process.env.ONPI}`);
+            // Set up GPIO 4 (pysical pin 7) as output, then call functions.auger.ready()
+            if (process.env.ONPI == 'true') {
+                gpio.setup(7, gpio.DIR_OUT, (err) => {
+                    if (err) reject(err);
+                    resolve('GPIO Initialized');
+                });
+            } else {
+                resolve('GPIO Not Available');
+            }
+        });
     },
-}
-
-// Set up GPIO 4 (pysical pin 7) as output, then call functions.auger.ready()
-if (process.env.ONPI == 'true') {
-    gpio.setup(7, gpio.DIR_OUT, functions.auger.ready());
 }
 
 module.exports = { functions };
