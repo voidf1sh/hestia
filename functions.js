@@ -29,7 +29,7 @@ const functions = {
             
         },
         // Turns the auger off (pin 7 low)
-        off() {
+        off(gpio) {
             return new Promise((resolve) => {
                 if (process.env.ONPI == 'true') {
                     gpio.write(7, false, function(err) {
