@@ -22,8 +22,8 @@ const functions = {
                         if (process.env.DEBUG == "true") console.log('Auger turned on.');
                     });
                 } else {
-                    console.log('Auger turned on.');
-                    resolve('Auger turned on.');
+                    console.log('NOPI Auger turned on.');
+                    resolve('NOPI Auger turned on.');
                 }
             });
             
@@ -37,8 +37,8 @@ const functions = {
                         if (process.env.DEBUG == "true") console.log('Auger turned off.');
                     });
                 } else {
-                    console.log('Auger turned off.');
-                    resolve('Auger turned off.');
+                    console.log('NOPI Auger turned off.');
+                    resolve('NOPI Auger turned off.');
                 }
             });
 
