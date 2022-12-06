@@ -19,7 +19,13 @@
 	"Log if in Debug mode": {
 		"scope": "javascript",
 		"prefix": "log",
-		"body": "if (process.env.DEBUG == 'true') console.log('$1');\n$0",
+		"body": "if (config.debugMode) console.log($1);\n$0",
 		"description": "Log output to console if in debug mode"
+	},
+	"Run only on Pi": {
+		"scope": "javascript",
+		"prefix": "onpi",
+		"body": "if (process.env.ONPI == 'true') {\n\t$1\n} else {\n\t$2\n}$0",
+		"description": "Run something only if the ONPI env var is set"
 	}
 }
