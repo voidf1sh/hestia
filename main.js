@@ -10,34 +10,38 @@
 // Custom functions module to keep main script clean
 const fn = require('./functions.js').functions;
 
+// Config File
+const config = require('./config.json');
+config.startTime = Date.now();
+
 // Environment Variables Importing
 const dotenv = require('dotenv').config();
 
 // Setup for use with the Pi's GPIO pins
 if (process.env.ONPI == 'true') {
-    console.log('== Running on a Raspberry Pi.');
+    console.log(`[${(Date.now() - config.startTime)/1000}] == Running on a Raspberry Pi.`);
     const gpio = require('rpi-gpio');
     fn.init(gpio).then((res, rej) => {
         if (res != undefined) {
-            console.log(res);
+            console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
             main(fn, gpio);
         } else {
-            console.error(rej);
+            console.error(`[${(Date.now() - config.startTime)/1000}] E: ${rej}`);
         }
     });
 } else if (process.env.ONPI == 'false') {
-    console.log('== Not running on a Raspberry Pi.');
+    console.log(`[${(Date.now() - config.startTime)/1000}] I: Not running on a Raspberry Pi.`);
     const gpio = 'gpio';
     fn.init(gpio).then((res, rej) => {
         if (res != undefined) {
-            console.log(res);
+            console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
             main(fn, gpio);
         } else {
             console.error(rej);
         }
     });
 } else {
-    console.log('== Problem with ENV file.');
+    console.error(`[${Date.now() - config.startTime}] E: Problem with ENV file.`);
 }
 
 // TODO Add logic for other sensors
@@ -49,7 +53,7 @@ async function main(fn, gpio) {
     // Check for the existence of certain files
     fn.files.check().then((res,rej) => {
         // Log the result of the check if in debug mode
-        if (process.env.DEBUG == 'true') console.log('File Check: ' + res);
+        if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: File Check: ${res}`);
         // Choose what to do depending on the result of the check
         switch (res) {
             case "pause":
@@ -64,27 +68,45 @@ async function main(fn, gpio) {
                 fn.commands.reload().then(() => {
                     // Rerun this function once the reload has finished
                     main(fn, gpio);
+                }).catch(rej => {
+                    console.error(`[${(Date.now() - config.startTime)/1000}] E: ${rej}`);
                 });
                 break;
             case "quit":
                 // Quit the script
                 fn.commands.quit();
                 break;
+            case "ignite":
+                // Start the igniter and timer
+                fn.commands.ignite(gpio).then(res => {
+                    if (config.debugMode) console.log(res);
+                }).catch(rej => {
+                    console.error(`[${(Date.now() - config.startTime)/1000}] E: ${rej}`);
+                });
             case "none":
                 // If no special files are found, cycle the auger normally
                 fn.auger.cycle(gpio).then((res) => {
                     // Log the auger cycle results if in debug mode.
-                    if (process.env.DEBUG == 'true') console.log(res);
+                    if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
+                    // Run the status check function
+                    statusCheck(fn, gpio);
                     // Rerun this function once the cycle is complete
-                    main(fn, gpio);
+                    // main(fn, gpio);
                 });
                 break;
         
             default:
                 // If we don't get a result from the file check, or for some reason it's an unexpected response, log it and quit the script.
-                console.error(`No result was received, something is wrong.\nres: ${res}`);
+                console.error(`[${(Date.now() - config.startTime)/1000}] E: No result was received, something is wrong.\nres: ${res}`);
                 fn.commands.quit();
                 break;
         }
+    });
+}
+
+function statusCheck(fn, gpio) {
+    fn.tests.igniter(gpio).then((res) => {
+        if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
+        main(fn, gpio);
     });
 }
