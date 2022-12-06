@@ -167,7 +167,7 @@ const functions = {
     // Initializes rpi-gpio, or resolves if not on a raspberry pi
     init(gpio) {
         return new Promise((resolve, reject) => {
-            // Boot About/Info
+            // Boot/About/Info
             console.log(`
 == Lennox Winslow PS40
 == Pellet Stove Control Panel
@@ -182,8 +182,6 @@ const functions = {
 == == PAUSETIME=${process.env.PAUSETIME}
 == == DEBUG=${process.env.DEBUG}
 == == ONPI=${process.env.ONPI}`);
-            // Write the current env vars to console
-            console.log(`E`);
             // Set up GPIO 4 (pysical pin 7) as output, then call functions.auger.ready()
             if (process.env.ONPI == 'true') {
                 // Init the Auger pin
