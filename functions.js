@@ -6,6 +6,9 @@ const pofPin = 16;          // Pin for sensing the status (open/closed) of the P
 const tempPin = 18;         // Pin for receiving data from a DS18B20 OneWire temperature sensor.
 const vacuumPin = 22;       // Pin for sensing the status (open/closed) of the vacuum switch.
 
+// Require the package for pulling version numbers
+const package = require('./package.json');
+
 // Get environment variables
 const dotenv = require('dotenv').config();
 // Module for working with files
@@ -164,13 +167,23 @@ const functions = {
     // Initializes rpi-gpio, or resolves if not on a raspberry pi
     init(gpio) {
         return new Promise((resolve, reject) => {
+            // Boot About/Info
+            console.log(`
+== Lennox Winslow PS40
+== Pellet Stove Control Panel
+== Author: Skylar Grant
+== Version: v${package.version}
+==
+== Startup Time: ${new Date().toISOString()}
+==
+== Environment variables:
+== == ONTIME=${process.env.ONTIME}
+== == OFFTIME=${process.env.OFFTIME}
+== == PAUSETIME=${process.env.PAUSETIME}
+== == DEBUG=${process.env.DEBUG}
+== == ONPI=${process.env.ONPI}`);
             // Write the current env vars to console
-            console.log(`Environment variables:
-ONTIME=${process.env.ONTIME}
-OFFTIME=${process.env.OFFTIME}
-PAUSETIME=${process.env.PAUSETIME}
-DEBUG=${process.env.DEBUG}
-ONPI=${process.env.ONPI}`);
+            console.log(`E`);
             // Set up GPIO 4 (pysical pin 7) as output, then call functions.auger.ready()
             if (process.env.ONPI == 'true') {
                 // Init the Auger pin
