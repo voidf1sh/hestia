@@ -47,7 +47,7 @@ const functions = {
                 if (process.env.ONPI == 'true') {
                     gpio.write(7, false, function(err) {
                         if (err) throw err;
-                        resolve('Auger turned on.');
+                        resolve('Auger turned off.');
 
                     });
                 } else {
