@@ -1,3 +1,11 @@
+// Physical Pin numbers for GPIO
+const augerPin = 7;         // Pin for controlling the relay for the pellet auger motor.
+const igniterPin = 13;      // Pin for controlling the relay for the igniter.
+const blowerPin = 15;       // Pin for controlling the relay for the combustion blower/exhaust.
+const pofPin = 16;          // Pin for sensing the status (open/closed) of the Proof of Fire switch.
+const tempPin = 18;         // Pin for receiving data from a DS18B20 OneWire temperature sensor.
+const vacuumPin = 22;       // Pin for sensing the status (open/closed) of the vacuum switch.
+
 // Get environment variables
 const dotenv = require('dotenv').config();
 // Module for working with files
@@ -140,7 +148,7 @@ const functions = {
             process.exit();
         },
     },
-    // Sleeps for any given milliseconds, call with await
+    // Sleeps for any given milliseconds
     sleep(ms) {
         return new Promise((resolve) => {
             if (process.env.DEBUG == "true") console.log(`Sleeping for ${ms}ms`);
@@ -157,14 +165,46 @@ const functions = {
     init(gpio) {
         return new Promise((resolve, reject) => {
             // Write the current env vars to console
-            console.log('Environment variables:');
-            console.log(`ONTIME=${process.env.ONTIME}\nOFFTIME=${process.env.OFFTIME}\nPAUSETIME=${process.env.PAUSETIME}\nDEBUG=${process.env.DEBUG}\nONPI=${process.env.ONPI}`);
+            console.log(`Environment variables:\n
+                ONTIME=${process.env.ONTIME}\n
+                OFFTIME=${process.env.OFFTIME}\n
+                PAUSETIME=${process.env.PAUSETIME}\n
+                DEBUG=${process.env.DEBUG}\n
+                ONPI=${process.env.ONPI}
+            `);
             // Set up GPIO 4 (pysical pin 7) as output, then call functions.auger.ready()
             if (process.env.ONPI == 'true') {
-                gpio.setup(7, gpio.DIR_OUT, (err) => {
+                // Init the Auger pin
+                gpio.setup(augerPin, gpio.DIR_OUT, (err) => {
                     if (err) reject(err);
-                    // Resolve the promise
-                    resolve('GPIO Initialized');
+                    if (process.env.DEBUG == 'true') console.log('Auger pin initialized.');
+                    // Init the igniter pin
+                    gpio.setup(igniterPin, gpio.DIR_OUT, (err) => {
+                        if (err) reject(err);
+                        if (process.env.DEBUG == 'true') console.log('Igniter pin initialized.');
+                        // Init the blower pin
+                        gpio.setup(blowerPin, gpio.DIR_OUT, (err) => {
+                            if (err) reject(err);
+                            if (process.env.DEBUG == 'true') console.log('Combustion blower pin initialized.');
+                            // Init the Proof of Fire pin
+                            gpio.setup(pofPin, gpio.DIR_IN, (err) => {
+                                if (err) reject(err);
+                                if (process.env.DEBUG == 'true') console.log('Proof of Fire pin initialized.');
+                                // Init the Temp Sensor pin
+                                gpio.setup(tempPin, gpio.DIR_IN, (err) => {
+                                    if (err) reject(err);
+                                    if (process.env.DEBUG == 'true') console.log('Temperature pin initialized.');
+                                    // Init the Vacuum Switch pin
+                                    gpio.setup(vacuumPin, gpio.DIR_IN, (err) => {
+                                        if (err) reject(err);
+                                        if (process.env.DEBUG == 'true') console.log('Vacuum Switch pin initialized.');
+                                        // Resolve the promise now that all pins have been initialized
+                                        resolve('GPIO Initialized.');
+                                    });
+                                });
+                            });
+                        });
+                    });
                 });
             } else {
                 // Resolve the promise

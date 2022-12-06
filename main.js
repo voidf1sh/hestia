@@ -1,3 +1,12 @@
+/* Pellet Stove Control Panel
+ * Written by Skylar Grant
+ * v0.2.0
+ * 
+ * TODO:
+ * Add logic for other sensors
+ * More documentation?
+ */ 
+
 // Custom functions module to keep main script clean
 const fn = require('./functions.js').functions;
 
