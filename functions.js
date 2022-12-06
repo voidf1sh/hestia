@@ -168,8 +168,7 @@ const functions = {
     init(gpio) {
         return new Promise((resolve, reject) => {
             // Boot/About/Info
-            console.log(`
-== Lennox Winslow PS40
+            console.log(`== Lennox Winslow PS40
 == Pellet Stove Control Panel
 == Author: Skylar Grant
 == Version: v${package.version}
@@ -187,29 +186,29 @@ const functions = {
                 // Init the Auger pin
                 gpio.setup(augerPin, gpio.DIR_OUT, (err) => {
                     if (err) reject(err);
-                    if (process.env.DEBUG == 'true') console.log('Auger pin initialized.');
+                    if (process.env.DEBUG == 'true') console.log('== Auger pin initialized.');
                     // Init the igniter pin
                     gpio.setup(igniterPin, gpio.DIR_OUT, (err) => {
                         if (err) reject(err);
-                        if (process.env.DEBUG == 'true') console.log('Igniter pin initialized.');
+                        if (process.env.DEBUG == 'true') console.log('== Igniter pin initialized.');
                         // Init the blower pin
                         gpio.setup(blowerPin, gpio.DIR_OUT, (err) => {
                             if (err) reject(err);
-                            if (process.env.DEBUG == 'true') console.log('Combustion blower pin initialized.');
+                            if (process.env.DEBUG == 'true') console.log('== Combustion blower pin initialized.');
                             // Init the Proof of Fire pin
                             gpio.setup(pofPin, gpio.DIR_IN, (err) => {
                                 if (err) reject(err);
-                                if (process.env.DEBUG == 'true') console.log('Proof of Fire pin initialized.');
+                                if (process.env.DEBUG == 'true') console.log('== Proof of Fire pin initialized.');
                                 // Init the Temp Sensor pin
                                 gpio.setup(tempPin, gpio.DIR_IN, (err) => {
                                     if (err) reject(err);
-                                    if (process.env.DEBUG == 'true') console.log('Temperature pin initialized.');
+                                    if (process.env.DEBUG == 'true') console.log('== Temperature pin initialized.');
                                     // Init the Vacuum Switch pin
                                     gpio.setup(vacuumPin, gpio.DIR_IN, (err) => {
                                         if (err) reject(err);
-                                        if (process.env.DEBUG == 'true') console.log('Vacuum Switch pin initialized.');
+                                        if (process.env.DEBUG == 'true') console.log('== Vacuum Switch pin initialized.');
                                         // Resolve the promise now that all pins have been initialized
-                                        resolve('GPIO Initialized.');
+                                        resolve('== GPIO Initialized.');
                                     });
                                 });
                             });

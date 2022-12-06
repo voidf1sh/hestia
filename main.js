@@ -15,7 +15,7 @@ const dotenv = require('dotenv').config();
 
 // Setup for use with the Pi's GPIO pins
 if (process.env.ONPI == 'true') {
-    console.log('Running on a Raspberry Pi.');
+    console.log('== Running on a Raspberry Pi.');
     const gpio = require('rpi-gpio');
     fn.init(gpio).then((res, rej) => {
         if (res != undefined) {
@@ -26,7 +26,7 @@ if (process.env.ONPI == 'true') {
         }
     });
 } else if (process.env.ONPI == 'false') {
-    console.log('Not running on a Raspberry Pi.');
+    console.log('== Not running on a Raspberry Pi.');
     const gpio = 'gpio';
     fn.init(gpio).then((res, rej) => {
         if (res != undefined) {
@@ -37,7 +37,7 @@ if (process.env.ONPI == 'true') {
         }
     });
 } else {
-    console.log('Problem with ENV file.');
+    console.log('== Problem with ENV file.');
 }
 
 // TODO Add logic for other sensors
