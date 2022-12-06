@@ -165,13 +165,12 @@ const functions = {
     init(gpio) {
         return new Promise((resolve, reject) => {
             // Write the current env vars to console
-            console.log(`Environment variables:\n
-                ONTIME=${process.env.ONTIME}\n
-                OFFTIME=${process.env.OFFTIME}\n
-                PAUSETIME=${process.env.PAUSETIME}\n
-                DEBUG=${process.env.DEBUG}\n
-                ONPI=${process.env.ONPI}
-            `);
+            console.log(`Environment variables:
+ONTIME=${process.env.ONTIME}
+OFFTIME=${process.env.OFFTIME}
+PAUSETIME=${process.env.PAUSETIME}
+DEBUG=${process.env.DEBUG}
+ONPI=${process.env.ONPI}`);
             // Set up GPIO 4 (pysical pin 7) as output, then call functions.auger.ready()
             if (process.env.ONPI == 'true') {
                 // Init the Auger pin
