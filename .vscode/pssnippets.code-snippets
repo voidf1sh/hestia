@@ -19,7 +19,7 @@
 	"Log if in Debug mode": {
 		"scope": "javascript",
 		"prefix": "log",
-		"body": "if (config.debugMode) console.log($1);\n$0",
+		"body": "if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: $1`);\n$0",
 		"description": "Log output to console if in debug mode"
 	},
 	"Run only on Pi": {
