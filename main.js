@@ -85,6 +85,7 @@ async function main(fn, gpio) {
                         fn.commands.quit();
                     });
                 });
+                break;
             case "start":
                 // Start the stove
                 fn.commands.startup(gpio).then(res => {
@@ -92,6 +93,7 @@ async function main(fn, gpio) {
                 }).catch(rej => {
 
                 });
+                break;
             case "none":
                 // If no special files are found, cycle the auger normally
                 if (config.status.auger == 1) {
