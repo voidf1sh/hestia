@@ -182,6 +182,7 @@ const functions = {
         },
         ignite(gpio) {
             config.status.igniter = 1;
+            config.status.auger = 1;
             config.igniterOnTime = Date.now();
             config.igniterOffTime = config.igniterOnTime + config.igniterWaitTime;     // 7 Minutes, 420,000ms
             return new Promise((resolve, reject) => {
