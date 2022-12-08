@@ -1,9 +1,9 @@
 // Physical Pin numbers for GPIO
-const augerPin = 7;         // Pin for controlling the relay for the pellet auger motor.
+const augerPin = 26;         // Pin for controlling the relay for the pellet auger motor.
 const igniterPin = 13;      // Pin for controlling the relay for the igniter.
 const blowerPin = 15;       // Pin for controlling the relay for the combustion blower/exhaust.
 const pofPin = 16;          // Pin for sensing the status (open/closed) of the Proof of Fire switch.
-const tempPin = 18;         // Pin for receiving data from a DS18B20 OneWire temperature sensor.
+// const tempPin = 18;         // Pin for receiving data from a DS18B20 OneWire temperature sensor.
 const vacuumPin = 22;       // Pin for sensing the status (open/closed) of the vacuum switch.
 
 // Require the package for pulling version numbers
@@ -32,7 +32,7 @@ const functions = {
         on(gpio) {
             return new Promise((resolve) => {
                 if (process.env.ONPI == 'true') {
-                    gpio.write(7, true, function(err) {
+                    gpio.write(augerPin, true, function(err) {
                         if (err) throw err;
                         resolve('Auger turned on.');
                     });
@@ -46,7 +46,7 @@ const functions = {
         off(gpio) {
             return new Promise((resolve) => {
                 if (process.env.ONPI == 'true') {
-                    gpio.write(7, false, function(err) {
+                    gpio.write(augerPin, false, function(err) {
                         if (err) throw err;
                         resolve('Auger turned off.');
 
