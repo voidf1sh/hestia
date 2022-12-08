@@ -76,6 +76,7 @@ async function main(fn, gpio) {
                 // Start the igniter and timer
                 fn.commands.ignite(gpio).then(res => {
                     if (config.debugMode) console.log(res);
+                    statusCheck(fn, gpio);
                 }).catch(rej => {
                     console.error(`[${(Date.now() - config.startTime)/1000}] E: ${rej}`);
                     fn.commands.shutdown(gpio).then(res => {
@@ -91,7 +92,7 @@ async function main(fn, gpio) {
                 fn.commands.startup(gpio).then(res => {
                     statusCheck(fn, gpio);
                 }).catch(rej => {
-
+                    // TODO
                 });
                 break;
             case "none":
