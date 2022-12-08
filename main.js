@@ -21,24 +21,20 @@ const dotenv = require('dotenv').config();
 if (process.env.ONPI == 'true') {
     console.log(`[${(Date.now() - config.startTime)/1000}] == Running on a Raspberry Pi.`);
     const gpio = require('rpi-gpio');
-    fn.init(gpio).then((res, rej) => {
-        if (res != undefined) {
-            console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
-            main(fn, gpio);
-        } else {
-            console.error(`[${(Date.now() - config.startTime)/1000}] E: ${rej}`);
-        }
+    fn.init(gpio).then((res) => {
+        console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
+        main(fn, gpio);
+    }).catch(rej => {
+        console.error(`[${(Date.now() - config.startTime)/1000}] E: ${rej}`);
     });
 } else if (process.env.ONPI == 'false') {
     console.log(`[${(Date.now() - config.startTime)/1000}] I: Not running on a Raspberry Pi.`);
     const gpio = 'gpio';
-    fn.init(gpio).then((res, rej) => {
-        if (res != undefined) {
-            console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
-            main(fn, gpio);
-        } else {
-            console.error(rej);
-        }
+    fn.init(gpio).then(res => {
+        console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
+        main(fn, gpio);
+    }).catch(rej => {
+        console.error(rej);
     });
 } else {
     console.error(`[${Date.now() - config.startTime}] E: Problem with ENV file.`);
