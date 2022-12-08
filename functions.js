@@ -112,15 +112,40 @@ const functions = {
                 if (fs.existsSync('./ignite')) {
                     resolve('ignite');
                 }
+
+                // Check for start file existing
+                if (fs.existsSync('./start')) {
+                    resolve('start');
+                }
                 // Resolve the promise, letting the main script know what we found (nothing)
                 resolve("none");
             });
         },
     },
     commands: {
+        // Prepare the stove for starting
+        startup (gpio) {
+            fs.unlink('./start', (err) => {
+                if (err) throw err;
+            });
+            return new Promise((resolve, reject) => {
+                if (process.env.ONPI == 'true') {
+                    // Turn the combustion blower on
+                    functions.power.blower.on(gpio).then(res => {
+                        resolve(`I: Combustion blower has been enabled.`);
+                    }).catch(rej => {
+                        reject(`E: There was a problem starting the combustion blower: ${rej}`);
+                    });
+                } else {
+                    resolve(`I: Simulated combustion blower turned on.`);
+                }
+            });
+        },
         // Pauses the script for the time defined in env variables
         pause() {
             return new Promise((resolve) => {
+                if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: Pausing for ${config.pauseTime}ms`);
+                               
                 functions.sleep(config.pauseTime).then(() => { resolve(); });
             });
         },
@@ -193,31 +218,45 @@ const functions = {
             });
         },
         igniter(gpio) {
-            return new Promise((resolve) => {
+            return new Promise((resolve, reject) => {
                 var statusMsg = "";
                 if (config.status.igniter == 1) {
-                    statusMsg += "The igniter is on. ";
+                    statusMsg += "The igniter is on.\n";
                 } else if (config.status.igniter == 0) {
-                    statusMsg += "The igniter is off. ";
+                    statusMsg += "The igniter is off.\n";
                 } else {
-                    statusMsg += "E: Unable to determine igniter status. ";
+                    reject("E: Unable to determine igniter status.");
                 }
                 if (config.igniterOnTime > 0) {
                     const humanStartTime = new Date(config.igniterOnTime).toISOString();
                     const humanEndTime = new Date(config.igniterOffTime).toISOString();
-                    statusMsg += `Igniter started: ${humanStartTime}. Igniter scheduled to stop: ${humanEndTime}`;
+                    if (Date.now() < config.igniterOffTime && config.status.igniter == 1) {
+                        statusMsg += `Igniter started: ${humanStartTime}.\n`;
+                        statusMsg += `Igniter scheduled to stop: ${humanEndTime}.\n`;
+                    }
                     // Shut the igniter off if it's past the waiting period
                     if ((Date.now() > config.igniterOffTime) && (config.status.igniter == 1)) {
                         if (process.env.ONPI == 'true') {
                             gpio.write(igniterPin, false, (err) => {
                                 if (err) throw(err);
                                 config.status.igniter = 0;
-                                statusMsg += `\n${new Date().toISOString()} Turned off igniter.`;
+                                statusMsg += `${new Date().toISOString()} I: Turned off igniter.`;
+                                functions.tests.pof(gpio).then(res => {
+                                    if (res) {
+                                        config.status.seenFire = true;
+                                    } else {
+                                        reject(`E: No Proof of Fire after igniter shut off.`);
+                                    }
+                                }).catch(rej => {
+
+                                });
                             });
                         } else {
                             config.status.igniter = 0;
-                            statusMsg += `\n${new Date().toISOString()} Simulated igniter turned off.`;
+                            statusMsg += `${new Date().toISOString()} I: Simulated igniter turned off.`;
                         }                       
+                    } else if  ((Date.now() > config.igniterOffTime) && (config.status.igniter == 0)) {
+                        statusMsg += `The igniter was turned off at ${new Date(config.igniterOffTime).toISOString()}.`;
                     }
                 } else {
                     statusMsg += 'The igniter hasn\'t been started yet.';

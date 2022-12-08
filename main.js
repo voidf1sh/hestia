@@ -82,17 +82,36 @@ async function main(fn, gpio) {
                     if (config.debugMode) console.log(res);
                 }).catch(rej => {
                     console.error(`[${(Date.now() - config.startTime)/1000}] E: ${rej}`);
+                    fn.commands.shutdown(gpio).then(res => {
+                        fn.commands.quit();
+                    }).catch(rej => {
+                        console.error(rej);
+                        fn.commands.quit();
+                    });
+                });
+            case "start":
+                // Start the stove
+                fn.commands.startup(gpio).then(res => {
+                    statusCheck(fn, gpio);
+                }).catch(rej => {
+
                 });
             case "none":
                 // If no special files are found, cycle the auger normally
-                fn.auger.cycle(gpio).then((res) => {
-                    // Log the auger cycle results if in debug mode.
-                    if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
-                    // Run the status check function
-                    statusCheck(fn, gpio);
-                    // Rerun this function once the cycle is complete
-                    // main(fn, gpio);
-                });
+                if (config.status.auger == 1) {
+                    fn.auger.cycle(gpio).then((res) => {
+                        // Log the auger cycle results if in debug mode.
+                        if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
+                        // Run the status check function
+                        statusCheck(fn, gpio);
+                        // Rerun this function once the cycle is complete
+                        // main(fn, gpio);
+                    });
+                } else {
+                    fn.commands.pause().then(res => {
+                        statusCheck(fn, gpio);
+                    });
+                }
                 break;
         
             default:

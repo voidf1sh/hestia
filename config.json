@@ -10,6 +10,7 @@
     "status": {
         "igniter": 0,
         "blower": 0,
-        "auger": 0
+        "auger": 0,
+        "seenFire": false
     }
 }
