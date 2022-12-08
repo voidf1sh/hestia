@@ -355,18 +355,19 @@ const functions = {
                             gpio.setup(pofPin, gpio.DIR_IN, (err) => {
                                 if (err) reject(err);
                                 if (config.debugMode) console.log('== Proof of Fire pin initialized.');
-                                // Init the Temp Sensor pin
-                                gpio.setup(tempPin, gpio.DIR_IN, (err) => {
+                                // Init the Vacuum Switch pin
+                                gpio.setup(vacuumPin, gpio.DIR_IN, (err) => {
                                     if (err) reject(err);
-                                    if (config.debugMode) console.log('== Temperature pin initialized.');
-                                    // Init the Vacuum Switch pin
-                                    gpio.setup(vacuumPin, gpio.DIR_IN, (err) => {
-                                        if (err) reject(err);
-                                        if (config.debugMode) console.log('== Vacuum Switch pin initialized.');
-                                        // Resolve the promise now that all pins have been initialized
-                                        resolve('== GPIO Initialized.');
-                                    });
+                                    if (config.debugMode) console.log('== Vacuum Switch pin initialized.');
+                                    // Resolve the promise now that all pins have been initialized
+                                    resolve('== GPIO Initialized.');
                                 });
+                                // Init the Temp Sensor pin
+                                // gpio.setup(tempPin, gpio.DIR_IN, (err) => {
+                                //     if (err) reject(err);
+                                //     if (config.debugMode) console.log('== Temperature pin initialized.');
+                                    
+                                // });
                             });
                         });
                     });
