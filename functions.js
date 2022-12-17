@@ -1,3 +1,5 @@
+// TODOs: Add tests for PoF and Vacuum switches, add delays for shutting down blower, test logic for igniter
+
 // Physical Pin numbers for GPIO
 const augerPin = 26;         // Pin for controlling the relay for the pellet auger motor.
 const igniterPin = 13;      // Pin for controlling the relay for the igniter.
@@ -170,6 +172,7 @@ const functions = {
         },
         // Shutdown the script gracefully
         quit() {
+            // TODO add quit file detection, not always going to be quitting from files
             // Delete the quit file
             fs.unlink('./quit', (err) => {
                 if (err) throw err;
@@ -199,6 +202,27 @@ const functions = {
                     resolve('Simulated igniter turned on.');
                 }
             });
+        },
+        shutdown(gpio) {
+            // If the auger is enabled, disable it
+            if (config.status.auger == 1) {
+                config.status.auger = 0;
+            }
+            // If the igniter is on, shut it off.
+            if (config.status.igniter == 1) {
+                functions.power.igniter.off(gpio).then(res => {
+                    if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: Shut off igniter.`);
+                }); // TODO catch an error here
+            }
+            // TODO Change this so it gives a delay after shutting down so smoke doesn't enter the house
+            if (config.status.blower == 1) {
+                config.times.blowerOff = Date.now() + 600000; // 10 minutes, TODO move to config
+                // TODO Move this to another function, to run after tests pass
+                // functions.power.blower.off(gpio).then(res => {
+                //     if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: Shut off blower.`);
+                    
+                // });
+            }
         },
     },
     tests: {
@@ -264,7 +288,16 @@ const functions = {
                 }
                 resolve(statusMsg);
             });
-        }
+        },
+        blowerOffDelay() {
+            if (config.times.blowerOff == 0) return false;
+            // TODO Implement the blower shutdown delay as a test here
+            if (Date.now() > config.times.blowerOff) {
+                return true;
+            } else {
+                return false;
+            }
+        },
     },
     power: {
         igniter: {

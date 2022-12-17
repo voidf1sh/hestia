@@ -127,4 +127,19 @@ function statusCheck(fn, gpio) {
         if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
         main(fn, gpio);
     });
+
+    fn.tests.vacuum(gpio).then(status => {
+        if (!status) {
+            fn.commands.shutdown(gpio);
+        }
+    })
+
+    // blowerOffDelay() returns true only if the blower shutdown has
+    // been initiated AND the specified cooldown time has passed
+    if(fn.tests.blowerOffDelay()) {
+        fn.power.blower.off(gpio).then(res => {
+            // Since the blower shutting off is the last step in the shutdown, we can quit.
+            fn.commands.quit();
+        });
+    }
 }

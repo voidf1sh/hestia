@@ -12,5 +12,8 @@
         "blower": 0,
         "auger": 0,
         "seenFire": false
+    },
+    "times": {
+        "blowerOff": 0
     }
 }
