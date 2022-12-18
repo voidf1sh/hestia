@@ -39,3 +39,9 @@ For ease of adaption, connection, and prototyping I've decided to use Cat 5 ethe
 * Pause the script by creating a file named `pause` in the root directory.  
 * Reload the environment variables by creating a file named `reload` in the root directory.  
 * Quit the script by creating a file named `quit` in the root directory.
+
+# Roadmap
+* v0.1 - Get the pellet stove operating at a basic level. Only implements the auger relay and no safeties.
+* v0.2 - Implement safety switches and put the igniter and combustion blowers on relays controlled by the Pi.
+* v0.3 - Implement the HTTP module to allow controlling the stove from the LAN.
+* v0.4 - Implement usage logging with a SQL database.
