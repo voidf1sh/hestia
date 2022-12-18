@@ -1,6 +1,6 @@
 /* Pellet Stove Control Panel
  * Written by Skylar Grant
- * v0.2.0
+ * v0.2
  * 
  * TODO:
  * Add logic for other sensors
@@ -128,11 +128,20 @@ function statusCheck(fn, gpio) {
         main(fn, gpio);
     });
 
+    // Check the vacuum switch, if the test returns true, the vacuum is sensed
+    // if it returns false, we will initiate a shutdown
     fn.tests.vacuum(gpio).then(status => {
         if (!status) {
             fn.commands.shutdown(gpio);
         }
-    })
+    });
+
+    // Check the Proof of Fire Switch
+    fn.tests.pof(gpio).then(status => {
+        // If the igniter has finished running and no proof of fire is seen, shutdown the stove
+        // TODO Shutdown will handle checks if it's being called repeatedly. 
+        if (config.status.igniterFinished && (!status)) fn.commands.shutdown(gpio);
+    });
 
     // blowerOffDelay() returns true only if the blower shutdown has
     // been initiated AND the specified cooldown time has passed
