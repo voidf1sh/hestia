@@ -1,19 +1,24 @@
 {
-    "startTime": 0,
-    "augerOnTime": 500,
-    "augerOffTime": 1500,
-    "pauseTime": 10000,
     "debugMode": true,
-    "igniterOnTime": 0,
-    "igniterOffTime": 0,
-    "igniterWaitTime": 30000,
     "status": {
         "igniter": 0,
         "blower": 0,
         "auger": 0,
-        "seenFire": false
+        "igniterFinished": false,
+        "seenFire": false,
+        "shutdown": 0
     },
-    "times": {
-        "blowerOff": 0
+    "timestamps": {
+        "startup": 0,
+        "blowerOff": 0,
+        "igniterOn": 0,
+        "igniterOff": 0
+    },
+    "intervals": {
+        "augerOn": 500,
+        "augerOff": 1500,
+        "pause": 10000,
+        "igniterStart": 420000,
+        "blowerStop": 600000
     }
 }
