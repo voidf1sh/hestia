@@ -12,32 +12,32 @@ const fn = require('./functions.js').functions;
 
 // Config File
 const config = require('./config.json');
-config.startTime = Date.now();
+config.timestamps.procStart = Date.now();
 
 // Environment Variables Importing
 const dotenv = require('dotenv').config();
 
 // Setup for use with the Pi's GPIO pins
 if (process.env.ONPI == 'true') {
-    console.log(`[${(Date.now() - config.startTime)/1000}] == Running on a Raspberry Pi.`);
+    console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] == Running on a Raspberry Pi.`);
     const gpio = require('rpi-gpio');
     fn.init(gpio).then((res) => {
-        console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
+        console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
         main(fn, gpio);
     }).catch(rej => {
-        console.error(`[${(Date.now() - config.startTime)/1000}] E: ${rej}`);
+        console.error(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${rej}`);
     });
 } else if (process.env.ONPI == 'false') {
-    console.log(`[${(Date.now() - config.startTime)/1000}] I: Not running on a Raspberry Pi.`);
+    console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Not running on a Raspberry Pi.`);
     const gpio = 'gpio';
     fn.init(gpio).then(res => {
-        console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
+        console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
         main(fn, gpio);
     }).catch(rej => {
         console.error(rej);
     });
 } else {
-    console.error(`[${Date.now() - config.startTime}] E: Problem with ENV file.`);
+    console.error(`[${Date.now() - config.timestamps.procStart}] E: Problem with ENV file.`);
 }
 
 // TODO Add logic for other sensors
@@ -49,7 +49,7 @@ async function main(fn, gpio) {
     // Check for the existence of certain files
     fn.files.check().then((res,rej) => {
         // Log the result of the check if in debug mode
-        if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: File Check: ${res}`);
+        if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: File Check: ${res}`);
         // Choose what to do depending on the result of the check
         switch (res) {
             case "pause":
@@ -65,7 +65,7 @@ async function main(fn, gpio) {
                     // Rerun this function once the reload has finished
                     main(fn, gpio);
                 }).catch(rej => {
-                    console.error(`[${(Date.now() - config.startTime)/1000}] E: ${rej}`);
+                    console.error(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${rej}`);
                 });
                 break;
             case "quit":
@@ -78,7 +78,7 @@ async function main(fn, gpio) {
                     if (config.debugMode) console.log(res);
                     statusCheck(fn, gpio);
                 }).catch(rej => {
-                    console.error(`[${(Date.now() - config.startTime)/1000}] E: ${rej}`);
+                    console.error(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${rej}`);
                     fn.commands.shutdown(gpio).then(res => {
                         fn.commands.quit();
                     }).catch(rej => {
@@ -100,7 +100,7 @@ async function main(fn, gpio) {
                 if (config.status.auger == 1) {
                     fn.auger.cycle(gpio).then((res) => {
                         // Log the auger cycle results if in debug mode.
-                        if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
+                        if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                         // Run the status check function
                         statusCheck(fn, gpio);
                         // Rerun this function once the cycle is complete
@@ -115,7 +115,7 @@ async function main(fn, gpio) {
         
             default:
                 // If we don't get a result from the file check, or for some reason it's an unexpected response, log it and quit the script.
-                console.error(`[${(Date.now() - config.startTime)/1000}] E: No result was received, something is wrong.\nres: ${res}`);
+                console.error(`[${(Date.now() - config.timestamps.procStart)/1000}] E: No result was received, something is wrong.\nres: ${res}`);
                 fn.commands.quit();
                 break;
         }
@@ -124,7 +124,7 @@ async function main(fn, gpio) {
 
 function statusCheck(fn, gpio) {
     fn.tests.igniter(gpio).then((res) => {
-        if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
+        if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
         main(fn, gpio);
     });
 
@@ -139,15 +139,15 @@ function statusCheck(fn, gpio) {
     // Check the Proof of Fire Switch
     fn.tests.pof(gpio).then(status => {
         // If the igniter has finished running and no proof of fire is seen, shutdown the stove
-        // TODO Shutdown will handle checks if it's being called repeatedly. 
         if (config.status.igniterFinished && (!status)) fn.commands.shutdown(gpio);
     });
 
-    // blowerOffDelay() returns true only if the blower shutdown has
+    // blower.canShutdown() returns true only if the blower shutdown has
     // been initiated AND the specified cooldown time has passed
-    if(fn.tests.blowerOffDelay()) {
+    if(fn.blower.canShutdown()) {
         fn.power.blower.off(gpio).then(res => {
             // Since the blower shutting off is the last step in the shutdown, we can quit.
+            // TODO eventually we don't want to ever quit the program, so it can be restarted remotely
             fn.commands.quit();
         });
     }

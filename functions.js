@@ -66,19 +66,19 @@ const functions = {
                 // Turn the auger on
                 this.on(gpio).then((res) => {
                     // Log action if in debug mode
-                    if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
+                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                     // Sleep for the time set in env variables
-                    functions.sleep(config.augerOnTime).then((res) => {
+                    functions.sleep(config.intervals.augerOn).then((res) => {
                         // Log action if in debug mode
-                        if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
+                        if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                         // Turn the auger off
                         this.off(gpio).then((res) => {
                             // Log action if in debug mode
-                            if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
+                            if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                             // Sleep for the time set in env variables
-                            functions.sleep(config.augerOffTime).then((res) => {
+                            functions.sleep(config.intervals.augerOff).then((res) => {
                                 // Log action if in debug mode
-                                if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: ${res}`);
+                                if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                                 // Resolve the promise, letting the main script know the cycle is complete
                                 resolve("Cycle complete.");
                             });
@@ -87,6 +87,19 @@ const functions = {
                 });
             });
         },
+    },
+    blower: {
+        canShutdown() {
+            // If the blowerOff timestamp hasn't been set, return false as the blower hasn't been asked to turn off yet
+            if (config.timestamps.blowerOff == 0) return false;
+            // If the current time is past the blowerOff timestamp, we can turn off the blower
+            if (Date.now() > config.timestamps.blowerOff) {
+                return true;
+            // Otherwise, return false because we're not ready to 
+            } else {
+                return false;
+            }
+        }
     },
     files: {
         // Check for a preset-list of files in the root directory of the app
@@ -146,9 +159,9 @@ const functions = {
         // Pauses the script for the time defined in env variables
         pause() {
             return new Promise((resolve) => {
-                if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: Pausing for ${config.pauseTime}ms`);
+                if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Pausing for ${config.intervals.pause}ms`);
                                
-                functions.sleep(config.pauseTime).then(() => { resolve(); });
+                functions.sleep(config.intervals.pause).then(() => { resolve(); });
             });
         },
         // Reload the environment variables on the fly
@@ -164,7 +177,7 @@ const functions = {
                 // Print out the new environment variables
                 // This should be printed regardless of debug status, maybe prettied up TODO?
                 console.log('Reloaded environment variables.');
-                console.log(`ONTIME=${config.augerOnTime}\nOFFTIME=${config.augerOffTime}\nPAUSETIME=${config.pauseTime}\nDEBUG=${config.debugMode}\nONPI=${process.env.ONPI}`);
+                console.log(`ONTIME=${config.intervals.augerOn}\nOFFTIME=${config.intervals.augerOff}\nPAUSETIME=${config.intervals.pause}\nDEBUG=${config.debugMode}\nONPI=${process.env.ONPI}`);
                 // Resolve the promise, letting the main script know we're done reloading the variables and the cycle can continue
                 resolve();
             });
@@ -186,12 +199,12 @@ const functions = {
         ignite(gpio) {
             config.status.igniter = 1;
             config.status.auger = 1;
-            config.igniterOnTime = Date.now();
-            config.igniterOffTime = config.igniterOnTime + config.igniterWaitTime;     // 7 Minutes, 420,000ms
+            config.timestamps.igniterOn = Date.now();
+            config.timestamps.igniterOff = config.timestamps.igniterOn + config.intervals.igniterStart;     // 7 Minutes, 420,000ms
             return new Promise((resolve, reject) => {
                 fs.unlink('./ignite', (err) => {
                     if (err) reject(err);
-                    if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: Delete the ignite file.`);                    
+                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Delete the ignite file.`);                    
                 });
                 if (process.env.ONPI == 'true') {
                     gpio.write(igniterPin, true, (err) => {
@@ -204,24 +217,28 @@ const functions = {
             });
         },
         shutdown(gpio) {
-            // If the auger is enabled, disable it
-            if (config.status.auger == 1) {
-                config.status.auger = 0;
-            }
-            // If the igniter is on, shut it off.
-            if (config.status.igniter == 1) {
-                functions.power.igniter.off(gpio).then(res => {
-                    if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: Shut off igniter.`);
-                }); // TODO catch an error here
-            }
-            // TODO Change this so it gives a delay after shutting down so smoke doesn't enter the house
-            if (config.status.blower == 1) {
-                config.times.blowerOff = Date.now() + 600000; // 10 minutes, TODO move to config
-                // TODO Move this to another function, to run after tests pass
-                // functions.power.blower.off(gpio).then(res => {
-                //     if (config.debugMode) console.log(`[${(Date.now() - config.startTime)/1000}] I: Shut off blower.`);
-                    
-                // });
+            // Only run if a shutdown isn't already started
+            if (config.status.shutdown == 0) {
+                // set shutdown flag to 1
+                config.status.shutdown = 1;
+                // If the auger is enabled, disable it
+                if (config.status.auger == 1) {
+                    config.status.auger = 0;
+                }
+                // If the igniter is on, shut it off.
+                if (config.status.igniter == 1) {
+                    functions.power.igniter.off(gpio).then(res => {
+                        if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Shut off igniter.`);
+                    }); // TODO catch an error here
+                }
+                // TODO Change this so it gives a delay after shutting down so smoke doesn't enter the house
+                if (config.status.blower == 1) {
+                    // Set the timestamp to turn the blower off at
+                    config.timestamps.blowerOff = Date.now() + config.intervals.blowerStop;
+                }
+                return "Shutdown has been initiated.";
+            } else {
+                return "A shutdown has already been initiated.";
             }
         },
     },
@@ -252,15 +269,15 @@ const functions = {
                 } else {
                     reject("E: Unable to determine igniter status.");
                 }
-                if (config.igniterOnTime > 0) {
-                    const humanStartTime = new Date(config.igniterOnTime).toISOString();
-                    const humanEndTime = new Date(config.igniterOffTime).toISOString();
-                    if (Date.now() < config.igniterOffTime && config.status.igniter == 1) {
+                if (config.timestamps.igniterOn > 0) {
+                    const humanStartTime = new Date(config.timestamps.igniterOn).toISOString();
+                    const humanEndTime = new Date(config.timestamps.igniterOff).toISOString();
+                    if (Date.now() < config.timestamps.igniterOff && config.status.igniter == 1) {
                         statusMsg += `Igniter started: ${humanStartTime}.\n`;
                         statusMsg += `Igniter scheduled to stop: ${humanEndTime}.\n`;
                     }
                     // Shut the igniter off if it's past the waiting period
-                    if ((Date.now() > config.igniterOffTime) && (config.status.igniter == 1)) {
+                    if ((Date.now() > config.timestamps.igniterOff) && (config.status.igniter == 1)) {
                         if (process.env.ONPI == 'true') {
                             gpio.write(igniterPin, false, (err) => {
                                 if (err) throw(err);
@@ -280,8 +297,8 @@ const functions = {
                             config.status.igniter = 0;
                             statusMsg += `${new Date().toISOString()} I: Simulated igniter turned off.`;
                         }                       
-                    } else if  ((Date.now() > config.igniterOffTime) && (config.status.igniter == 0)) {
-                        statusMsg += `The igniter was turned off at ${new Date(config.igniterOffTime).toISOString()}.`;
+                    } else if  ((Date.now() > config.timestamps.igniterOff) && (config.status.igniter == 0)) {
+                        statusMsg += `The igniter was turned off at ${new Date(config.timestamps.igniterOff).toISOString()}.`;
                     }
                 } else {
                     statusMsg += 'The igniter hasn\'t been started yet.';
@@ -290,13 +307,7 @@ const functions = {
             });
         },
         blowerOffDelay() {
-            if (config.times.blowerOff == 0) return false;
-            // TODO Implement the blower shutdown delay as a test here
-            if (Date.now() > config.times.blowerOff) {
-                return true;
-            } else {
-                return false;
-            }
+
         },
     },
     power: {
@@ -366,9 +377,9 @@ const functions = {
 == Startup Time: ${new Date().toISOString()}
 ==
 == Environment variables:
-== == ONTIME=${config.augerOnTime}
-== == OFFTIME=${config.augerOffTime}
-== == PAUSETIME=${config.pauseTime}
+== == ONTIME=${config.intervals.augerOn}
+== == OFFTIME=${config.intervals.augerOff}
+== == PAUSETIME=${config.intervals.pause}
 == == DEBUG=${config.debugMode}
 == == ONPI=${process.env.ONPI}`);
             // Set up GPIO 4 (pysical pin 7) as output, then call functions.auger.ready()

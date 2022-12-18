@@ -9,7 +9,7 @@
         "shutdown": 0
     },
     "timestamps": {
-        "startup": 0,
+        "procStart": 0,
         "blowerOff": 0,
         "igniterOn": 0,
         "igniterOff": 0
