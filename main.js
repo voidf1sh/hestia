@@ -70,7 +70,7 @@ async function main(fn, gpio) {
                 break;
             case "quit":
                 // Quit the script
-                fn.commands.quit();
+                fn.commands.shutdown(gpio);
                 break;
             case "ignite":
                 // Start the igniter and timer
