@@ -45,3 +45,12 @@ For ease of adaption, connection, and prototyping I've decided to use Cat 5 ethe
 * v0.2 - Implement safety switches and put the igniter and combustion blowers on relays controlled by the Pi.
 * v0.3 - Implement the HTTP module to allow controlling the stove from the LAN.
 * v0.4 - Implement usage logging with a SQL database.
+
+# Testing Procedure
+1. Launch app, check startup messages, check that it idles and pauses properly.
+2. Provide ignite command, observe if the igniter, blower, and auger get turned on. Make sure the igniter turns off after the pre-set time.
+3. Test that the following conditions cause a shutdown:
+    * Proof of Fire Switch OPEN after igniter shutoff.
+    * Vacuum Switch OPEN after igniter start.
+4. Test manipulation of feed rates.
+5. Test shutdown sequence.
