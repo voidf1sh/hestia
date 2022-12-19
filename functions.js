@@ -228,7 +228,7 @@ const functions = {
                 // set shutdown flag to 1
                 config.status.shutdown = 1;
                 // Check if this was invoked from a 'quit' file, if so, delete the file
-                if (fs.existsSync('./quit')) fs.unlink('./quit', (err) => { throw err; });
+                if (fs.existsSync('./quit')) fs.unlink('./quit', (err) => { if (err) throw err; });
                 // If the auger is enabled, disable it
                 if (config.status.auger == 1) {
                     config.status.auger = 0;
