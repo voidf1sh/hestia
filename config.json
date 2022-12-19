@@ -18,7 +18,7 @@
         "augerOn": 500,
         "augerOff": 1500,
         "pause": 10000,
-        "igniterStart": 420000,
-        "blowerStop": 600000
+        "igniterStart": 30000,
+        "blowerStop": 10000
     }
 }
