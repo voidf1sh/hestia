@@ -197,18 +197,19 @@ const functions = {
             process.exit();
         },
         ignite(gpio) {
+            // Enable the auger
             config.status.auger = 1;
+            // Set the timestamp when the igniter turned on
             config.timestamps.igniterOn = Date.now();
+            // Set the timestamp for when the igniter will turn off
             config.timestamps.igniterOff = config.timestamps.igniterOn + config.intervals.igniterStart;     // 7 Minutes, 420,000ms
             return new Promise((resolve, reject) => {
-                fs.unlink('./ignite', (err) => {
-                    if (err) reject(err);
-                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Deleted the ignite file.`);                    
-                });
+                // Check if we got here from a file, then delete it.
+                if (fs.existsSync('./ignite')) fs.unlink('./ignite', (err) => { if (err) throw err; });
                 // Run the first block if this is being run on a Raspberry Pi
                 if (process.env.ONPI == 'true') {
+                    // Power the blower on
                     functions.power.blower.on(gpio).then(res => {
-                        // TODO move this to a fn.power function
                         // Turn on the igniter
                         functions.power.igniter.on(gpio).then(res => {
                             resolve('Auger enabled, combustion blower and igniter turned on.');
@@ -216,7 +217,6 @@ const functions = {
                             reject(err);
                         });
                     });
-
                 } else {
                     resolve('Simulated igniter turned on.');
                 }

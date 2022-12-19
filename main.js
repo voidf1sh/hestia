@@ -107,6 +107,8 @@ async function main(fn, gpio) {
                         // main(fn, gpio);
                     });
                 } else {
+                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Auger Status: ${config.status.auger}`);
+                    
                     fn.commands.pause().then(res => {
                         statusCheck(fn, gpio);
                     });
