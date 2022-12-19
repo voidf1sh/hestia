@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pellet Stove Web Portal</title>
+    </head>
+    <body>
+        <div id="title">Pellet Stove Web Portal</div>
+        <div id="status">Auger: Off | Igniter: Off | Combustion Blower: Off</div>
+        <div id="safeties">Vacuum: Open | Proof of Fire: Open</div>
+        <div id="controls-container">
+            <form>
+                <!-- Start | Shutdown | Reload Settings -->
+                <button id="ignite">Start</button><button id="shutdown">Shutdown</button><button id="reload">Reload Settings</button><br>
+                <!-- Set feed rates -->
+                <label for="augerOn">Auger On Interval: </label><input type="number" id="augerOn" name="augerOn" min="500" max="1000">ms<br>
+                <label for="augerOff">Auger Off Interval: </label><input type="number" id="augerOff" name="augerOff" min="1000" max="2000">ms<br>
+                <label for="pauseInt">App Pause Interval: </label><input type="number" id="pauseInt" name="pauseInt" min="1000" max="600000">ms<br>
+            </form>
+
+
+        </div>
+    </body>
+</html>
