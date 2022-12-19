@@ -197,20 +197,26 @@ const functions = {
             process.exit();
         },
         ignite(gpio) {
-            config.status.igniter = 1;
             config.status.auger = 1;
             config.timestamps.igniterOn = Date.now();
             config.timestamps.igniterOff = config.timestamps.igniterOn + config.intervals.igniterStart;     // 7 Minutes, 420,000ms
             return new Promise((resolve, reject) => {
                 fs.unlink('./ignite', (err) => {
                     if (err) reject(err);
-                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Delete the ignite file.`);                    
+                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Deleted the ignite file.`);                    
                 });
+                // Run the first block if this is being run on a Raspberry Pi
                 if (process.env.ONPI == 'true') {
-                    gpio.write(igniterPin, true, (err) => {
-                        if (err) reject(err);
-                        resolve('Igniter turned on.');
+                    functions.power.blower.on(gpio).then(res => {
+                        // TODO move this to a fn.power function
+                        // Turn on the igniter
+                        functions.power.igniter.on(gpio).then(res => {
+                            resolve('Auger enabled, combustion blower and igniter turned on.');
+                        }).catch(err => {
+                            reject(err);
+                        });
                     });
+
                 } else {
                     resolve('Simulated igniter turned on.');
                 }
@@ -317,7 +323,8 @@ const functions = {
                 return new Promise((resolve, reject) => {
                     gpio.write(igniterPin, true, (err) => {
                         if (err) reject(err);
-                        resolve();
+                        config.status.igniter = 1;
+                        resolve('Igniter turned on.');
                     });
                 });
             },
@@ -326,7 +333,8 @@ const functions = {
                 return new Promise((resolve, reject) => {
                     gpio.write(igniterPin, false, (err) => {
                         if (err) reject(err);
-                        resolve();
+                        config.status.igniter = 0;
+                        resolve('Igniter turned off.');
                     });
                 });
             },
@@ -337,7 +345,8 @@ const functions = {
                 return new Promise((resolve, reject) => {
                     gpio.write(blowerPin, true, (err) => {
                         if (err) reject(err);
-                        resolve();
+                        config.status.blower = 1;
+                        resolve('Blower turned on.');
                     });
                 });
             },
@@ -346,7 +355,8 @@ const functions = {
                 return new Promise((resolve, reject) => {
                     gpio.write(blowerPin, false, (err) => {
                         if (err) reject(err);
-                        resolve();
+                        config.status.blower = 0;
+                        resolve('Blower turned off.');
                     });
                 });
             },

@@ -73,7 +73,7 @@ async function main(fn, gpio) {
                 fn.commands.shutdown(gpio);
                 break;
             case "ignite":
-                // Start the igniter and timer
+                // Start the ignite sequence
                 fn.commands.ignite(gpio).then(res => {
                     if (config.debugMode) console.log(res);
                     statusCheck(fn, gpio);
