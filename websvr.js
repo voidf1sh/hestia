@@ -1,6 +1,11 @@
 /* Pellet Stove Control Panel
  * Web Configuration Server
  * v0.0.0 by Skylar Grant
+ * 
+ * TODOs: 
+    * Implement Express to make it easier
+    * Add actual data into the responses
+    * Launching point: https://stackoverflow.com/questions/18831783/how-to-call-a-server-side-function-from-client-side-e-g-html-button-onclick-i
  */
 
 const http = require('http');
