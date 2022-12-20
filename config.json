@@ -6,10 +6,13 @@
         "auger": 0,
         "igniterFinished": false,
         "seenFire": false,
-        "shutdown": 0
+        "shutdown": 0,
+        "vacuum": 1,
+        "pof": 0
     },
     "timestamps": {
         "procStart": 0,
+        "blowerOn": 0,
         "blowerOff": 0,
         "igniterOn": 0,
         "igniterOff": 0
@@ -18,7 +21,7 @@
         "augerOn": 500,
         "augerOff": 1500,
         "pause": 10000,
-        "igniterStart": 30000,
+        "igniterStart": 10000,
         "blowerStop": 10000
     }
 }

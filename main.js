@@ -49,7 +49,7 @@ async function main(fn, gpio) {
     // Check for the existence of certain files
     fn.files.check().then((res,rej) => {
         // Log the result of the check if in debug mode
-        if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: File Check: ${res}`);
+        // if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: File Check: ${res}`);
         // Choose what to do depending on the result of the check
         switch (res) {
             case "pause":
@@ -75,16 +75,12 @@ async function main(fn, gpio) {
             case "ignite":
                 // Start the ignite sequence
                 fn.commands.ignite(gpio).then(res => {
-                    if (config.debugMode) console.log(res);
+                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
+                    
                     statusCheck(fn, gpio);
                 }).catch(rej => {
                     console.error(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${rej}`);
-                    fn.commands.shutdown(gpio).then(res => {
-                        fn.commands.quit();
-                    }).catch(rej => {
-                        console.error(rej);
-                        fn.commands.quit();
-                    });
+                    fn.commands.shutdown(gpio);
                 });
                 break;
             case "start":
@@ -127,30 +123,27 @@ async function main(fn, gpio) {
 function statusCheck(fn, gpio) {
     fn.tests.igniter(gpio).then((res) => {
         if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
-        main(fn, gpio);
     });
 
     // Check the vacuum switch, if the test returns true, the vacuum is sensed
     // if it returns false, we will initiate a shutdown
-    fn.tests.vacuum(gpio).then(status => {
-        if (!status) {
+    // TODO this is messed up
+    fn.tests.vacuum(gpio).then(vacStatus => {
+        if (!vacStatus) {
+            console.error('No vacuum detected, beginning shutdown procedure.');
             fn.commands.shutdown(gpio);
+        } else {
+            // Check the Proof of Fire Switch
+            fn.tests.pof(gpio).then(pofStatus => {
+                // If the igniter has finished running and no proof of fire is seen, shutdown the stove
+                if (config.status.igniterFinished && (!pofStatus)) {
+                    console.error('No Proof of Fire after the igniter shut off, beginning shutdown procedure.');
+                    fn.commands.shutdown(gpio);
+                } else {
+                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Vacuum and Proof of Fire OK.`);
+                    main(fn, gpio);                    
+                }
+            });
         }
     });
-
-    // Check the Proof of Fire Switch
-    fn.tests.pof(gpio).then(status => {
-        // If the igniter has finished running and no proof of fire is seen, shutdown the stove
-        if (config.status.igniterFinished && (!status)) fn.commands.shutdown(gpio);
-    });
-
-    // blower.canShutdown() returns true only if the blower shutdown has
-    // been initiated AND the specified cooldown time has passed
-    if(fn.blower.canShutdown()) {
-        fn.power.blower.off(gpio).then(res => {
-            // Since the blower shutting off is the last step in the shutdown, we can quit.
-            // TODO eventually we don't want to ever quit the program, so it can be restarted remotely
-            fn.commands.quit();
-        });
-    }
 }
