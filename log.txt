@@ -1,23 +1,971 @@
-[0.001] I: Not running on a Raspberry Pi.
+[0] I: Not running on a Raspberry Pi.
 == Lennox Winslow PS40
 == Pellet Stove Control Panel
 == Author: Skylar Grant
 == Version: v0.2.1
 ==
-== Startup Time: 2022-12-20T20:15:16.797Z
+== Startup Time: 2022-12-20T20:33:08.676Z
 ==
 == Environment variables:
 == == ONTIME=500
 == == OFFTIME=1500
-== == PAUSETIME=10000
+== == PAUSETIME=3000
 == == DEBUG=true
 == == ONPI=false
-[0.002] I: == GPIO Not Available
-[0.002] I: File Check: none
-[0.002] I: Auger Status: 0
-[0.002] I: Pausing for 10000ms
-[10.007] I: The igniter is off.
-The igniter hasn't been started yet.
-[10.007] I: File Check: none
-[10.008] I: Auger Status: 0
-[10.008] I: Pausing for 10000ms
+[0.001] I: == GPIO Not Available
+[0.001] I: Auger Status: 0
+[0.001] I: Pausing for 3000ms
+[3.005] I: Vacuum and Proof of Fire OK.
+[3.006] I: Auger Status: 0
+[3.006] I: Pausing for 3000ms
+[6.008] I: Vacuum and Proof of Fire OK.
+[6.008] I: Auger Status: 0
+[6.009] I: Pausing for 3000ms
+[9.011] I: Vacuum and Proof of Fire OK.
+[9.011] I: Auger Status: 0
+[9.012] I: Pausing for 3000ms
+[12.015] I: Vacuum and Proof of Fire OK.
+[12.015] I: Auger Status: 0
+[12.015] I: Pausing for 3000ms
+[15.018] I: Vacuum and Proof of Fire OK.
+[15.018] I: Auger Status: 0
+[15.018] I: Pausing for 3000ms
+[18.02] I: Vacuum and Proof of Fire OK.
+[18.021] I: Auger Status: 0
+[18.021] I: Pausing for 3000ms
+[21.023] I: Vacuum and Proof of Fire OK.
+[21.024] I: Auger Status: 0
+[21.024] I: Pausing for 3000ms
+[24.025] I: Vacuum and Proof of Fire OK.
+[24.026] I: Auger Status: 0
+[24.026] I: Pausing for 3000ms
+[27.028] I: Vacuum and Proof of Fire OK.
+[27.028] I: Auger Status: 0
+[27.028] I: Pausing for 3000ms
+[30.029] I: Vacuum and Proof of Fire OK.
+[30.029] I: Auger Status: 0
+[30.03] I: Pausing for 3000ms
+[33.031] I: Vacuum and Proof of Fire OK.
+[33.032] I: Auger Status: 0
+[33.032] I: Pausing for 3000ms
+[36.033] I: Vacuum and Proof of Fire OK.
+[36.033] I: Auger Status: 0
+[36.034] I: Pausing for 3000ms
+[39.035] I: Vacuum and Proof of Fire OK.
+[39.036] I: Auger Status: 0
+[39.036] I: Pausing for 3000ms
+[42.038] I: Vacuum and Proof of Fire OK.
+[42.039] I: Auger Status: 0
+[42.039] I: Pausing for 3000ms
+[45.041] I: Vacuum and Proof of Fire OK.
+[45.041] I: Auger Status: 0
+[45.041] I: Pausing for 3000ms
+[48.043] I: Vacuum and Proof of Fire OK.
+[48.044] I: Auger Status: 0
+[48.044] I: Pausing for 3000ms
+[51.045] I: Vacuum and Proof of Fire OK.
+[51.045] I: Auger Status: 0
+[51.046] I: Pausing for 3000ms
+[54.047] I: Vacuum and Proof of Fire OK.
+[54.047] I: Auger Status: 0
+[54.047] I: Pausing for 3000ms
+[57.049] I: Vacuum and Proof of Fire OK.
+[57.05] I: Auger Status: 0
+[57.05] I: Pausing for 3000ms
+[60.051] I: Vacuum and Proof of Fire OK.
+[60.052] I: Auger Status: 0
+[60.052] I: Pausing for 3000ms
+[63.052] I: Vacuum and Proof of Fire OK.
+[63.053] I: Auger Status: 0
+[63.053] I: Pausing for 3000ms
+[66.054] I: Vacuum and Proof of Fire OK.
+[66.055] I: Auger Status: 0
+[66.055] I: Pausing for 3000ms
+[69.056] I: Vacuum and Proof of Fire OK.
+[69.057] I: Auger Status: 0
+[69.057] I: Pausing for 3000ms
+[72.058] I: Vacuum and Proof of Fire OK.
+[72.058] I: Auger Status: 0
+[72.059] I: Pausing for 3000ms
+[75.059] I: Vacuum and Proof of Fire OK.
+[75.059] I: Auger Status: 0
+[75.059] I: Pausing for 3000ms
+[78.06] I: Vacuum and Proof of Fire OK.
+[78.06] I: Auger Status: 0
+[78.06] I: Pausing for 3000ms
+[81.061] I: Vacuum and Proof of Fire OK.
+[81.061] I: Auger Status: 0
+[81.061] I: Pausing for 3000ms
+[84.062] I: Vacuum and Proof of Fire OK.
+[84.063] I: Auger Status: 0
+[84.063] I: Pausing for 3000ms
+[87.064] I: Vacuum and Proof of Fire OK.
+[87.065] I: Auger Status: 0
+[87.065] I: Pausing for 3000ms
+[90.066] I: Vacuum and Proof of Fire OK.
+[90.067] I: Auger Status: 0
+[90.067] I: Pausing for 3000ms
+[93.068] I: Vacuum and Proof of Fire OK.
+[93.068] I: Auger Status: 0
+[93.068] I: Pausing for 3000ms
+[96.069] I: Vacuum and Proof of Fire OK.
+[96.069] I: Auger Status: 0
+[96.069] I: Pausing for 3000ms
+[99.07] I: Vacuum and Proof of Fire OK.
+[99.071] I: Auger Status: 0
+[99.071] I: Pausing for 3000ms
+[102.072] I: Vacuum and Proof of Fire OK.
+[102.073] I: Auger Status: 0
+[102.073] I: Pausing for 3000ms
+[105.074] I: Vacuum and Proof of Fire OK.
+[105.074] I: Auger Status: 0
+[105.074] I: Pausing for 3000ms
+[108.076] I: Vacuum and Proof of Fire OK.
+[108.076] I: Auger Status: 0
+[108.076] I: Pausing for 3000ms
+[111.077] I: Vacuum and Proof of Fire OK.
+[111.077] I: Auger Status: 0
+[111.077] I: Pausing for 3000ms
+[114.078] I: Vacuum and Proof of Fire OK.
+[114.079] I: Auger Status: 0
+[114.079] I: Pausing for 3000ms
+[117.08] I: Vacuum and Proof of Fire OK.
+[117.08] I: Auger Status: 0
+[117.08] I: Pausing for 3000ms
+[120.081] I: Vacuum and Proof of Fire OK.
+[120.082] I: Auger Status: 0
+[120.082] I: Pausing for 3000ms
+[123.083] I: Vacuum and Proof of Fire OK.
+[123.083] I: Auger Status: 0
+[123.083] I: Pausing for 3000ms
+[126.086] I: Vacuum and Proof of Fire OK.
+[126.086] I: Auger Status: 0
+[126.086] I: Pausing for 3000ms
+[129.088] I: Vacuum and Proof of Fire OK.
+[129.088] I: Auger Status: 0
+[129.088] I: Pausing for 3000ms
+[132.089] I: Vacuum and Proof of Fire OK.
+[132.089] I: Auger Status: 0
+[132.089] I: Pausing for 3000ms
+[135.09] I: Vacuum and Proof of Fire OK.
+[135.091] I: Auger Status: 0
+[135.091] I: Pausing for 3000ms
+[138.092] I: Vacuum and Proof of Fire OK.
+[138.093] I: Auger Status: 0
+[138.093] I: Pausing for 3000ms
+[141.094] I: Vacuum and Proof of Fire OK.
+[141.094] I: Auger Status: 0
+[141.094] I: Pausing for 3000ms
+[144.096] I: Vacuum and Proof of Fire OK.
+[144.096] I: Auger Status: 0
+[144.096] I: Pausing for 3000ms
+[147.096] I: Vacuum and Proof of Fire OK.
+[147.097] I: Auger Status: 0
+[147.097] I: Pausing for 3000ms
+[150.098] I: Vacuum and Proof of Fire OK.
+[150.098] I: Auger Status: 0
+[150.098] I: Pausing for 3000ms
+[153.099] I: Vacuum and Proof of Fire OK.
+[153.1] I: Auger Status: 0
+[153.1] I: Pausing for 3000ms
+[156.101] I: Vacuum and Proof of Fire OK.
+[156.102] I: Auger Status: 0
+[156.102] I: Pausing for 3000ms
+[159.103] I: Vacuum and Proof of Fire OK.
+[159.103] I: Auger Status: 0
+[159.104] I: Pausing for 3000ms
+[162.105] I: Vacuum and Proof of Fire OK.
+[162.105] I: Auger Status: 0
+[162.105] I: Pausing for 3000ms
+[165.107] I: Vacuum and Proof of Fire OK.
+[165.107] I: Auger Status: 0
+[165.107] I: Pausing for 3000ms
+[168.109] I: Vacuum and Proof of Fire OK.
+[168.109] I: Auger Status: 0
+[168.109] I: Pausing for 3000ms
+[171.11] I: Vacuum and Proof of Fire OK.
+[171.11] I: Auger Status: 0
+[171.11] I: Pausing for 3000ms
+[174.112] I: Vacuum and Proof of Fire OK.
+[174.112] I: Auger Status: 0
+[174.112] I: Pausing for 3000ms
+[177.112] I: Vacuum and Proof of Fire OK.
+[177.114] I: Auger Status: 0
+[177.114] I: Pausing for 3000ms
+[180.115] I: Vacuum and Proof of Fire OK.
+[180.115] I: Auger Status: 0
+[180.115] I: Pausing for 3000ms
+[183.116] I: Vacuum and Proof of Fire OK.
+[183.118] I: Auger Status: 0
+[183.118] I: Pausing for 3000ms
+[186.118] I: Vacuum and Proof of Fire OK.
+[186.119] I: Auger Status: 0
+[186.119] I: Pausing for 3000ms
+[189.119] I: Vacuum and Proof of Fire OK.
+[189.12] I: Auger Status: 0
+[189.12] I: Pausing for 3000ms
+[192.121] I: Vacuum and Proof of Fire OK.
+[192.122] I: Auger Status: 0
+[192.122] I: Pausing for 3000ms
+[195.123] I: Vacuum and Proof of Fire OK.
+[195.124] I: Auger Status: 0
+[195.124] I: Pausing for 3000ms
+[198.125] I: Vacuum and Proof of Fire OK.
+[198.126] I: Auger Status: 0
+[198.126] I: Pausing for 3000ms
+[201.127] I: Vacuum and Proof of Fire OK.
+[201.128] I: Auger Status: 0
+[201.128] I: Pausing for 3000ms
+[204.128] I: Vacuum and Proof of Fire OK.
+[204.128] I: Auger Status: 0
+[204.128] I: Pausing for 3000ms
+[207.13] I: Vacuum and Proof of Fire OK.
+[207.13] I: Auger Status: 0
+[207.13] I: Pausing for 3000ms
+[210.131] I: Vacuum and Proof of Fire OK.
+[210.132] I: Auger Status: 0
+[210.132] I: Pausing for 3000ms
+[213.133] I: Vacuum and Proof of Fire OK.
+[213.133] I: Auger Status: 0
+[213.133] I: Pausing for 3000ms
+[216.134] I: Vacuum and Proof of Fire OK.
+[216.134] I: Auger Status: 0
+[216.134] I: Pausing for 3000ms
+[219.136] I: Vacuum and Proof of Fire OK.
+[219.136] I: Auger Status: 0
+[219.136] I: Pausing for 3000ms
+[222.138] I: Vacuum and Proof of Fire OK.
+[222.138] I: Auger Status: 0
+[222.138] I: Pausing for 3000ms
+[225.139] I: Vacuum and Proof of Fire OK.
+[225.139] I: Auger Status: 0
+[225.139] I: Pausing for 3000ms
+[228.139] I: Vacuum and Proof of Fire OK.
+[228.14] I: Auger Status: 0
+[228.14] I: Pausing for 3000ms
+[231.14] I: Vacuum and Proof of Fire OK.
+[231.141] I: Auger Status: 0
+[231.141] I: Pausing for 3000ms
+[234.142] I: Vacuum and Proof of Fire OK.
+[234.142] I: Auger Status: 0
+[234.143] I: Pausing for 3000ms
+[237.144] I: Vacuum and Proof of Fire OK.
+[237.144] I: Auger Status: 0
+[237.144] I: Pausing for 3000ms
+[240.146] I: Vacuum and Proof of Fire OK.
+[240.146] I: Auger Status: 0
+[240.146] I: Pausing for 3000ms
+[243.148] I: Vacuum and Proof of Fire OK.
+[243.148] I: Auger Status: 0
+[243.148] I: Pausing for 3000ms
+[246.15] I: Vacuum and Proof of Fire OK.
+[246.15] I: Auger Status: 0
+[246.15] I: Pausing for 3000ms
+[249.152] I: Vacuum and Proof of Fire OK.
+[249.152] I: Auger Status: 0
+[249.152] I: Pausing for 3000ms
+[252.153] I: Vacuum and Proof of Fire OK.
+[252.154] I: Auger Status: 0
+[252.154] I: Pausing for 3000ms
+[255.154] I: Vacuum and Proof of Fire OK.
+[255.155] I: Auger Status: 0
+[255.155] I: Pausing for 3000ms
+[258.156] I: Vacuum and Proof of Fire OK.
+[258.156] I: Auger Status: 0
+[258.157] I: Pausing for 3000ms
+[261.158] I: Vacuum and Proof of Fire OK.
+[261.158] I: Auger Status: 0
+[261.159] I: Pausing for 3000ms
+[264.16] I: Vacuum and Proof of Fire OK.
+[264.16] I: Auger Status: 0
+[264.16] I: Pausing for 3000ms
+[267.161] I: Vacuum and Proof of Fire OK.
+[267.162] I: Auger Status: 0
+[267.162] I: Pausing for 3000ms
+[270.163] I: Vacuum and Proof of Fire OK.
+[270.163] I: Auger Status: 0
+[270.163] I: Pausing for 3000ms
+[273.165] I: Vacuum and Proof of Fire OK.
+[273.165] I: Auger Status: 0
+[273.165] I: Pausing for 3000ms
+[276.166] I: Vacuum and Proof of Fire OK.
+[276.166] I: Auger Status: 0
+[276.167] I: Pausing for 3000ms
+[279.168] I: Vacuum and Proof of Fire OK.
+[279.168] I: Auger Status: 0
+[279.168] I: Pausing for 3000ms
+[282.169] I: Vacuum and Proof of Fire OK.
+[282.169] I: Auger Status: 0
+[282.17] I: Pausing for 3000ms
+[285.171] I: Vacuum and Proof of Fire OK.
+[285.171] I: Auger Status: 0
+[285.171] I: Pausing for 3000ms
+[288.172] I: Vacuum and Proof of Fire OK.
+[288.175] I: Auger Status: 0
+[288.175] I: Pausing for 3000ms
+[291.177] I: Vacuum and Proof of Fire OK.
+[291.177] I: Auger Status: 0
+[291.177] I: Pausing for 3000ms
+[294.178] I: Vacuum and Proof of Fire OK.
+[294.179] I: Auger Status: 0
+[294.179] I: Pausing for 3000ms
+[297.18] I: Vacuum and Proof of Fire OK.
+[297.18] I: Auger Status: 0
+[297.18] I: Pausing for 3000ms
+[300.181] I: Vacuum and Proof of Fire OK.
+[300.182] I: Auger Status: 0
+[300.182] I: Pausing for 3000ms
+[303.183] I: Vacuum and Proof of Fire OK.
+[303.183] I: Auger Status: 0
+[303.183] I: Pausing for 3000ms
+[306.184] I: Vacuum and Proof of Fire OK.
+[306.184] I: Auger Status: 0
+[306.184] I: Pausing for 3000ms
+[309.186] I: Vacuum and Proof of Fire OK.
+[309.186] I: Auger Status: 0
+[309.186] I: Pausing for 3000ms
+[312.187] I: Vacuum and Proof of Fire OK.
+[312.187] I: Auger Status: 0
+[312.187] I: Pausing for 3000ms
+[315.189] I: Vacuum and Proof of Fire OK.
+[315.189] I: Auger Status: 0
+[315.189] I: Pausing for 3000ms
+[318.19] I: Vacuum and Proof of Fire OK.
+[318.19] I: Auger Status: 0
+[318.191] I: Pausing for 3000ms
+[321.191] I: Vacuum and Proof of Fire OK.
+[321.191] I: Auger Status: 0
+[321.191] I: Pausing for 3000ms
+[324.192] I: Vacuum and Proof of Fire OK.
+[324.192] I: Auger Status: 0
+[324.192] I: Pausing for 3000ms
+[327.193] I: Vacuum and Proof of Fire OK.
+[327.194] I: Auger Status: 0
+[327.194] I: Pausing for 3000ms
+[330.195] I: Vacuum and Proof of Fire OK.
+[330.195] I: Auger Status: 0
+[330.195] I: Pausing for 3000ms
+[333.196] I: Vacuum and Proof of Fire OK.
+[333.196] I: Auger Status: 0
+[333.196] I: Pausing for 3000ms
+[336.197] I: Vacuum and Proof of Fire OK.
+[336.198] I: Auger Status: 0
+[336.198] I: Pausing for 3000ms
+[339.198] I: Vacuum and Proof of Fire OK.
+[339.199] I: Auger Status: 0
+[339.199] I: Pausing for 3000ms
+[342.2] I: Vacuum and Proof of Fire OK.
+[342.2] I: Auger Status: 0
+[342.2] I: Pausing for 3000ms
+[345.201] I: Vacuum and Proof of Fire OK.
+[345.202] I: Auger Status: 0
+[345.202] I: Pausing for 3000ms
+[348.203] I: Vacuum and Proof of Fire OK.
+[348.203] I: Auger Status: 0
+[348.203] I: Pausing for 3000ms
+[351.204] I: Vacuum and Proof of Fire OK.
+[351.204] I: Auger Status: 0
+[351.204] I: Pausing for 3000ms
+[354.205] I: Vacuum and Proof of Fire OK.
+[354.205] I: Auger Status: 0
+[354.205] I: Pausing for 3000ms
+[357.207] I: Vacuum and Proof of Fire OK.
+[357.207] I: Auger Status: 0
+[357.207] I: Pausing for 3000ms
+[360.208] I: Vacuum and Proof of Fire OK.
+[360.208] I: Auger Status: 0
+[360.209] I: Pausing for 3000ms
+[363.21] I: Vacuum and Proof of Fire OK.
+[363.211] I: Auger Status: 0
+[363.211] I: Pausing for 3000ms
+[366.211] I: Vacuum and Proof of Fire OK.
+[366.211] I: Auger Status: 0
+[366.211] I: Pausing for 3000ms
+[369.212] I: Vacuum and Proof of Fire OK.
+[369.213] I: Auger Status: 0
+[369.213] I: Pausing for 3000ms
+[372.213] I: Vacuum and Proof of Fire OK.
+[372.214] I: Auger Status: 0
+[372.214] I: Pausing for 3000ms
+[375.215] I: Vacuum and Proof of Fire OK.
+[375.215] I: Auger Status: 0
+[375.215] I: Pausing for 3000ms
+[378.216] I: Vacuum and Proof of Fire OK.
+[378.216] I: Auger Status: 0
+[378.216] I: Pausing for 3000ms
+[381.218] I: Vacuum and Proof of Fire OK.
+[381.218] I: Auger Status: 0
+[381.218] I: Pausing for 3000ms
+[384.219] I: Vacuum and Proof of Fire OK.
+[384.219] I: Auger Status: 0
+[384.219] I: Pausing for 3000ms
+[387.22] I: Vacuum and Proof of Fire OK.
+[387.22] I: Auger Status: 0
+[387.22] I: Pausing for 3000ms
+[390.222] I: Vacuum and Proof of Fire OK.
+[390.222] I: Auger Status: 0
+[390.222] I: Pausing for 3000ms
+[393.222] I: Vacuum and Proof of Fire OK.
+[393.222] I: Auger Status: 0
+[393.222] I: Pausing for 3000ms
+[396.219] I: Vacuum and Proof of Fire OK.
+[396.223] I: Auger Status: 0
+[396.223] I: Pausing for 3000ms
+[399.22] I: Vacuum and Proof of Fire OK.
+[399.222] I: Auger Status: 0
+[399.222] I: Pausing for 3000ms
+[402.221] I: Vacuum and Proof of Fire OK.
+[402.221] I: Auger Status: 0
+[402.221] I: Pausing for 3000ms
+[405.22] I: Vacuum and Proof of Fire OK.
+[405.22] I: Auger Status: 0
+[405.22] I: Pausing for 3000ms
+[408.22] I: Vacuum and Proof of Fire OK.
+[408.221] I: Auger Status: 0
+[408.221] I: Pausing for 3000ms
+[411.22] I: Vacuum and Proof of Fire OK.
+[411.221] I: Auger Status: 0
+[411.221] I: Pausing for 3000ms
+[414.221] I: Vacuum and Proof of Fire OK.
+[414.221] I: Auger Status: 0
+[414.221] I: Pausing for 3000ms
+[417.221] I: Vacuum and Proof of Fire OK.
+[417.221] I: Auger Status: 0
+[417.221] I: Pausing for 3000ms
+[420.222] I: Vacuum and Proof of Fire OK.
+[420.222] I: Auger Status: 0
+[420.222] I: Pausing for 3000ms
+[423.222] I: Vacuum and Proof of Fire OK.
+[423.223] I: Auger Status: 0
+[423.223] I: Pausing for 3000ms
+[426.222] I: Vacuum and Proof of Fire OK.
+[426.223] I: Auger Status: 0
+[426.223] I: Pausing for 3000ms
+[429.223] I: Vacuum and Proof of Fire OK.
+[429.224] I: Auger Status: 0
+[429.224] I: Pausing for 3000ms
+[432.225] I: Vacuum and Proof of Fire OK.
+[432.225] I: Auger Status: 0
+[432.225] I: Pausing for 3000ms
+[435.226] I: Vacuum and Proof of Fire OK.
+[435.226] I: Auger Status: 0
+[435.226] I: Pausing for 3000ms
+[438.227] I: Vacuum and Proof of Fire OK.
+[438.227] I: Auger Status: 0
+[438.227] I: Pausing for 3000ms
+[441.228] I: Vacuum and Proof of Fire OK.
+[441.229] I: Auger Status: 0
+[441.229] I: Pausing for 3000ms
+[444.229] I: Vacuum and Proof of Fire OK.
+[444.229] I: Auger Status: 0
+[444.23] I: Pausing for 3000ms
+[447.231] I: Vacuum and Proof of Fire OK.
+[447.231] I: Auger Status: 0
+[447.231] I: Pausing for 3000ms
+[450.232] I: Vacuum and Proof of Fire OK.
+[450.232] I: Auger Status: 0
+[450.232] I: Pausing for 3000ms
+[453.233] I: Vacuum and Proof of Fire OK.
+[453.233] I: Auger Status: 0
+[453.234] I: Pausing for 3000ms
+[456.235] I: Vacuum and Proof of Fire OK.
+[456.235] I: Auger Status: 0
+[456.235] I: Pausing for 3000ms
+[459.236] I: Vacuum and Proof of Fire OK.
+[459.236] I: Auger Status: 0
+[459.236] I: Pausing for 3000ms
+[462.237] I: Vacuum and Proof of Fire OK.
+[462.237] I: Auger Status: 0
+[462.238] I: Pausing for 3000ms
+[465.239] I: Vacuum and Proof of Fire OK.
+[465.24] I: Auger Status: 0
+[465.24] I: Pausing for 3000ms
+[468.241] I: Vacuum and Proof of Fire OK.
+[468.241] I: Auger Status: 0
+[468.241] I: Pausing for 3000ms
+[471.243] I: Vacuum and Proof of Fire OK.
+[471.243] I: Auger Status: 0
+[471.243] I: Pausing for 3000ms
+[474.245] I: Vacuum and Proof of Fire OK.
+[474.245] I: Auger Status: 0
+[474.245] I: Pausing for 3000ms
+[477.247] I: Vacuum and Proof of Fire OK.
+[477.247] I: Auger Status: 0
+[477.247] I: Pausing for 3000ms
+[480.248] I: Vacuum and Proof of Fire OK.
+[480.249] I: Auger Status: 0
+[480.249] I: Pausing for 3000ms
+[483.251] I: Vacuum and Proof of Fire OK.
+[483.252] I: Auger Status: 0
+[483.252] I: Pausing for 3000ms
+[486.254] I: Vacuum and Proof of Fire OK.
+[486.255] I: Auger Status: 0
+[486.255] I: Pausing for 3000ms
+[489.256] I: Vacuum and Proof of Fire OK.
+[489.257] I: Auger Status: 0
+[489.257] I: Pausing for 3000ms
+[492.258] I: Vacuum and Proof of Fire OK.
+[492.259] I: Auger Status: 0
+[492.259] I: Pausing for 3000ms
+[495.26] I: Vacuum and Proof of Fire OK.
+[495.261] I: Auger Status: 0
+[495.261] I: Pausing for 3000ms
+[498.262] I: Vacuum and Proof of Fire OK.
+[498.262] I: Auger Status: 0
+[498.262] I: Pausing for 3000ms
+[501.264] I: Vacuum and Proof of Fire OK.
+[501.264] I: Auger Status: 0
+[501.264] I: Pausing for 3000ms
+[504.265] I: Vacuum and Proof of Fire OK.
+[504.266] I: Auger Status: 0
+[504.266] I: Pausing for 3000ms
+[507.267] I: Vacuum and Proof of Fire OK.
+[507.268] I: Auger Status: 0
+[507.268] I: Pausing for 3000ms
+[510.269] I: Vacuum and Proof of Fire OK.
+[510.27] I: Auger Status: 0
+[510.27] I: Pausing for 3000ms
+[513.272] I: Vacuum and Proof of Fire OK.
+[513.272] I: Auger Status: 0
+[513.272] I: Pausing for 3000ms
+[516.274] I: Vacuum and Proof of Fire OK.
+[516.275] I: Auger Status: 0
+[516.275] I: Pausing for 3000ms
+[519.277] I: Vacuum and Proof of Fire OK.
+[519.277] I: Auger Status: 0
+[519.277] I: Pausing for 3000ms
+[522.278] I: Vacuum and Proof of Fire OK.
+[522.279] I: Auger Status: 0
+[522.279] I: Pausing for 3000ms
+[525.279] I: Vacuum and Proof of Fire OK.
+[525.279] I: Auger Status: 0
+[525.279] I: Pausing for 3000ms
+[528.28] I: Vacuum and Proof of Fire OK.
+[528.281] I: Auger Status: 0
+[528.281] I: Pausing for 3000ms
+[531.283] I: Vacuum and Proof of Fire OK.
+[531.284] I: Auger Status: 0
+[531.284] I: Pausing for 3000ms
+[534.285] I: Vacuum and Proof of Fire OK.
+[534.285] I: Auger Status: 0
+[534.285] I: Pausing for 3000ms
+[537.288] I: Vacuum and Proof of Fire OK.
+[537.289] I: Auger Status: 0
+[537.289] I: Pausing for 3000ms
+[540.291] I: Vacuum and Proof of Fire OK.
+[540.292] I: Auger Status: 0
+[540.292] I: Pausing for 3000ms
+[543.293] I: Vacuum and Proof of Fire OK.
+[543.293] I: Auger Status: 0
+[543.293] I: Pausing for 3000ms
+[546.295] I: Vacuum and Proof of Fire OK.
+[546.295] I: Auger Status: 0
+[546.295] I: Pausing for 3000ms
+[549.297] I: Vacuum and Proof of Fire OK.
+[549.298] I: Auger Status: 0
+[549.298] I: Pausing for 3000ms
+[552.299] I: Vacuum and Proof of Fire OK.
+[552.3] I: Auger Status: 0
+[552.3] I: Pausing for 3000ms
+[555.301] I: Vacuum and Proof of Fire OK.
+[555.301] I: Auger Status: 0
+[555.301] I: Pausing for 3000ms
+[558.303] I: Vacuum and Proof of Fire OK.
+[558.304] I: Auger Status: 0
+[558.304] I: Pausing for 3000ms
+[561.305] I: Vacuum and Proof of Fire OK.
+[561.306] I: Auger Status: 0
+[561.306] I: Pausing for 3000ms
+[564.307] I: Vacuum and Proof of Fire OK.
+[564.307] I: Auger Status: 0
+[564.308] I: Pausing for 3000ms
+[567.309] I: Vacuum and Proof of Fire OK.
+[567.309] I: Auger Status: 0
+[567.309] I: Pausing for 3000ms
+[570.31] I: Vacuum and Proof of Fire OK.
+[570.311] I: Auger Status: 0
+[570.311] I: Pausing for 3000ms
+[573.312] I: Vacuum and Proof of Fire OK.
+[573.313] I: Auger Status: 0
+[573.313] I: Pausing for 3000ms
+[576.314] I: Vacuum and Proof of Fire OK.
+[576.315] I: Auger Status: 0
+[576.315] I: Pausing for 3000ms
+[579.317] I: Vacuum and Proof of Fire OK.
+[579.318] I: Auger Status: 0
+[579.318] I: Pausing for 3000ms
+[582.319] I: Vacuum and Proof of Fire OK.
+[582.32] I: Auger Status: 0
+[582.32] I: Pausing for 3000ms
+[585.321] I: Vacuum and Proof of Fire OK.
+[585.322] I: Auger Status: 0
+[585.322] I: Pausing for 3000ms
+[588.322] I: Vacuum and Proof of Fire OK.
+[588.322] I: Auger Status: 0
+[588.322] I: Pausing for 3000ms
+[591.323] I: Vacuum and Proof of Fire OK.
+[591.323] I: Auger Status: 0
+[591.323] I: Pausing for 3000ms
+[594.326] I: Vacuum and Proof of Fire OK.
+[594.326] I: Auger Status: 0
+[594.326] I: Pausing for 3000ms
+[597.327] I: Vacuum and Proof of Fire OK.
+[597.328] I: Auger Status: 0
+[597.328] I: Pausing for 3000ms
+[600.329] I: Vacuum and Proof of Fire OK.
+[600.33] I: Auger Status: 0
+[600.33] I: Pausing for 3000ms
+[603.332] I: Vacuum and Proof of Fire OK.
+[603.332] I: Auger Status: 0
+[603.332] I: Pausing for 3000ms
+[606.333] I: Vacuum and Proof of Fire OK.
+[606.334] I: Auger Status: 0
+[606.334] I: Pausing for 3000ms
+[609.335] I: Vacuum and Proof of Fire OK.
+[609.335] I: Auger Status: 0
+[609.336] I: Pausing for 3000ms
+[612.337] I: Vacuum and Proof of Fire OK.
+[612.338] I: Auger Status: 0
+[612.338] I: Pausing for 3000ms
+[615.339] I: Vacuum and Proof of Fire OK.
+[615.339] I: Auger Status: 0
+[615.339] I: Pausing for 3000ms
+[618.341] I: Vacuum and Proof of Fire OK.
+[618.341] I: Auger Status: 0
+[618.341] I: Pausing for 3000ms
+[621.341] I: Vacuum and Proof of Fire OK.
+[621.342] I: Auger Status: 0
+[621.342] I: Pausing for 3000ms
+[624.342] I: Vacuum and Proof of Fire OK.
+[624.343] I: Auger Status: 0
+[624.343] I: Pausing for 3000ms
+[627.344] I: Vacuum and Proof of Fire OK.
+[627.344] I: Auger Status: 0
+[627.344] I: Pausing for 3000ms
+[630.345] I: Vacuum and Proof of Fire OK.
+[630.345] I: Auger Status: 0
+[630.345] I: Pausing for 3000ms
+[633.347] I: Vacuum and Proof of Fire OK.
+[633.347] I: Auger Status: 0
+[633.347] I: Pausing for 3000ms
+[636.347] I: Vacuum and Proof of Fire OK.
+[636.347] I: Auger Status: 0
+[636.347] I: Pausing for 3000ms
+[639.349] I: Vacuum and Proof of Fire OK.
+[639.349] I: Auger Status: 0
+[639.349] I: Pausing for 3000ms
+[642.35] I: Vacuum and Proof of Fire OK.
+[642.351] I: Auger Status: 0
+[642.351] I: Pausing for 3000ms
+[645.352] I: Vacuum and Proof of Fire OK.
+[645.352] I: Auger Status: 0
+[645.352] I: Pausing for 3000ms
+[648.353] I: Vacuum and Proof of Fire OK.
+[648.354] I: Auger Status: 0
+[648.354] I: Pausing for 3000ms
+[651.355] I: Vacuum and Proof of Fire OK.
+[651.355] I: Auger Status: 0
+[651.355] I: Pausing for 3000ms
+[654.357] I: Vacuum and Proof of Fire OK.
+[654.357] I: Auger Status: 0
+[654.357] I: Pausing for 3000ms
+[657.358] I: Vacuum and Proof of Fire OK.
+[657.358] I: Auger Status: 0
+[657.359] I: Pausing for 3000ms
+[660.359] I: Vacuum and Proof of Fire OK.
+[660.36] I: Auger Status: 0
+[660.36] I: Pausing for 3000ms
+[663.361] I: Vacuum and Proof of Fire OK.
+[663.362] I: Auger Status: 0
+[663.362] I: Pausing for 3000ms
+[666.363] I: Vacuum and Proof of Fire OK.
+[666.364] I: Auger Status: 0
+[666.364] I: Pausing for 3000ms
+[669.365] I: Vacuum and Proof of Fire OK.
+[669.365] I: Auger Status: 0
+[669.365] I: Pausing for 3000ms
+[672.366] I: Vacuum and Proof of Fire OK.
+[672.366] I: Auger Status: 0
+[672.367] I: Pausing for 3000ms
+[675.368] I: Vacuum and Proof of Fire OK.
+[675.368] I: Auger Status: 0
+[675.368] I: Pausing for 3000ms
+[678.37] I: Vacuum and Proof of Fire OK.
+[678.37] I: Auger Status: 0
+[678.37] I: Pausing for 3000ms
+[681.371] I: Vacuum and Proof of Fire OK.
+[681.372] I: Auger Status: 0
+[681.372] I: Pausing for 3000ms
+[684.373] I: Vacuum and Proof of Fire OK.
+[684.373] I: Auger Status: 0
+[684.373] I: Pausing for 3000ms
+[687.374] I: Vacuum and Proof of Fire OK.
+[687.374] I: Auger Status: 0
+[687.374] I: Pausing for 3000ms
+[690.375] I: Vacuum and Proof of Fire OK.
+[690.376] I: Auger Status: 0
+[690.376] I: Pausing for 3000ms
+[693.377] I: Vacuum and Proof of Fire OK.
+[693.377] I: Auger Status: 0
+[693.378] I: Pausing for 3000ms
+[696.379] I: Vacuum and Proof of Fire OK.
+[696.379] I: Auger Status: 0
+[696.38] I: Pausing for 3000ms
+[699.381] I: Vacuum and Proof of Fire OK.
+[699.381] I: Auger Status: 0
+[699.381] I: Pausing for 3000ms
+[702.383] I: Vacuum and Proof of Fire OK.
+[702.383] I: Auger Status: 0
+[702.383] I: Pausing for 3000ms
+[705.384] I: Vacuum and Proof of Fire OK.
+[705.385] I: Auger Status: 0
+[705.385] I: Pausing for 3000ms
+[708.386] I: Vacuum and Proof of Fire OK.
+[708.387] I: Auger Status: 0
+[708.387] I: Pausing for 3000ms
+[711.387] I: Vacuum and Proof of Fire OK.
+[711.387] I: Auger Status: 0
+[711.388] I: Pausing for 3000ms
+[714.389] I: Vacuum and Proof of Fire OK.
+[714.39] I: Auger Status: 0
+[714.39] I: Pausing for 3000ms
+[717.391] I: Vacuum and Proof of Fire OK.
+[717.392] I: Auger Status: 0
+[717.392] I: Pausing for 3000ms
+[720.393] I: Vacuum and Proof of Fire OK.
+[720.393] I: Auger Status: 0
+[720.393] I: Pausing for 3000ms
+[723.394] I: Vacuum and Proof of Fire OK.
+[723.394] I: Auger Status: 0
+[723.394] I: Pausing for 3000ms
+[726.396] I: Vacuum and Proof of Fire OK.
+[726.396] I: Auger Status: 0
+[726.396] I: Pausing for 3000ms
+[729.397] I: Vacuum and Proof of Fire OK.
+[729.397] I: Auger Status: 0
+[729.397] I: Pausing for 3000ms
+[732.399] I: Vacuum and Proof of Fire OK.
+[732.399] I: Auger Status: 0
+[732.399] I: Pausing for 3000ms
+[735.4] I: Vacuum and Proof of Fire OK.
+[735.4] I: Auger Status: 0
+[735.4] I: Pausing for 3000ms
+[738.401] I: Vacuum and Proof of Fire OK.
+[738.401] I: Auger Status: 0
+[738.402] I: Pausing for 3000ms
+[741.404] I: Vacuum and Proof of Fire OK.
+[741.404] I: Auger Status: 0
+[741.404] I: Pausing for 3000ms
+[744.406] I: Vacuum and Proof of Fire OK.
+[744.406] I: Auger Status: 0
+[744.406] I: Pausing for 3000ms
+[747.407] I: Vacuum and Proof of Fire OK.
+[747.408] I: Auger Status: 0
+[747.408] I: Pausing for 3000ms
+[750.41] I: Vacuum and Proof of Fire OK.
+[750.41] I: Auger Status: 0
+[750.41] I: Pausing for 3000ms
+[753.412] I: Vacuum and Proof of Fire OK.
+[753.412] I: Auger Status: 0
+[753.412] I: Pausing for 3000ms
+[756.413] I: Vacuum and Proof of Fire OK.
+[756.413] I: Auger Status: 0
+[756.413] I: Pausing for 3000ms
+[759.414] I: Vacuum and Proof of Fire OK.
+[759.414] I: Auger Status: 0
+[759.414] I: Pausing for 3000ms
+[762.415] I: Vacuum and Proof of Fire OK.
+[762.415] I: Auger Status: 0
+[762.415] I: Pausing for 3000ms
+[765.416] I: Vacuum and Proof of Fire OK.
+[765.416] I: Auger Status: 0
+[765.416] I: Pausing for 3000ms
+[768.417] I: Vacuum and Proof of Fire OK.
+[768.417] I: Auger Status: 0
+[768.417] I: Pausing for 3000ms
+[771.418] I: Vacuum and Proof of Fire OK.
+[771.418] I: Auger Status: 0
+[771.419] I: Pausing for 3000ms
+[774.42] I: Vacuum and Proof of Fire OK.
+[774.42] I: Auger Status: 0
+[774.42] I: Pausing for 3000ms
+[777.421] I: Vacuum and Proof of Fire OK.
+[777.421] I: Auger Status: 0
+[777.421] I: Pausing for 3000ms
+[780.422] I: Vacuum and Proof of Fire OK.
+[780.422] I: Auger Status: 0
+[780.422] I: Pausing for 3000ms
+[783.423] I: Vacuum and Proof of Fire OK.
+[783.423] I: Auger Status: 0
+[783.423] I: Pausing for 3000ms
+[786.425] I: Vacuum and Proof of Fire OK.
+[786.425] I: Auger Status: 0
+[786.425] I: Pausing for 3000ms
+[789.426] I: Vacuum and Proof of Fire OK.
+[789.427] I: Auger Status: 0
+[789.427] I: Pausing for 3000ms
+[792.428] I: Vacuum and Proof of Fire OK.
+[792.428] I: Auger Status: 0
+[792.428] I: Pausing for 3000ms
+[795.428] I: Vacuum and Proof of Fire OK.
+[795.429] I: Auger Status: 0
+[795.429] I: Pausing for 3000ms
+[798.43] I: Vacuum and Proof of Fire OK.
+[798.43] I: Auger Status: 0
+[798.43] I: Pausing for 3000ms
+[801.431] I: Vacuum and Proof of Fire OK.
+[801.432] I: Auger Status: 0
+[801.432] I: Pausing for 3000ms
+[804.432] I: Vacuum and Proof of Fire OK.
+[804.433] I: Auger Status: 0
+[804.433] I: Pausing for 3000ms
+[807.434] I: Vacuum and Proof of Fire OK.
+[807.434] I: Auger Status: 0
+[807.434] I: Pausing for 3000ms
+[810.435] I: Vacuum and Proof of Fire OK.
+[810.435] I: Auger Status: 0
+[810.436] I: Pausing for 3000ms
+[813.437] I: Vacuum and Proof of Fire OK.
+[813.437] I: Auger Status: 0
+[813.437] I: Pausing for 3000ms
+[816.438] I: Vacuum and Proof of Fire OK.
+[816.438] I: Auger Status: 0
+[816.438] I: Pausing for 3000ms
+[819.439] I: Vacuum and Proof of Fire OK.
+[819.439] I: Auger Status: 0
+[819.439] I: Pausing for 3000ms
+[822.44] I: Vacuum and Proof of Fire OK.
+[822.441] I: Auger Status: 0
+[822.441] I: Pausing for 3000ms
+[825.442] I: Vacuum and Proof of Fire OK.
+[825.442] I: Auger Status: 0
+[825.442] I: Pausing for 3000ms
+[828.443] I: Vacuum and Proof of Fire OK.
+[828.443] I: Auger Status: 0
+[828.443] I: Pausing for 3000ms
+[831.445] I: Vacuum and Proof of Fire OK.
+[831.445] I: Auger Status: 0
+[831.446] I: Pausing for 3000ms
+[834.446] I: Vacuum and Proof of Fire OK.
+[834.447] I: Auger Status: 0
+[834.447] I: Pausing for 3000ms
+[837.449] I: Vacuum and Proof of Fire OK.
+[837.449] I: Auger Status: 0
+[837.449] I: Pausing for 3000ms
+[840.45] I: Vacuum and Proof of Fire OK.
+[840.45] I: Auger Status: 0
+[840.45] I: Pausing for 3000ms
+[843.452] I: Vacuum and Proof of Fire OK.
+[843.452] I: Auger Status: 0
+[843.452] I: Pausing for 3000ms
+[846.453] I: Vacuum and Proof of Fire OK.
+[846.453] I: Auger Status: 0
+[846.453] I: Pausing for 3000ms
+[849.454] I: Vacuum and Proof of Fire OK.
+[849.455] I: Auger Status: 0
+[849.455] I: Pausing for 3000ms
+[852.456] I: Vacuum and Proof of Fire OK.
+[852.457] I: Auger Status: 0
+[852.457] I: Pausing for 3000ms
+[855.457] I: Vacuum and Proof of Fire OK.
+[855.458] I: Auger Status: 0
+[855.458] I: Pausing for 3000ms
+[858.459] I: Vacuum and Proof of Fire OK.
+[858.46] I: Auger Status: 0
+[858.46] I: Pausing for 3000ms
+[861.461] I: Vacuum and Proof of Fire OK.
+[861.462] I: Auger Status: 0
+[861.462] I: Pausing for 3000ms
+[864.463] I: Vacuum and Proof of Fire OK.
+[864.464] I: Auger Status: 0
+[864.464] I: Pausing for 3000ms
+[867.465] I: Vacuum and Proof of Fire OK.
+[867.465] I: Auger Status: 0
+[867.465] I: Pausing for 3000ms
+[870.466] I: Vacuum and Proof of Fire OK.
+[870.467] I: Auger Status: 0
+[870.467] I: Pausing for 3000ms
+[873.467] I: Vacuum and Proof of Fire OK.
+[873.467] I: Auger Status: 0
+[873.467] I: Pausing for 3000ms
+[876.468] I: Vacuum and Proof of Fire OK.
+[876.468] I: Auger Status: 0
+[876.468] I: Pausing for 3000ms
+[879.47] I: Vacuum and Proof of Fire OK.
+[879.47] I: Auger Status: 0
+[879.47] I: Pausing for 3000ms
+[882.471] I: Vacuum and Proof of Fire OK.
+[882.472] I: Auger Status: 0
+[882.472] I: Pausing for 3000ms
+[885.473] I: Vacuum and Proof of Fire OK.
+[885.474] I: Auger Status: 0
+[885.474] I: Pausing for 3000ms
+[888.475] I: Vacuum and Proof of Fire OK.
+[888.475] I: Auger Status: 0
+[888.475] I: Pausing for 3000ms
+[891.476] I: Vacuum and Proof of Fire OK.
+[891.477] I: Auger Status: 0
+[891.477] I: Pausing for 3000ms
+[894.477] I: Vacuum and Proof of Fire OK.
+[894.478] I: Auger Status: 0
+[894.478] I: Pausing for 3000ms
+[897.479] I: Vacuum and Proof of Fire OK.
+[897.48] I: Auger Status: 0
+[897.48] I: Pausing for 3000ms
+[900.481] I: Vacuum and Proof of Fire OK.
+[900.481] I: Auger Status: 0
+[900.481] I: Pausing for 3000ms
+[903.483] I: Vacuum and Proof of Fire OK.
+[903.483] I: Auger Status: 0
+[903.483] I: Pausing for 3000ms
+[906.485] I: Vacuum and Proof of Fire OK.
+[906.485] I: Auger Status: 0
+[906.485] I: Pausing for 3000ms
+[909.487] I: Vacuum and Proof of Fire OK.
+[909.487] I: Auger Status: 0
+[909.487] I: Pausing for 3000ms
+[912.488] I: Vacuum and Proof of Fire OK.
+[912.489] I: Auger Status: 0
+[912.489] I: Pausing for 3000ms
+[915.49] I: Vacuum and Proof of Fire OK.
+[915.491] I: Auger Status: 0
+[915.491] I: Pausing for 3000ms
+[918.492] I: Vacuum and Proof of Fire OK.
+[918.492] I: Auger Status: 0
+[918.492] I: Pausing for 3000ms
+[921.493] I: Vacuum and Proof of Fire OK.
+[921.493] I: Auger Status: 0
+[921.493] I: Pausing for 3000ms
+[924.495] I: Vacuum and Proof of Fire OK.
+[924.495] I: Auger Status: 0
+[924.495] I: Pausing for 3000ms
+[927.496] I: Vacuum and Proof of Fire OK.
+[927.497] I: Auger Status: 0
+[927.497] I: Pausing for 3000ms
+[930.498] I: Vacuum and Proof of Fire OK.
+[930.499] I: Auger Status: 0
+[930.499] I: Pausing for 3000ms
+[933.5] I: Vacuum and Proof of Fire OK.
+[933.5] I: Auger Status: 0
+[933.5] I: Pausing for 3000ms
+[936.502] I: Vacuum and Proof of Fire OK.
+[936.502] I: Auger Status: 0
+[936.502] I: Pausing for 3000ms
+[939.503] I: Vacuum and Proof of Fire OK.
+[939.503] I: Auger Status: 0
+[939.503] I: Pausing for 3000ms
+[942.505] I: Vacuum and Proof of Fire OK.
+[942.505] I: Auger Status: 0
+[942.505] I: Pausing for 3000ms
+[945.507] I: Vacuum and Proof of Fire OK.
+[945.507] I: Auger Status: 0
+[945.507] I: Pausing for 3000ms
+[948.509] I: Vacuum and Proof of Fire OK.
+[948.509] I: Auger Status: 0
+[948.509] I: Pausing for 3000ms
+[951.51] I: Vacuum and Proof of Fire OK.
+[951.511] I: Auger Status: 0
+[951.511] I: Pausing for 3000ms
+[954.512] I: Vacuum and Proof of Fire OK.
+[954.512] I: Auger Status: 0
+[954.512] I: Pausing for 3000ms

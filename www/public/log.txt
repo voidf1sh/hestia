@@ -1,1 +1,1 @@
-log.txt
+/Users/voidf1sh/pscontrolpanel/log.txt

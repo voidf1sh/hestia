@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="/main.css">
     </head>
     <body>
+        <%- include('trial.html') -%>
         <div id="title">Pellet Stove Web Portal</div>
         <div id="status">Auger: <%= status.auger %> | Igniter: <%= status.igniter %> | Combustion Blower: <%= status.blower %></div>
         <div id="safeties">Vacuum: <%= status.vacuum %> | Proof of Fire: <%= status.pof %></div>
@@ -21,13 +22,19 @@
             </form>
         </div>
         <div id="log-container">
-            <button id="refresh-log" onclick="refreshLog()">Refresh Log</button><br>
-            <textarea></textarea>
+            <!-- <button id="refresh-log" onclick="refreshLog()">Refresh Log</button><br>
+            <textarea id="log-area"></textarea> -->
+            <iframe id="log-area" src="log.txt"></iframe>
         </div>
+        <script>
+            function refreshLog() {
+                console.log('Refresh button hit');
+                // TODO
+                const fs = require('fs');
+                fs.readFile('/log.txt', (err, data) => {
+                    document.getElementById('log-area').innerHTML = data;
+                });
+            };
+        </script>
     </body>
-    <script type="javascript">
-        const refreshLog() => {
-            // TODO
-        };
-    </script>
 </html>
