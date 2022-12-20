@@ -1,0 +1,23 @@
+[0.001] I: Not running on a Raspberry Pi.
+== Lennox Winslow PS40
+== Pellet Stove Control Panel
+== Author: Skylar Grant
+== Version: v0.2.1
+==
+== Startup Time: 2022-12-20T20:15:16.797Z
+==
+== Environment variables:
+== == ONTIME=500
+== == OFFTIME=1500
+== == PAUSETIME=10000
+== == DEBUG=true
+== == ONPI=false
+[0.002] I: == GPIO Not Available
+[0.002] I: File Check: none
+[0.002] I: Auger Status: 0
+[0.002] I: Pausing for 10000ms
+[10.007] I: The igniter is off.
+The igniter hasn't been started yet.
+[10.007] I: File Check: none
+[10.008] I: Auger Status: 0
+[10.008] I: Pausing for 10000ms

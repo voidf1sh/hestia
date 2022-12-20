@@ -20,5 +20,9 @@
         "pause": 10000,
         "igniterStart": 30000,
         "blowerStop": 10000
+    },
+    "web": {
+      "port": 8080,
+      "ip": "127.0.0.1"
     }
 }
