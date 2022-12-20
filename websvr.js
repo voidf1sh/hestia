@@ -8,18 +8,16 @@
     * Launching point: https://stackoverflow.com/questions/18831783/how-to-call-a-server-side-function-from-client-side-e-g-html-button-onclick-i
  */
 
+const express = require('express');
+const app = express();
 const http = require('http');
-const host = 'localhost';
-const port = 8080;
+const server = http.createServer(app);
 const config = require('./config.json');
 
-const requestListener = (req, res) => {
-    res.writeHead(200);
-    res.end('PSControlPanel Web Server')
-};
+app.use(express.bodyParser());
+app.post('/', (req, res) => {
+    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${req.body}`);
+    res.send(200);    
+});
 
-const server = http.createServer(requestListener);
-
-server.listen(port, host, () => {
-    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Started web config portal.`);
-})
+server.listen(config.web.port, config.web.ip);

@@ -5,6 +5,9 @@
     "packages": {},
     "dependencies": {
         "dotenv": "^16.0.3",
-        "rpi-gpio": "^2.1.7"
+        "express": "^4.18.2",
+        "rpi-gpio": "^2.1.7",
+        "sequelize": "^6.28.0",
+        "sqlite3": "^5.1.4"
     }
 }
