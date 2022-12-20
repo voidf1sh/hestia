@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pellet Stove Web Portal</title>
+        <link rel="stylesheet" href="/main.css">
+    </head>
+    <body>
+        <div id="title">Pellet Stove Web Portal</div>
+        <div id="status">Auger: <%= status.auger %> | Igniter: <%= status.igniter %> | Combustion Blower: <%= status.blower %></div>
+        <div id="safeties">Vacuum: <%= status.vacuum %> | Proof of Fire: <%= status.pof %></div>
+        <div id="controls-container">
+            <form>
+                <!-- Start | Shutdown | Reload Settings -->
+                <div id="buttons">
+                    <button id="ignite" onclick="">Start</button><button id="shutdown">Shutdown</button><button id="reload">Reload Settings</button><br>
+                </div>
+                <!-- Set feed rates -->
+                <label for="augerOn">Auger On Interval: </label><input type="number" id="augerOn" name="augerOn" min="500" max="1000" value="<%= intervals.augerOn %>">ms<br>
+                <label for="augerOff">Auger Off Interval: </label><input type="number" id="augerOff" name="augerOff" min="1000" max="2000" value="<%= intervals.augerOff %>">ms<br>
+                <label for="pauseInt">App Pause Interval: </label><input type="number" id="pauseInt" name="pauseInt" min="1000" max="600000" value="<%= intervals.pause %>">ms<br>
+            </form>
+        </div>
+        <div id="log-container">
+            <button id="refresh-log" onclick="refreshLog()">Refresh Log</button><br>
+            <textarea></textarea>
+        </div>
+    </body>
+    <script type="javascript">
+        const refreshLog() => {
+            // TODO
+        };
+    </script>
+</html>
