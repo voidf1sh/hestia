@@ -224,6 +224,7 @@ const functions = {
                 // If the auger is enabled, disable it
                 if (config.status.auger == 1) {
                     config.status.auger = 0;
+                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Auger disabled.`);
                 }
                 // If the igniter is on, shut it off.
                 if (config.status.igniter == 1) {
@@ -235,20 +236,17 @@ const functions = {
                 if (config.status.blower == 1) {
                     // Set the timestamp to turn the blower off at
                     config.timestamps.blowerOff = Date.now() + config.intervals.blowerStop;
-                    functions.power.blower.off(gpio).then(res => {
-                        if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
-                    });
                 }
                 return "Shutdown has been initiated.";
             } else {
-                // blower.canShutdown() returns true only if the blower shutdown has
+                // blower.blocksShutdown() returns false only if the blower shutdown has
                 // been initiated AND the specified cooldown time has passed
-                if(functions.blower.blocksShutdown()) {
+                if(!(functions.blower.blocksShutdown())) {
                     if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Blower can be turned off.`);
-                    fn.power.blower.off(gpio).then(res => {
+                    functions.power.blower.off(gpio).then(res => {
                         // Since the blower shutting off is the last step in the shutdown, we can quit.
                         // TODO eventually we don't want to ever quit the program, so it can be restarted remotely
-                        fn.commands.quit();
+                        functions.commands.quit();
                     });
                 } else {
                     return "A shutdown has already been initiated and the blower is preventing shutdown.";
@@ -379,6 +377,7 @@ const functions = {
             off(gpio) {
                 return new Promise((resolve, reject) => {
                     config.timestamps.igniterOff = Date.now();
+                    config.status.igniterFinished = true;
                     if (process.env.ONPI == 'true') {
                         gpio.write(igniterPin, false, (err) => {
                             if (err) reject(err);

@@ -70,7 +70,8 @@ async function main(fn, gpio) {
                 break;
             case "quit":
                 // Quit the script
-                fn.commands.shutdown(gpio);
+                console.log(fn.commands.shutdown(gpio));
+                statusCheck(fn, gpio);
                 break;
             case "ignite":
                 // Start the ignite sequence
@@ -121,9 +122,16 @@ async function main(fn, gpio) {
 }
 
 function statusCheck(fn, gpio) {
-    fn.tests.igniter(gpio).then((res) => {
-        if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
-    });
+    if (config.status.shutdown == 1) {
+        console.log(fn.commands.shutdown(gpio) || 'Shutting down...');
+        main(fn, gpio);
+        return;
+    }
+    if (config.status.igniter == 1) {
+        fn.tests.igniter(gpio).then((res) => {
+            if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
+        });
+    }
 
     // Check the vacuum switch, if the test returns true, the vacuum is sensed
     // if it returns false, we will initiate a shutdown
@@ -131,14 +139,16 @@ function statusCheck(fn, gpio) {
     fn.tests.vacuum(gpio).then(vacStatus => {
         if (!vacStatus) {
             console.error('No vacuum detected, beginning shutdown procedure.');
-            fn.commands.shutdown(gpio);
+            console.log(fn.commands.shutdown(gpio));
+            main(fn, gpio);
         } else {
             // Check the Proof of Fire Switch
             fn.tests.pof(gpio).then(pofStatus => {
                 // If the igniter has finished running and no proof of fire is seen, shutdown the stove
                 if (config.status.igniterFinished && (!pofStatus)) {
                     console.error('No Proof of Fire after the igniter shut off, beginning shutdown procedure.');
-                    fn.commands.shutdown(gpio);
+                    console.log(fn.commands.shutdown(gpio));
+                    main(fn, gpio);
                 } else {
                     if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Vacuum and Proof of Fire OK.`);
                     main(fn, gpio);                    
