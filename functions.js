@@ -1,5 +1,6 @@
 // TODOs: Add tests for PoF and Vacuum switches, add delays for shutting down blower, test logic for igniter
 
+// TODO: Move these to config
 // Physical Pin numbers for GPIO
 const augerPin = 26;         // Pin for controlling the relay for the pellet auger motor.
 const igniterPin = 13;      // Pin for controlling the relay for the igniter.
@@ -17,8 +18,7 @@ const config = require('./config.json');
 const dotenv = require('dotenv').config();
 // Module for working with files
 const fs = require('fs');
-// Promises I think?
-const { resolve } = require('path');
+const { time } = require('console');
 
 
 // The functions we'll export to be used in other files
@@ -66,21 +66,21 @@ const functions = {
                 // Turn the auger on
                 this.on(gpio).then((res) => {
                     // Log action if in debug mode
-                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
+                    // if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                     // Sleep for the time set in env variables
                     functions.sleep(config.intervals.augerOn).then((res) => {
                         // Log action if in debug mode
-                        if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
+                        // if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                         // Turn the auger off
                         this.off(gpio).then((res) => {
                             // Log action if in debug mode
-                            if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
+                            // if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                             // Sleep for the time set in env variables
                             functions.sleep(config.intervals.augerOff).then((res) => {
                                 // Log action if in debug mode
-                                if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
+                                // if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                                 // Resolve the promise, letting the main script know the cycle is complete
-                                resolve("Cycle complete.");
+                                resolve("Auger cycled.");
                             });
                         });
                     });
@@ -89,15 +89,13 @@ const functions = {
         },
     },
     blower: {
-        canShutdown() {
-            // If the blowerOff timestamp hasn't been set, return false as the blower hasn't been asked to turn off yet
-            if (config.timestamps.blowerOff == 0) return false;
-            // If the current time is past the blowerOff timestamp, we can turn off the blower
-            if (Date.now() > config.timestamps.blowerOff) {
-                return true;
-            // Otherwise, return false because we're not ready to 
-            } else {
+        blocksShutdown() {
+            // If the current time is past the blowerOff timestamp, we can turn finish shutting down the stove
+            if ((config.timestamps.blowerOff > 0) && (Date.now() > config.timestamps.blowerOff)) {
                 return false;
+            // Otherwise, return true because we're not ready to shutdown yet
+            } else {
+                return true;
             }
         }
     },
@@ -197,29 +195,23 @@ const functions = {
             process.exit();
         },
         ignite(gpio) {
-            // Enable the auger
-            config.status.auger = 1;
-            // Set the timestamp when the igniter turned on
-            config.timestamps.igniterOn = Date.now();
-            // Set the timestamp for when the igniter will turn off
-            config.timestamps.igniterOff = config.timestamps.igniterOn + config.intervals.igniterStart;     // 7 Minutes, 420,000ms
             return new Promise((resolve, reject) => {
                 // Check if we got here from a file, then delete it.
                 if (fs.existsSync('./ignite')) fs.unlink('./ignite', (err) => { if (err) throw err; });
-                // Run the first block if this is being run on a Raspberry Pi
-                if (process.env.ONPI == 'true') {
-                    // Power the blower on
-                    functions.power.blower.on(gpio).then(res => {
-                        // Turn on the igniter
-                        functions.power.igniter.on(gpio).then(res => {
-                            resolve('Auger enabled, combustion blower and igniter turned on.');
-                        }).catch(err => {
-                            reject(err);
-                        });
+                functions.power.blower.on(gpio).then(res => {
+                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
+                    // Turn on the igniter
+                    functions.power.igniter.on(gpio).then(res => {
+                        if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
+                        // Enable the auger
+                        config.status.auger = 1;
+                        if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Auger enabled.`);
+                        
+                        resolve('Ignition sequence started successfully.');
+                    }).catch(err => {
+                        reject(err);
                     });
-                } else {
-                    resolve('Simulated igniter turned on.');
-                }
+                });
             });
         },
         shutdown(gpio) {
@@ -232,11 +224,12 @@ const functions = {
                 // If the auger is enabled, disable it
                 if (config.status.auger == 1) {
                     config.status.auger = 0;
+                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Auger disabled.`);
                 }
                 // If the igniter is on, shut it off.
                 if (config.status.igniter == 1) {
                     functions.power.igniter.off(gpio).then(res => {
-                        if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Shut off igniter.`);
+                        if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                     }); // TODO catch an error here
                 }
                 // TODO Change this so it gives a delay after shutting down so smoke doesn't enter the house
@@ -246,65 +239,110 @@ const functions = {
                 }
                 return "Shutdown has been initiated.";
             } else {
-                return "A shutdown has already been initiated.";
+                // blower.blocksShutdown() returns false only if the blower shutdown has
+                // been initiated AND the specified cooldown time has passed
+                if(!(functions.blower.blocksShutdown())) {
+                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Blower can be turned off.`);
+                    functions.power.blower.off(gpio).then(res => {
+                        // Since the blower shutting off is the last step in the shutdown, we can quit.
+                        // TODO eventually we don't want to ever quit the program, so it can be restarted remotely
+                        functions.commands.quit();
+                    });
+                } else {
+                    return "A shutdown has already been initiated and the blower is preventing shutdown.";
+                }
+
             }
         },
     },
     tests: {
         vacuum(gpio) {
             return new Promise((resolve, reject) => {
-                gpio.read(vacuumPin, (err, status) => {
-                    if (err) reject(err);
-                    resolve(status);
-                });
+                if (process.env.ONPI == 'true') {
+                    gpio.read(vacuumPin, (err, status) => {
+                        if (err) reject(err);
+                        resolve(status);
+                    });
+                } else {
+                    switch (config.status.vacuum) {
+                        case 0:
+                            resolve(false);
+                            break;
+                        case 1:
+                            resolve(true);
+                            break;
+                        default:
+                            reject('Unable to determine vacuum status.');
+                            break;
+                    }
+                }
             });
         },
         pof(gpio) {
             return new Promise((resolve, reject) => {
-                gpio.read(pofPin, (err, status) => {
-                    if (err) reject(err);
-                    resolve(status);
-                });
+                if (process.env.ONPI == 'true') {
+                    gpio.read(pofPin, (err, status) => {
+                        if (err) reject(err);
+                        resolve(status);
+                    });
+                } else {
+                    switch (config.status.pof) {
+                        case 0:
+                            resolve(false);
+                            break;
+                        case 1:
+                            resolve(true);
+                            break;
+                        default:
+                            reject('Unable to determine proof of fire status.');
+                            break;
+                    }
+                }
             });
         },
         igniter(gpio) {
             return new Promise((resolve, reject) => {
+                // Create a blank string to store the status message in as we build it
                 var statusMsg = "";
+                // Determine if the igniter is on
                 if (config.status.igniter == 1) {
-                    statusMsg += "The igniter is on.\n";
+                    statusMsg += "The igniter is on. ";
                 } else if (config.status.igniter == 0) {
-                    statusMsg += "The igniter is off.\n";
+                    statusMsg += "The igniter is off. ";
                 } else {
-                    reject("E: Unable to determine igniter status.");
+                    reject("Unable to determine igniter status.");
                 }
+                // Run this if the igniter has been turned on
                 if (config.timestamps.igniterOn > 0) {
-                    const humanStartTime = new Date(config.timestamps.igniterOn).toISOString();
-                    const humanEndTime = new Date(config.timestamps.igniterOff).toISOString();
                     if (Date.now() < config.timestamps.igniterOff && config.status.igniter == 1) {
-                        statusMsg += `Igniter started: ${humanStartTime}.\n`;
-                        statusMsg += `Igniter scheduled to stop: ${humanEndTime}.\n`;
+                        statusMsg += `Started: ${functions.time(config.timestamps.igniterOn)}. `;
+                        statusMsg += `Stopping: ${functions.time(config.timestamps.igniterOff)}. `;
                     }
                     // Shut the igniter off if it's past the waiting period
                     if ((Date.now() > config.timestamps.igniterOff) && (config.status.igniter == 1)) {
-                        if (process.env.ONPI == 'true') {
-                            gpio.write(igniterPin, false, (err) => {
-                                if (err) throw(err);
-                                config.status.igniter = 0;
-                                statusMsg += `${new Date().toISOString()} I: Turned off igniter.`;
-                                functions.tests.pof(gpio).then(res => {
-                                    if (res) {
-                                        config.status.seenFire = true;
-                                    } else {
-                                        reject(`E: No Proof of Fire after igniter shut off.`);
-                                    }
-                                }).catch(rej => {
+                        // if (process.env.ONPI == 'true') {
+                        //     gpio.write(igniterPin, false, (err) => {
+                        //         if (err) throw(err);
+                        //         config.status.igniter = 0;
+                        //         statusMsg += `${new Date().toISOString()} I: Turned off igniter.`;
+                        //         functions.tests.pof(gpio).then(res => {
+                        //             if (res) {
+                        //                 config.status.seenFire = true;
+                        //             } else {
+                        //                 reject(`E: No Proof of Fire after igniter shut off.`);
+                        //             }
+                        //         }).catch(rej => {
 
-                                });
-                            });
-                        } else {
-                            config.status.igniter = 0;
-                            statusMsg += `${new Date().toISOString()} I: Simulated igniter turned off.`;
-                        }                       
+                        //         });
+                        //     });
+                        // } else {
+                        //     config.status.igniter = 0;
+                        //     statusMsg += `${new Date().toISOString()} I: Simulated igniter turned off.`;
+                        // }
+                        // TODO I think this needs to be moved elsewhere, it doesn't finish resolving before the resolve call on line 354 is called (344+10=354)
+                        functions.power.igniter.off(gpio).then(res => {
+                            statusMsg += res;
+                        });
                     } else if  ((Date.now() > config.timestamps.igniterOff) && (config.status.igniter == 0)) {
                         statusMsg += `The igniter was turned off at ${new Date(config.timestamps.igniterOff).toISOString()}.`;
                     }
@@ -321,45 +359,67 @@ const functions = {
     power: {
         igniter: {
             on(gpio) {
-                // TODO
                 return new Promise((resolve, reject) => {
-                    gpio.write(igniterPin, true, (err) => {
-                        if (err) reject(err);
+                    config.timestamps.igniterOn = Date.now();
+                    config.timestamps.igniterOff = Date.now() + config.intervals.igniterStart;
+                    if (process.env.ONPI == 'true') {
+                        gpio.write(igniterPin, true, (err) => {
+                            if (err) reject(err);
+                            config.status.igniter = 1;
+                            resolve('Igniter turned on.');
+                        });
+                    } else {
                         config.status.igniter = 1;
                         resolve('Igniter turned on.');
-                    });
+                    }
                 });
             },
             off(gpio) {
-                // TODO
                 return new Promise((resolve, reject) => {
-                    gpio.write(igniterPin, false, (err) => {
-                        if (err) reject(err);
+                    config.timestamps.igniterOff = Date.now();
+                    config.status.igniterFinished = true;
+                    if (process.env.ONPI == 'true') {
+                        gpio.write(igniterPin, false, (err) => {
+                            if (err) reject(err);
+                            config.status.igniter = 0;
+                            resolve('Igniter turned off.');
+                        });
+                    } else {
                         config.status.igniter = 0;
                         resolve('Igniter turned off.');
-                    });
+                    }
                 });
             },
         },
         blower: {
             on(gpio) {
-                // TODO
                 return new Promise((resolve, reject) => {
-                    gpio.write(blowerPin, true, (err) => {
-                        if (err) reject(err);
+                    config.timestamps.blowerOn = Date.now();
+                    if (process.env.ONPI == 'true') {
+                        gpio.write(blowerPin, true, (err) => {
+                            if (err) reject(err);
+                            config.status.blower = 1;
+                            resolve('Blower turned on.');
+                        });
+                    } else {
                         config.status.blower = 1;
                         resolve('Blower turned on.');
-                    });
+                    }
                 });
             },
             off(gpio) {
-                // TODO
+                config.timestamps.blowerOff = Date.now();
                 return new Promise((resolve, reject) => {
-                    gpio.write(blowerPin, false, (err) => {
-                        if (err) reject(err);
+                    if (process.env.ONPI == 'true') {
+                        gpio.write(blowerPin, false, (err) => {
+                            if (err) reject(err);
+                            config.status.blower = 0;
+                            resolve('Blower turned off.');
+                        });
+                    } else {
                         config.status.blower = 0;
                         resolve('Blower turned off.');
-                    });
+                    }
                 });
             },
         },
@@ -379,6 +439,7 @@ const functions = {
     },
     // Initializes rpi-gpio, or resolves if not on a raspberry pi
     init(gpio) {
+        // TODO this boot splash needs updating
         return new Promise((resolve, reject) => {
             // Boot/About/Info
             console.log(`== Lennox Winslow PS40
@@ -435,6 +496,10 @@ const functions = {
             }
         });
     },
+    time(stamp) {
+        const time = new Date(stamp);
+        return `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
+    }
 }
 
 // Export the above object, functions, as a module
