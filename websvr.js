@@ -15,7 +15,7 @@ const config = require('./config.json');
 const fs = require('fs');
 // const bodyParser = require('body-parser');
 const core = require('./main.js');
-const fn = require('./functions.js');
+const fn = require('./functions.js').functions;
 const gpio = require('rpi-gpio');
 
 app.use(express.urlencoded());
@@ -31,7 +31,6 @@ app.get('/', (req, res) => {
         res.render('index', JSON.parse(data));
         // res.send(200);
     });
-    console.log(req);
 });
 
 app.post('/', (req, res) => {
@@ -39,11 +38,14 @@ app.post('/', (req, res) => {
         // console.log(JSON.parse(data));
         res.render('index', JSON.parse(data));
         if (req.body.start != undefined) {
-            core.main(fn, gpio);
+            fn.commands.ignite(gpio);
+        }
+        if (req.body.shutdown != undefined) {
+            fn.commands.shutdown(gpio);
         }
         // res.send(200);
     });
-    console.log(req.body);
+    // console.log(req.body);
 });
 
 server.listen(config.web.port, config.web.ip);

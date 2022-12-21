@@ -99,14 +99,14 @@ async function main(fn, gpio) {
                 if (config.status.auger == 1) {
                     fn.auger.cycle(gpio).then((res) => {
                         // Log the auger cycle results if in debug mode.
-                        if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
+                        // if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                         // Run the status check function
                         statusCheck(fn, gpio);
                         // Rerun this function once the cycle is complete
                         // main(fn, gpio);
                     });
                 } else {
-                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Auger Status: ${config.status.auger}`);
+                    // if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Auger Status: ${config.status.auger}`);
                     
                     fn.commands.pause().then(res => {
                         statusCheck(fn, gpio);
@@ -124,6 +124,7 @@ async function main(fn, gpio) {
 }
 
 function statusCheck(fn, gpio) {
+    fn.commands.writeConfig();
     if (config.status.shutdown == 1) {
         console.log(fn.commands.shutdown(gpio) || 'Shutting down...');
         main(fn, gpio);
@@ -152,7 +153,7 @@ function statusCheck(fn, gpio) {
                     console.log(fn.commands.shutdown(gpio));
                     main(fn, gpio);
                 } else {
-                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Vacuum and Proof of Fire OK.`);
+                    // if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Vacuum and Proof of Fire OK.`);
                     main(fn, gpio);                    
                 }
             });

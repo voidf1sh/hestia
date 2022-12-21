@@ -246,7 +246,8 @@ const functions = {
                     functions.power.blower.off(gpio).then(res => {
                         // Since the blower shutting off is the last step in the shutdown, we can quit.
                         // TODO eventually we don't want to ever quit the program, so it can be restarted remotely
-                        functions.commands.quit();
+                        // functions.commands.quit();
+                        config.status.shutdown = 0;
                     });
                 } else {
                     return "A shutdown has already been initiated and the blower is preventing shutdown.";
@@ -254,6 +255,11 @@ const functions = {
 
             }
         },
+        writeConfig() {
+            fs.writeFile('./config.json', JSON.stringify(config), (err) => {
+                if (err) throw err;
+            });
+        }
     },
     tests: {
         vacuum(gpio) {
@@ -341,7 +347,7 @@ const functions = {
                         // }
                         // TODO I think this needs to be moved elsewhere, it doesn't finish resolving before the resolve call on line 354 is called (344+10=354)
                         functions.power.igniter.off(gpio).then(res => {
-                            statusMsg += res;
+                            if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                         });
                     } else if  ((Date.now() > config.timestamps.igniterOff) && (config.status.igniter == 0)) {
                         statusMsg += `The igniter was turned off at ${new Date(config.timestamps.igniterOff).toISOString()}.`;

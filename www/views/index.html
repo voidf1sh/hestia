@@ -4,11 +4,11 @@
         <title>Pellet Stove Web Portal</title>
         <link rel="stylesheet" href="/main.css">
     </head>
-    <body>
+    <body onload="refreshData()">
         <%- include('trial.html') -%>
         <div id="title">Pellet Stove Web Portal</div>
-        <div id="status">Auger: <%= status.auger %> | Igniter: <%= status.igniter %> | Combustion Blower: <%= status.blower %></div>
-        <div id="safeties">Vacuum: <%= status.vacuum %> | Proof of Fire: <%= status.pof %></div>
+        <div id="status">Auger: <span id="auger-status"></span> | Igniter: <span id="igniter-status"></span> | Combustion Blower: <span id="blower-status"></span></div>
+        <div id="safeties">Vacuum: <span id="vacuum-status"></span> | Proof of Fire: <span id="pof-status"></span></div>
         <div id="controls-container">
             <form action="/" method="post">
                 <!-- Start | Shutdown | Reload Settings -->
@@ -16,23 +16,58 @@
                     <input type="submit" id="ignite" value="Start" name="start"><input type="submit" id="shutdown" value="Shutdown" name="shutdown"><input type="submit" id="reload" value="Reload" name="reload"><br>
                 </div>
                 <!-- Set feed rates -->
-                <label for="augerOn">Auger On Interval: </label><input type="number" id="augerOn" name="augerOn" min="500" max="1000" value="<%= intervals.augerOn %>">ms<br>
-                <label for="augerOff">Auger Off Interval: </label><input type="number" id="augerOff" name="augerOff" min="1000" max="2000" value="<%= intervals.augerOff %>">ms<br>
-                <label for="pauseInt">App Pause Interval: </label><input type="number" id="pauseInt" name="pauseInt" min="1000" max="600000" value="<%= intervals.pause %>">ms<br>
+                <label for="augerOn">Auger On Interval: </label><input type="number" id="auger-on" name="augerOn" min="500" max="1000" value="<%= intervals.augerOn %>">ms<br>
+                <label for="augerOff">Auger Off Interval: </label><input type="number" id="auger-off" name="augerOff" min="1000" max="2000" value="<%= intervals.augerOff %>">ms<br>
+                <label for="pauseInt">App Pause Interval: </label><input type="number" id="pause-int" name="pauseInt" min="1000" max="600000" value="<%= intervals.pause %>">ms<br>
             </form>
         </div>
         <div id="log-container">
-            <!-- <button id="refresh-log" onclick="refreshLog()">Refresh Log</button><br>
-            <textarea id="log-area"></textarea> -->
+            <button id="refresh-log" onclick="refreshLog()">Refresh Log</button><br>
+            <!-- <textarea id="log-area"></textarea> -->
             <iframe id="log-area" src="log.txt"></iframe>
         </div>
         <script>
-            function refreshLog() {
-                console.log('Refresh button hit');
-                // TODO
-                const fs = require('fs');
-                fs.readFile('/log.txt', (err, data) => {
-                    document.getElementById('log-area').innerHTML = data;
+            function sleep(ms) {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve();
+                    }, ms);
+                });
+            }
+
+            function readJSON(path) {
+                var request = new XMLHttpRequest();
+                request.open("GET", path, false);
+                request.send(null)
+                var JSONObj = JSON.parse(request.responseText);
+                return JSONObj;
+            }
+
+            function refreshData() {
+                const log = document.getElementById('log-area');
+                log.contentWindow.location.reload();
+                sleep(100).then(() => {
+                    document.getElementById('log-area').contentWindow.scrollTo(0, 9999999);
+                });
+
+                const augerStatus = document.getElementById('auger-status');
+                const augerOn = document.getElementById('auger-on');
+                const augerOff = document.getElementById('auger-off');
+                const igniterStatus = document.getElementById('igniter-status');
+                const blowerStatus = document.getElementById('blower-status');
+                const pauseInt = document.getElementById('pause-int');
+
+                const config = readJSON('./config.json');
+
+                augerStatus.innerHTML = config.status.auger;
+                augerOn.innerHTML = config.intervals.augerOn;
+                augerOff.innerHTML = config.intervals.augerOff;
+                igniterStatus.innerHTML = config.status.igniter;
+                blowerStatus.innerHTML = config.status.blower;
+                pauseInt.innerHTML = config.intervals.pause;
+
+                sleep(2000).then(() => {
+                    refreshData();
                 });
             };
         </script>

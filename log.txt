@@ -1,0 +1,58 @@
+[0] I: Not running on a Raspberry Pi.
+== Lennox Winslow PS40
+== Pellet Stove Control Panel
+== Author: Skylar Grant
+== Version: v0.2.1
+==
+== Startup Time: 2022-12-21T18:47:51.607Z
+==
+== Environment variables:
+== == ONTIME=500
+== == OFFTIME=1500
+== == PAUSETIME=3000
+== == DEBUG=true
+== == ONPI=false
+[0.008] I: == GPIO Not Available
+[0.008] I: Pausing for 3000ms
+[3.012] I: Pausing for 3000ms
+[6.014] I: Pausing for 3000ms
+[9.016] I: Pausing for 3000ms
+[12.018] I: Pausing for 3000ms
+[15.019] I: Pausing for 3000ms
+[18.02] I: Pausing for 3000ms
+[21.021] I: Pausing for 3000ms
+[24.022] I: Pausing for 3000ms
+[27.024] I: Pausing for 3000ms
+[30.027] I: Pausing for 3000ms
+[33.029] I: Pausing for 3000ms
+[36.031] I: Pausing for 3000ms
+[39.032] I: Pausing for 3000ms
+[42.032] I: Pausing for 3000ms
+[45.034] I: Pausing for 3000ms
+[48.035] I: Pausing for 3000ms
+[51.037] I: Pausing for 3000ms
+[54.039] I: Pausing for 3000ms
+[57.04] I: Pausing for 3000ms
+[60.041] I: Pausing for 3000ms
+[63.043] I: Pausing for 3000ms
+[66.044] I: Pausing for 3000ms
+[69.046] I: Pausing for 3000ms
+[72.048] I: Pausing for 3000ms
+[75.049] I: Pausing for 3000ms
+[78.05] I: Pausing for 3000ms
+[81.052] I: Pausing for 3000ms
+[84.054] I: Pausing for 3000ms
+[87.055] I: Pausing for 3000ms
+[90.057] I: Pausing for 3000ms
+[93.059] I: Pausing for 3000ms
+[96.061] I: Pausing for 3000ms
+[99.063] I: Pausing for 3000ms
+[102.064] I: Pausing for 3000ms
+[105.065] I: Pausing for 3000ms
+[108.065] I: Pausing for 3000ms
+[111.067] I: Pausing for 3000ms
+[114.069] I: Pausing for 3000ms
+[117.071] I: Pausing for 3000ms
+[120.071] I: Pausing for 3000ms
+[123.073] I: Pausing for 3000ms
+[126.075] I: Pausing for 3000ms
