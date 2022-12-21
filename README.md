@@ -1,5 +1,5 @@
-# pscontrolpanel
-Node.js Raspberry Pi Pellet Stove Controller
+# Hestia
+Node.js Raspberry Pi Pellet Stove Controller, named after the Greek virgin goddess of the hearth.
 
 # About
 This project seeks to replace the OEM control panel on a Lennox Winslow PS40 pellet stove with a Raspberry Pi. I will be utilizing a Raspberry Pi Zero W, relays, and switches already installed on the pellet stove. I chose a Pi Zero W for its small form factor, the lack of pre-installed headers, its wireless connectivity, and familiarity with the platform. I had previously used an Arduino Nano for a much more rudimentary version of this project and found great difficulty in making adjustments to the code. Additionally the Raspberry Pi platform will allow for expansion in the future to include IoT controls and logging of usage utilizing networked databases. The project will be written using Node.js and the rpi-gpio Node module. I've chosen Node.js for its familiarity as well as ease of implementation of a web server for future expansion.
