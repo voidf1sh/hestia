@@ -13,6 +13,12 @@ const http = require('http');
 const server = http.createServer(app);
 const config = require('./config.json');
 const fs = require('fs');
+// const bodyParser = require('body-parser');
+const core = require('./main.js');
+const fn = require('./functions.js');
+const gpio = require('rpi-gpio');
+
+app.use(express.urlencoded());
 
 app.use(express.static(__dirname + '/www/public'));
 app.set('views', __dirname + '/www/views');
@@ -29,8 +35,15 @@ app.get('/', (req, res) => {
 });
 
 app.post('/', (req, res) => {
-    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${req.body}`);
-    // oop
+    fs.readFile(__dirname + '/config.json', (err, data) => {
+        // console.log(JSON.parse(data));
+        res.render('index', JSON.parse(data));
+        if (req.body.start != undefined) {
+            core.main(fn, gpio);
+        }
+        // res.send(200);
+    });
+    console.log(req.body);
 });
 
 server.listen(config.web.port, config.web.ip);

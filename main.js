@@ -3,8 +3,10 @@
  * v0.2
  * 
  * TODO:
- * Add logic for other sensors
- * More documentation?
+ * Update documentation
+ * Move some of these functions to the functions file so they can be called from the web server
+ * Or move the web server here and remove the first init
+ * Or just remove the first init call and start the init elsewhere after main() is called
  */ 
 
 // Custom functions module to keep main script clean
@@ -157,3 +159,5 @@ function statusCheck(fn, gpio) {
         }
     });
 }
+
+module.exports = main;
