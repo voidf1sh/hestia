@@ -79,6 +79,8 @@
                 const igniterStatus = document.getElementById('igniter-status');
                 const blowerStatus = document.getElementById('blower-status');
                 // const pauseInt = document.getElementById('pause-int');
+                const vacuumStatus = document.getElementById('vacuum-status');
+                const pofStatus = document.getElementById('pof-status');
 
                 const config = readJSON('./config.json');
 
@@ -88,6 +90,8 @@
                 igniterStatus.innerHTML = parseStatus(config.status.igniter);
                 blowerStatus.innerHTML = parseStatus(config.status.blower);
                 // pauseInt.innerHTML = parseStatus(config.intervals.pause);
+                vacuumStatus.innerHTML = parseStatus(config.status.vacuum);
+                pofStatus.innerHTML = parseStatus(config.status.pof);
 
                 sleep(2000).then(() => {
                     refreshData();
