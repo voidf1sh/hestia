@@ -74,20 +74,20 @@
                 });
 
                 const augerStatus = document.getElementById('auger-status');
-                const augerOn = document.getElementById('auger-on');
-                const augerOff = document.getElementById('auger-off');
+                // const augerOn = document.getElementById('auger-on');
+                // const augerOff = document.getElementById('auger-off');
                 const igniterStatus = document.getElementById('igniter-status');
                 const blowerStatus = document.getElementById('blower-status');
-                const pauseInt = document.getElementById('pause-int');
+                // const pauseInt = document.getElementById('pause-int');
 
                 const config = readJSON('./config.json');
 
                 augerStatus.innerHTML = parseStatus(config.status.auger);
-                augerOn.innerHTML = parseStatus(config.intervals.augerOn);
-                augerOff.innerHTML = parseStatus(config.intervals.augerOff);
+                // augerOn.innerHTML = parseStatus(config.intervals.augerOn);
+                // augerOff.innerHTML = parseStatus(config.intervals.augerOff);
                 igniterStatus.innerHTML = parseStatus(config.status.igniter);
                 blowerStatus.innerHTML = parseStatus(config.status.blower);
-                pauseInt.innerHTML = parseStatus(config.intervals.pause);
+                // pauseInt.innerHTML = parseStatus(config.intervals.pause);
 
                 sleep(2000).then(() => {
                     refreshData();
