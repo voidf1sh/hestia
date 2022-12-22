@@ -12,14 +12,23 @@
         <div id="controls-container">
             <form action="/" method="post">
                 <!-- Start | Shutdown | Reload Settings -->
-                <div id="buttons">
-                    <input type="submit" id="ignite" value="Start" name="start"><input type="submit" id="shutdown" value="Shutdown" name="shutdown"><input type="submit" id="reload" value="Reload" name="reload"><br>
+                <div class="button-container">
+                    <input class="button-unselected" type="submit" id="ignite" value="Start" name="start"><input class="button-unselected" type="submit" id="shutdown" value="Shutdown" name="shutdown"><input class="button-unselected" type="submit" id="reload" value="Reload" name="reload"><br>
                 </div>
                 <!-- Set feed rates -->
-                <label for="augerOn">Auger On Interval: </label><input type="number" id="auger-on" name="augerOn" min="500" max="1000" value="<%= intervals.augerOn %>">ms<br>
-                <label for="augerOff">Auger Off Interval: </label><input type="number" id="auger-off" name="augerOff" min="1000" max="2000" value="<%= intervals.augerOff %>">ms<br>
-                <label for="pauseInt">App Pause Interval: </label><input type="number" id="pause-int" name="pauseInt" min="1000" max="600000" value="<%= intervals.pause %>">ms<br>
+                <!-- <label for="augerOn">Auger On Interval: </label><input type="number" id="auger-on" name="augerOn" min="500" max="1000" value="<%= intervals.augerOn %>">ms<br> -->
+                <!-- <label for="augerOff">Auger Off Interval: </label><input type="number" id="auger-off" name="augerOff" min="1000" max="2000" value="<%= intervals.augerOff %>">ms<br> -->
+                <!-- <label for="pauseInt">App Pause Interval: </label><input type="number" id="pause-int" name="pauseInt" min="1000" max="600000" value="<%= intervals.pause %>">ms<br> -->
             </form>
+        </div>
+        <div class="subheading">
+            Pellet Feed Rate
+        </div>
+        <div class="button-container">
+            <button class="button-unselected" id="low-level">LOW</button><button class="button-unselected" id="med-level">MED</button><button class="button-unselected" id="hi-level">HI</button>
+        </div>
+        <div class="button-container">
+            <img src="./dancing_jesus.gif">
         </div>
         <div id="log-container">
             <button id="refresh-log" onclick="refreshLog()">Refresh Log</button><br>
@@ -43,6 +52,20 @@
                 return JSONObj;
             }
 
+            function parseStatus(data) {
+                switch (data) {
+                    case 0:
+                        return "Off";
+                        break;
+                    case 1:
+                        return "On";
+                        break
+                    default:
+                        return "Error";
+                        break;
+                }
+            }
+
             function refreshData() {
                 const log = document.getElementById('log-area');
                 log.contentWindow.location.reload();
@@ -59,12 +82,12 @@
 
                 const config = readJSON('./config.json');
 
-                augerStatus.innerHTML = config.status.auger;
-                augerOn.innerHTML = config.intervals.augerOn;
-                augerOff.innerHTML = config.intervals.augerOff;
-                igniterStatus.innerHTML = config.status.igniter;
-                blowerStatus.innerHTML = config.status.blower;
-                pauseInt.innerHTML = config.intervals.pause;
+                augerStatus.innerHTML = parseStatus(config.status.auger);
+                augerOn.innerHTML = parseStatus(config.intervals.augerOn);
+                augerOff.innerHTML = parseStatus(config.intervals.augerOff);
+                igniterStatus.innerHTML = parseStatus(config.status.igniter);
+                blowerStatus.innerHTML = parseStatus(config.status.blower);
+                pauseInt.innerHTML = parseStatus(config.intervals.pause);
 
                 sleep(2000).then(() => {
                     refreshData();

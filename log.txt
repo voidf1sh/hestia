@@ -1,0 +1,80 @@
+[0] I: Not running on a Raspberry Pi.
+== Lennox Winslow PS40
+== Pellet Stove Control Panel
+== Author: Skylar Grant
+== Version: v0.2.1
+==
+== Startup Time: 2022-12-21T22:02:46.124Z
+==
+== Environment variables:
+== == ONTIME=500
+== == OFFTIME=1500
+== == PAUSETIME=3000
+== == DEBUG=true
+== == ONPI=false
+[0.008] I: == GPIO Not Available
+[0.008] I: Pausing for 3000ms
+[3.012] I: Pausing for 3000ms
+[6.015] I: Pausing for 3000ms
+[9.016] I: Pausing for 3000ms
+[12.018] I: Pausing for 3000ms
+[15.02] I: Pausing for 3000ms
+[18.021] I: Pausing for 3000ms
+[21.023] I: Pausing for 3000ms
+[21.995] I: Blower turned on.
+[21.995] I: Igniter turned on.
+[21.995] I: Auger enabled.
+[24.024] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
+[26.027] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
+[28.03] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
+[30.034] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
+[32.037] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
+[34.04] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
+[36.045] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
+[38.047] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
+[40.05] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
+[42.053] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
+[44.056] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
+[46.06] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
+[48.063] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
+[50.066] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
+[52.069] I: Igniter turned off.
+[52.069] I: The igniter is on. 
+[71.858] I: Auger disabled.
+A shutdown has already been initiated and the blower is preventing shutdown.
+[72.094] I: Pausing for 3000ms
+A shutdown has already been initiated and the blower is preventing shutdown.
+[75.096] I: Pausing for 3000ms
+A shutdown has already been initiated and the blower is preventing shutdown.
+[78.098] I: Pausing for 3000ms
+A shutdown has already been initiated and the blower is preventing shutdown.
+[81.1] I: Pausing for 3000ms
+[84.101] I: Blower can be turned off.
+Shutting down...
+[84.102] I: Pausing for 3000ms
+[87.103] I: Pausing for 3000ms
+[90.105] I: Pausing for 3000ms
+[93.106] I: Pausing for 3000ms
+[96.108] I: Pausing for 3000ms
+[98.989] I: Blower turned on.
+[98.99] I: Igniter turned on.
+[98.99] I: Auger enabled.
+[99.11] I: The igniter is on. Started: 17:4:25. Stopping: 17:4:55. 
+[101.113] I: The igniter is on. Started: 17:4:25. Stopping: 17:4:55. 
+[103.115] I: The igniter is on. Started: 17:4:25. Stopping: 17:4:55. 
+[103.441] I: Auger disabled.
+[103.441] I: Igniter turned off.
+A shutdown has already been initiated and the blower is preventing shutdown.
+[105.119] I: Pausing for 3000ms
+A shutdown has already been initiated and the blower is preventing shutdown.
+[108.12] I: Pausing for 3000ms
+A shutdown has already been initiated and the blower is preventing shutdown.
+[111.123] I: Pausing for 3000ms
+[114.124] I: Blower can be turned off.
+Shutting down...
+[114.125] I: Pausing for 3000ms
+[117.126] I: Pausing for 3000ms
+[120.128] I: Pausing for 3000ms
+[123.129] I: Pausing for 3000ms
+[126.131] I: Pausing for 3000ms
+[129.132] I: Pausing for 3000ms

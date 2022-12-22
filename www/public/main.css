@@ -1,4 +1,6 @@
 html, body {
+    padding: 0;
+    margin: 0;
     background-color: #333;
     color: aqua;
     font-family: sans-serif;
@@ -33,6 +35,12 @@ html, body {
     margin: 5px;
 }
 
+.subheading {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
 #log-container {
     text-align: center;
 }
@@ -48,4 +56,38 @@ html, body {
     color: yellow;
     font-size: 20px;
     background-color: red;
+}
+
+.button-container {
+    padding: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.button-unselected {
+    margin: 5px;
+    border-width: 0px;
+    font-family: times;
+    font-size: 20px;
+    height: 35px;
+    width: 100px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-color: #ccc;
+}
+
+.button-selected {
+    margin: 5px;
+    border-width: 0px;
+    font-family: times;
+    font-size: 20px;
+    height: 35px;
+    width: 100px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
