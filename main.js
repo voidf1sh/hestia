@@ -124,6 +124,7 @@ async function main(fn, gpio) {
 }
 
 function statusCheck(fn, gpio) {
+    // Once per cycle, write the config variable to the file so it can be read by the web server
     fn.commands.writeConfig();
     if (config.status.shutdown == 1) {
         console.log(fn.commands.shutdown(gpio) || 'Shutting down...');

@@ -264,24 +264,31 @@ const functions = {
     tests: {
         vacuum(gpio) {
             return new Promise((resolve, reject) => {
-                if (process.env.ONPI == 'true') {
-                    gpio.read(vacuumPin, (err, status) => {
-                        if (err) reject(err);
-                        resolve(status);
-                    });
-                } else {
-                    switch (config.status.vacuum) {
-                        case 0:
-                            resolve(false);
-                            break;
-                        case 1:
-                            resolve(true);
-                            break;
-                        default:
-                            reject('Unable to determine vacuum status.');
-                            break;
+                if (config.status.blower == 1) {
+                    if (process.env.ONPI == 'true') {
+                        gpio.read(vacuumPin, (err, status) => {
+                            if (err) reject(err);
+                            config.status.vacuum = status;
+                            resolve(status);
+                        });
+                    } else {
+                        switch (config.status.vacuum) {
+                            case 0:
+                                resolve(false);
+                                break;
+                            case 1:
+                                resolve(true);
+                                break;
+                            default:
+                                reject('Unable to determine vacuum status.');
+                                break;
+                        }
                     }
+                } else {
+                    // If the blower isn't on, the vacuum doesn't matter so always return true
+                    resolve(true);
                 }
+
             });
         },
         pof(gpio) {
@@ -289,6 +296,7 @@ const functions = {
                 if (process.env.ONPI == 'true') {
                     gpio.read(pofPin, (err, status) => {
                         if (err) reject(err);
+                        config.status.pof = status;
                         resolve(status);
                     });
                 } else {
