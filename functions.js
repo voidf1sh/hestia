@@ -12,7 +12,7 @@ const vacuumPin = 22;       // Pin for sensing the status (open/closed) of the v
 // Require the package for pulling version numbers
 const package = require('./package.json');
 // Import the config file
-const config = require('./config.json');
+var config = require('./config.json');
 
 // Get environment variables
 const dotenv = require('dotenv').config();
@@ -453,6 +453,12 @@ const functions = {
     },
     // Initializes rpi-gpio, or resolves if not on a raspberry pi
     init(gpio) {
+        fs.readFile('./templates/config.json', (err, data) => {
+            fs.writeFile('./config.json', data, (err) => {
+                if (err) throw err;
+                config = require('./config.json');
+            })
+        })
         // TODO this boot splash needs updating
         return new Promise((resolve, reject) => {
             // Boot/About/Info

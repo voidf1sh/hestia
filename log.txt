@@ -4,7 +4,7 @@
 == Author: Skylar Grant
 == Version: v0.2.1
 ==
-== Startup Time: 2022-12-21T22:02:46.124Z
+== Startup Time: 2023-01-03T15:56:33.395Z
 ==
 == Environment variables:
 == == ONTIME=500
@@ -12,69 +12,45 @@
 == == PAUSETIME=3000
 == == DEBUG=true
 == == ONPI=false
-[0.008] I: == GPIO Not Available
-[0.008] I: Pausing for 3000ms
-[3.012] I: Pausing for 3000ms
+[0.009] I: == GPIO Not Available
+[0.01] I: Pausing for 3000ms
+[3.013] I: Pausing for 3000ms
 [6.015] I: Pausing for 3000ms
-[9.016] I: Pausing for 3000ms
-[12.018] I: Pausing for 3000ms
-[15.02] I: Pausing for 3000ms
-[18.021] I: Pausing for 3000ms
-[21.023] I: Pausing for 3000ms
-[21.995] I: Blower turned on.
-[21.995] I: Igniter turned on.
-[21.995] I: Auger enabled.
-[24.024] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
-[26.027] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
-[28.03] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
-[30.034] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
-[32.037] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
-[34.04] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
-[36.045] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
-[38.047] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
-[40.05] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
-[42.053] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
-[44.056] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
-[46.06] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
-[48.063] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
-[50.066] I: The igniter is on. Started: 17:3:8. Stopping: 17:3:38. 
-[52.069] I: Igniter turned off.
-[52.069] I: The igniter is on. 
-[71.858] I: Auger disabled.
+[9.017] I: Pausing for 3000ms
+[12.019] I: Pausing for 3000ms
+[15.022] I: Pausing for 3000ms
+[18.025] I: Pausing for 3000ms
+[21.027] I: Pausing for 3000ms
+[24.028] I: Pausing for 3000ms
+[27.03] I: Pausing for 3000ms
+[30.032] I: Pausing for 3000ms
+[33.034] I: Pausing for 3000ms
+[36.037] I: Pausing for 3000ms
+[39.039] I: Pausing for 3000ms
+[42.041] I: Pausing for 3000ms
+[45.042] I: Pausing for 3000ms
+[48.044] I: Pausing for 3000ms
+[51.046] I: Pausing for 3000ms
+[52.551] I: Blower turned on.
+[52.552] I: Igniter turned on.
+[52.552] I: Auger enabled.
+[54.047] I: The igniter is on. Started: 10:57:25. Stopping: 10:57:30. 
+[54.048] I: Auger disabled.
+Shutdown has been initiated.
+[54.048] I: Igniter turned off.
+[54.048] I: Pausing for 3000ms
 A shutdown has already been initiated and the blower is preventing shutdown.
-[72.094] I: Pausing for 3000ms
-A shutdown has already been initiated and the blower is preventing shutdown.
-[75.096] I: Pausing for 3000ms
-A shutdown has already been initiated and the blower is preventing shutdown.
-[78.098] I: Pausing for 3000ms
-A shutdown has already been initiated and the blower is preventing shutdown.
-[81.1] I: Pausing for 3000ms
-[84.101] I: Blower can be turned off.
+[57.05] I: Pausing for 3000ms
+[60.052] I: Blower can be turned off.
 Shutting down...
-[84.102] I: Pausing for 3000ms
-[87.103] I: Pausing for 3000ms
-[90.105] I: Pausing for 3000ms
-[93.106] I: Pausing for 3000ms
-[96.108] I: Pausing for 3000ms
-[98.989] I: Blower turned on.
-[98.99] I: Igniter turned on.
-[98.99] I: Auger enabled.
-[99.11] I: The igniter is on. Started: 17:4:25. Stopping: 17:4:55. 
-[101.113] I: The igniter is on. Started: 17:4:25. Stopping: 17:4:55. 
-[103.115] I: The igniter is on. Started: 17:4:25. Stopping: 17:4:55. 
-[103.441] I: Auger disabled.
-[103.441] I: Igniter turned off.
-A shutdown has already been initiated and the blower is preventing shutdown.
-[105.119] I: Pausing for 3000ms
-A shutdown has already been initiated and the blower is preventing shutdown.
-[108.12] I: Pausing for 3000ms
-A shutdown has already been initiated and the blower is preventing shutdown.
-[111.123] I: Pausing for 3000ms
-[114.124] I: Blower can be turned off.
+[60.053] I: Pausing for 3000ms
+Shutdown has been initiated.
+[63.055] I: Pausing for 3000ms
+[66.057] I: Blower can be turned off.
 Shutting down...
-[114.125] I: Pausing for 3000ms
-[117.126] I: Pausing for 3000ms
-[120.128] I: Pausing for 3000ms
-[123.129] I: Pausing for 3000ms
-[126.131] I: Pausing for 3000ms
-[129.132] I: Pausing for 3000ms
+[66.057] I: Pausing for 3000ms
+Shutdown has been initiated.
+[69.059] I: Pausing for 3000ms
+[72.06] I: Blower can be turned off.
+Shutting down...
+[72.06] I: Pausing for 3000ms

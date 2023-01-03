@@ -1,0 +1,30 @@
+{
+    "debugMode": true,
+    "status": {
+        "igniter": 0,
+        "blower": 0,
+        "auger": 0,
+        "igniterFinished": false,
+        "shutdown": 0,
+        "vacuum": 0,
+        "pof": 0
+    },
+    "timestamps": {
+        "procStart": 0,
+        "blowerOn": 0,
+        "blowerOff": 0,
+        "igniterOn": 0,
+        "igniterOff": 0
+    },
+    "intervals": {
+        "augerOn": 500,
+        "augerOff": 1500,
+        "pause": 3000,
+        "igniterStart": 5000,
+        "blowerStop": 5000
+    },
+    "web": {
+        "port": 8080,
+        "ip": "0.0.0.0"
+    }
+}
