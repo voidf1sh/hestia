@@ -115,11 +115,13 @@ const functions = {
         startup () {
             // Basic startup just enables the auger
             config.status.auger = 1;
+            console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Auger enabled.`);
             return;
         },
         shutdown() {
             // Basic shutdown only needs to disable the auger
             config.status.auger = 0;
+            console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Auger disabled.`);
         },
         // Pauses the script for the time defined in env variables
         pause() {
@@ -160,6 +162,8 @@ const functions = {
                     config.intervals.augerOff = newSettings.augerOff;
                     config.intervals.augerOn = newSettings.augerOn;
                     config.intervals.pause = newSettings.pause;
+                    console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Intervals updated: (${newSettings.augerOn}/${newSettings.augerOff}/${newSettings.pause})`);
+                    
                 }
                 fs.writeFile('./config.json', JSON.stringify(config), (err) => {
                     if (err) reject(err);
@@ -230,7 +234,7 @@ const functions = {
 // Setup for use with the Pi's GPIO pins
 switch (process.env.ONPI) {
     case 'true':
-        console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] == Running on a Raspberry Pi.`);
+        console.log(`== Running on a Raspberry Pi.`);
         var gpio = require('rpi-gpio');
         functions.init(gpio).then((res) => {
             console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
@@ -241,7 +245,7 @@ switch (process.env.ONPI) {
         });
         break;
     case 'false':
-        console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Not running on a Raspberry Pi.`);
+        console.log(`I: Not running on a Raspberry Pi.`);
         var gpio = 'gpio';
         functions.init(gpio).then(res => {
             console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
