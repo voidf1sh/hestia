@@ -8,6 +8,7 @@ lerna-debug.log*
 .DS_Store
 .VSCodeCounter
 .vscode
+.vscode/*
 config.json
 log.txt
 
