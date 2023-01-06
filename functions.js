@@ -236,7 +236,7 @@ switch (process.env.ONPI) {
             console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
             main(gpio);
         }).catch(rej => {
-            console.error(`[${(Date.now() - config.timestamps.procStart)/1000}] E: Error during initialization: ${rej}`);
+            console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: Error during initialization: ${rej}`);
             process.exit(1);
         });
         break;
@@ -247,12 +247,12 @@ switch (process.env.ONPI) {
             console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
             main(gpio);
         }).catch(rej => {
-            console.error(`[${(Date.now() - config.timestamps.procStart)/1000}] E: Error during initialization: ${rej}`);
+            console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: Error during initialization: ${rej}`);
             process.exit(1);
         });
         break;
     default:
-        console.error(`[${Date.now() - config.timestamps.procStart}] E: Problem with ENV file.`);
+        console.log(`[${Date.now() - config.timestamps.procStart}] E: Problem with ENV file.`);
         process.exit(1);
         break;
 }
