@@ -33,5 +33,11 @@
 		"prefix": "err",
 		"body": "console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: $1`);\n$0",
 		"description": "Log an error to the console with timestamp"
-	}
+	},
+	"Log Always": {
+		"scope": "javascript",
+		"prefix": "log",
+		"body": "console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: $1`);\n$0",
+		"description": "Log output to console always"
+	},
 }
