@@ -161,7 +161,6 @@ const functions = {
                 if (newSettings != undefined) {
                     config.intervals.augerOff = newSettings.augerOff;
                     config.intervals.augerOn = newSettings.augerOn;
-                    config.intervals.pause = newSettings.pause;
                     console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Intervals updated: (${newSettings.augerOn}/${newSettings.augerOff}/${newSettings.pause})`);
                     
                 }
