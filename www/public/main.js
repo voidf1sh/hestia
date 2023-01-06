@@ -40,6 +40,7 @@ function refreshData() {
     const augerOn = document.getElementById('auger-on');
     const augerOff = document.getElementById('auger-off');
     const pauseInt = document.getElementById('pause-int');
+    const feedRate = document.getElementById('feed-rate');
     
     // Get the config file
     const config = readJSON('./config.json');
@@ -49,6 +50,7 @@ function refreshData() {
     augerOn.innerHTML = config.intervals.augerOn;
     augerOff.innerHTML = config.intervals.augerOff;
     pauseInt.innerHTML = config.intervals.pause;
+    feedRate.value = config.intervals.augerOn;
     
     // Run this again after 2 seconds
     sleep(5000).then(() => {
