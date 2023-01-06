@@ -39,7 +39,6 @@ function refreshData() {
     const augerStatus = document.getElementById('auger-status');
     const augerOn = document.getElementById('auger-on');
     const augerOff = document.getElementById('auger-off');
-    const pauseInt = document.getElementById('pause-int');
     const feedRate = document.getElementById('feed-rate');
     
     // Get the config file
@@ -49,7 +48,6 @@ function refreshData() {
     augerStatus.innerHTML = parseStatus(config.status.auger);
     augerOn.innerHTML = config.intervals.augerOn;
     augerOff.innerHTML = config.intervals.augerOff;
-    pauseInt.innerHTML = config.intervals.pause;
 
     switch (config.intervals.augerOn) {
         case 600:
