@@ -17,8 +17,8 @@
         "igniterOff": 0
     },
     "intervals": {
-        "augerOn": 500,
-        "augerOff": 1500,
+        "augerOn": 600,
+        "augerOff": 1400,
         "pause": 3000,
         "igniterStart": 5000,
         "blowerStop": 5000

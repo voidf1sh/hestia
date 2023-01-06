@@ -50,6 +50,21 @@ function refreshData() {
     augerOn.innerHTML = config.intervals.augerOn;
     augerOff.innerHTML = config.intervals.augerOff;
     pauseInt.innerHTML = config.intervals.pause;
+
+    switch (config.intervals.augerOn) {
+        case 600:
+            feedRate.selectedIndex = 0;
+            break;
+        case 800:
+            feedRate.selectedIndex = 1;
+            break;
+        case 1000:
+            feedRate.selectedIndex = 2;
+            break;
+        default:
+            feedRate.selectedIndex = 0;
+            break;
+    }
     feedRate.value = config.intervals.augerOn;
     
     // Run this again after 2 seconds
