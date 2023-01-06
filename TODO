@@ -1,0 +1,8 @@
+Logic Goal:
+
+1. Start Script & Web Server
+2. Await a command from the user.
+3. Startup enables auger
+4. If auger is enabled, run the cycle command.
+5. Once per cycle, read then rewrite the config file for interoperability
+6. Set feed rate based on config.
