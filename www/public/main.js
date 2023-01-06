@@ -46,9 +46,9 @@ function refreshData() {
     // console.log(config);
 
     augerStatus.innerHTML = parseStatus(config.status.auger);
-    augerOn.value = config.intervals.augerOn;
-    augerOff.value = config.intervals.augerOff;
-    pauseInt.value = config.intervals.pause;
+    augerOn.innerHTML = config.intervals.augerOn;
+    augerOff.innerHTML = config.intervals.augerOff;
+    pauseInt.innerHTML = config.intervals.pause;
     
     // Run this again after 2 seconds
     sleep(5000).then(() => {
