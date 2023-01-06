@@ -15,7 +15,12 @@
                     <input class="button-unselected" type="submit" id="ignite" value="Enable Auger" name="start"><input class="button-unselected" type="submit" id="shutdown" value="Disable Auger" name="shutdown"><input class="button-unselected" type="submit" id="reload" value="Reload" name="reload"><br>
                 </div>
                 <!-- Set feed rates -->
-                <label for="augerOn">Auger On Interval: </label><input type="number" name="augerOn" min="500" max="1000" step="100" value="<%= intervals.augerOn %>">ms<br>
+                <label for="feedRate">Feed Rate: </label>
+                <select name="feedRate">
+                    <option value="600">Low</option>
+                    <option value="800">Medium</option>
+                    <option value="1000">High</option>
+                </select>
                 <label for="pauseInt">App Pause Interval: </label><input type="number" name="pauseInt" min="1000" max="600000" step="1000" value="<%= intervals.pause %>">ms<br>
             </form>
         </div>

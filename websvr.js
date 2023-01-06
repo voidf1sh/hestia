@@ -54,8 +54,8 @@ app.post('/', (req, res) => {
         }
         if (req.body.reload != undefined) {
             fn.commands.refreshConfig({
-                augerOff: 2000 - req.body.augerOn,
-                augerOn: req.body.augerOn,
+                augerOff: 2000 - req.body.feedRate,
+                augerOn: req.body.feedRate,
                 pause: req.body.pauseInt
             });
         }
