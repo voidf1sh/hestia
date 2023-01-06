@@ -51,16 +51,16 @@ function refreshData() {
 
     switch (config.intervals.augerOn) {
         case 600:
-            feedRate.selectedIndex = 0;
+            feedRate.innerHTML = 'Low';
             break;
         case 800:
-            feedRate.selectedIndex = 1;
+            feedRate.innerHTML = 'Medium';
             break;
         case 1000:
-            feedRate.selectedIndex = 2;
+            feedRate.innerHTML = 'High';
             break;
         default:
-            feedRate.selectedIndex = 0;
+            feedRate.innerHTML = 'Unknown';
             break;
     }
     feedRate.value = config.intervals.augerOn;
