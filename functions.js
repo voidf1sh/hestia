@@ -161,7 +161,7 @@ const functions = {
                 if (newSettings != undefined) {
                     config.intervals.augerOff = newSettings.augerOff;
                     config.intervals.augerOn = newSettings.augerOn;
-                    console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Intervals updated: (${newSettings.augerOn}/${newSettings.augerOff}/${newSettings.pause})`);
+                    console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Intervals updated: (${newSettings.augerOn}/${newSettings.augerOff})`);
                     
                 }
                 fs.writeFile('./config.json', JSON.stringify(config), (err) => {
