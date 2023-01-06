@@ -27,5 +27,11 @@
 		"prefix": "onpi",
 		"body": "if (process.env.ONPI == 'true') {\n\t$1\n} else {\n\t$2\n}$0",
 		"description": "Run something only if the ONPI env var is set"
+	},
+	"Error": {
+		"scope": "javascript",
+		"prefix": "err",
+		"body": "console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: $1`);\n$0",
+		"description": "Log an error to the console with timestamp"
 	}
 }

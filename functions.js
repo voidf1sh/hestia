@@ -17,25 +17,30 @@ const fs = require('fs');
 const { time } = require('console');
 
 const main = (gpio) => {
-    // If the auger is enabled
-    if (config.status.auger == 1) {
-        // Run a cycle of the auger
-        functions.auger.cycle(gpio).then(res => {
-            if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
-            // Recursion ecursion cursion ursion rsion sion ion on n
-            main(gpio);
-        }).catch(err => {
-            if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${err}`);
-        });
-    } else {
-    // If the auger is disabled
-        functions.commands.pause().then(res => {
-            main(gpio);
-        }).catch(err => {
-            if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${err}`);
-            main(gpio);
-        });
-    }
+    functions.commands.refreshConfig().then(res => {
+        // If the auger is enabled
+        if (config.status.auger == 1) {
+            // Run a cycle of the auger
+            functions.auger.cycle(gpio).then(res => {
+                if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
+                // Recursion ecursion cursion ursion rsion sion ion on n
+                main(gpio);
+            }).catch(err => {
+                if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${err}`);
+            });
+        } else {
+        // If the auger is disabled
+            functions.commands.pause().then(res => {
+                main(gpio);
+            }).catch(err => {
+                if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${err}`);
+                main(gpio);
+            });
+        }
+    }).catch(rej => {
+        console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: Problem refreshing the config file.`);
+        main(gpio);
+    });
 }
 
 // The functions we'll export to be used in other files
@@ -144,20 +149,24 @@ const functions = {
             
         },
         refreshConfig(newSettings) {
-            // When the reload button is pressed, the call to this function will contain new config values
-            // {
-            //     augerOff: 500,
-            //     augerOn: 1500,
-            //     pause: 5000
-            // }
-            if (newSettings != undefined) {
-                config.intervals.augerOff = newSettings.augerOff;
-                config.intervals.augerOn = newSettings.augerOn;
-                config.intervals.pause = newSettings.pause;
-            }
-            fs.writeFile('./config.json', JSON.stringify(config), (err) => {
-                if (err) throw err;
-            });
+            return new Promise((resolve, reject) => {
+                // When the reload button is pressed, the call to this function will contain new config values
+                // {
+                //     augerOff: 500,
+                //     augerOn: 1500,
+                //     pause: 5000
+                // }
+                if (newSettings != undefined) {
+                    config.intervals.augerOff = newSettings.augerOff;
+                    config.intervals.augerOn = newSettings.augerOn;
+                    config.intervals.pause = newSettings.pause;
+                }
+                fs.writeFile('./config.json', JSON.stringify(config), (err) => {
+                    if (err) reject(err);
+                    resolve();
+                });
+            })
+            
         }
     },
     // Sleeps for any given milliseconds

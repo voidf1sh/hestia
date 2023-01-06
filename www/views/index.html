@@ -6,14 +6,13 @@
     </head>
     <body onload="refreshData()">
         <%- include('trial.html') -%>
-        <div id="title">Hestia Web Portal</div>
-        <div id="status">Auger: <span id="auger-status"></span> | Igniter: <span id="igniter-status"></span> | Combustion Blower: <span id="blower-status"></span></div>
-        <div id="safeties">Vacuum: <span id="vacuum-status"></span> | Proof of Fire: <span id="pof-status"></span></div>
+        <div id="title"><a href='./'>Hestia Web Portal</a></div>
+        <div id="status">Auger: <span id="auger-status"></span></div>
         <div id="controls-container">
             <form action="/" method="post">
                 <!-- Start | Shutdown | Reload Settings -->
                 <div class="button-container">
-                    <input class="button-unselected" type="submit" id="ignite" value="Start" name="start"><input class="button-unselected" type="submit" id="shutdown" value="Shutdown" name="shutdown"><input class="button-unselected" type="submit" id="reload" value="Reload" name="reload"><br>
+                    <input class="button-unselected" type="submit" id="ignite" value="Enable Auger" name="start"><input class="button-unselected" type="submit" id="shutdown" value="Disable Auger" name="shutdown"><input class="button-unselected" type="submit" id="reload" value="Reload" name="reload"><br>
                 </div>
                 <!-- Set feed rates -->
                 <label for="augerOn">Auger On Interval: </label><input type="number" id="auger-on" name="augerOn" min="500" max="1000" step="100" value="<%= intervals.augerOn %>">ms<br>
@@ -21,17 +20,17 @@
                 <label for="pauseInt">App Pause Interval: </label><input type="number" id="pause-int" name="pauseInt" min="1000" max="600000" step="1000" value="<%= intervals.pause %>">ms<br>
             </form>
         </div>
-        <div class="subheading">
+        <!-- <div class="subheading">
             Pellet Feed Rate
         </div>
         <div class="button-container">
             <button class="button-unselected" id="low-level">LOW</button><button class="button-unselected" id="med-level">MED</button><button class="button-unselected" id="hi-level">HI</button>
-        </div>
+        </div> -->
         <div class="button-container">
             <img src="./dancing_jesus.gif">
         </div>
         <div id="log-container">
-            <button id="refresh-log" onclick="refreshLog()">Refresh Log</button><br>
+            <button id="refresh-log" onclick="refreshData()">Refresh Log</button><br>
             <!-- <textarea id="log-area"></textarea> -->
             <iframe id="log-area" src="log.txt"></iframe>
         </div>

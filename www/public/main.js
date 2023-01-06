@@ -32,30 +32,26 @@ function refreshData() {
     const log = document.getElementById('log-area');
     log.contentWindow.location.reload();
     sleep(100).then(() => {
-        document.getElementById('log-area').contentWindow.scrollTo(0, 9999999);
+        document.getElementById('log-area').contentWindow.scrollTo(0, 9999999999);
     });
 
+    // Get the elements we need to update
     const augerStatus = document.getElementById('auger-status');
-    // const augerOn = document.getElementById('auger-on');
-    // const augerOff = document.getElementById('auger-off');
-    const igniterStatus = document.getElementById('igniter-status');
-    const blowerStatus = document.getElementById('blower-status');
-    // const pauseInt = document.getElementById('pause-int');
-    const vacuumStatus = document.getElementById('vacuum-status');
-    const pofStatus = document.getElementById('pof-status');
-
+    const augerOn = document.getElementById('auger-on');
+    const augerOff = document.getElementById('auger-off');
+    const pauseInt = document.getElementById('pause-int');
+    
+    // Get the config file
     const config = readJSON('./config.json');
+    // console.log(config);
 
     augerStatus.innerHTML = parseStatus(config.status.auger);
-    // augerOn.innerHTML = parseStatus(config.intervals.augerOn);
-    // augerOff.innerHTML = parseStatus(config.intervals.augerOff);
-    igniterStatus.innerHTML = parseStatus(config.status.igniter);
-    blowerStatus.innerHTML = parseStatus(config.status.blower);
-    // pauseInt.innerHTML = parseStatus(config.intervals.pause);
-    vacuumStatus.innerHTML = parseStatus(config.status.vacuum);
-    pofStatus.innerHTML = parseStatus(config.status.pof);
-
-    sleep(2000).then(() => {
+    augerOn.value = config.intervals.augerOn;
+    augerOff.value = config.intervals.augerOff;
+    pauseInt.value = config.intervals.pause;
+    
+    // Run this again after 2 seconds
+    sleep(5000).then(() => {
         refreshData();
     });
 };

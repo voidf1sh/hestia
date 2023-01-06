@@ -9,7 +9,13 @@ html, body {
 #title {
     text-align: center;
     font-size: 35px;
+    margin-top: 10px;
     padding-bottom: 15px;
+}
+
+#title a {
+    text-decoration: none;
+    color: inherit;
 }
 
 #status {
@@ -71,7 +77,7 @@ html, body {
     font-family: times;
     font-size: 20px;
     height: 35px;
-    width: 100px;
+    width: 150px;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
     border-top-right-radius: 0px;
