@@ -2,7 +2,7 @@
 
 // TODO: Move these to config
 // Physical Pin numbers for GPIO
-const augerPin = 26;         // Pin for controlling the relay for the pellet auger motor.
+const augerPin = 7;         // Pin for controlling the relay for the pellet auger motor.
 
 // Require the package for pulling version numbers
 const package = require('./package.json');
