@@ -14,7 +14,7 @@ config.timestamps.procStart = Date.now();
 const dotenv = require('dotenv').config();
 // Module for working with files
 const fs = require('fs');
-const { time } = require('console');
+const { exec } = require('child_process');
 
 const main = (gpio) => {
     functions.commands.refreshConfig().then(res => {
@@ -170,6 +170,16 @@ const functions = {
                 });
             })
             
+        },
+        quit() {
+            functions.commands.shutdown();
+            functions.auger.off(gpio).then(res => {
+                console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Exiting app...`);
+                process.exit(0);
+            }).catch(err => {
+                console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: Unable to shut off auger, rebooting Pi!`);
+                exec('shutdown -r 0');
+            });
         }
     },
     // Sleeps for any given milliseconds
