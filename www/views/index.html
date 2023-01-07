@@ -12,7 +12,7 @@
             <form action="/" method="post">
                 <!-- Start | Shutdown | Reload Settings -->
                 <div class="button-container">
-                    <input class="button-unselected" type="submit" id="ignite" value="Enable Auger" name="start"><input class="button-unselected" type="submit" id="shutdown" value="Disable Auger" name="shutdown"><input class="button-unselected" type="submit" id="reload" value="Reload" name="reload"><br>
+                    <input class="button-unselected" type="submit" id="ignite" value="Enable Auger" name="start"><input class="button-unselected" type="submit" id="shutdown" value="Disable Auger" name="shutdown"><br>
                 </div>
                 <!-- Set feed rates -->
                 <label for="feedRate">Feed Rate: </label>
@@ -21,6 +21,9 @@
                     <option value="800">Medium</option>
                     <option value="1000">High</option>
                 </select>
+                <div class="button-container">
+                    <input class="button-unselected" type="submit" id="reload" value="Reload" name="reload">
+                </div>
             </form>
         </div>
         <div class="button-container">
