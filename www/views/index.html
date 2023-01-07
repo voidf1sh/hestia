@@ -13,7 +13,6 @@
                 <!-- Start | Shutdown | Reload Settings -->
                 <div class="button-container">
                     <input class="button-unselected" type="submit" id="ignite" value="Enable Auger" name="start"><input class="button-unselected" type="submit" id="shutdown" value="Disable Auger" name="shutdown"><input class="button-unselected" type="submit" id="reload" value="Reload" name="reload"><br>
-                    <input class="button-unselected" type="submit" id="quit" value="Quit!!" name="quit"><br>
                 </div>
                 <!-- Set feed rates -->
                 <label for="feedRate">Feed Rate: </label>
@@ -38,6 +37,9 @@
             <!-- <textarea id="log-area"></textarea> -->
             <iframe id="log-area" src="log.txt"></iframe>
         </div>
+        <form action="/" method="POST">
+            <input class="button-unselected" type="submit" id="quit" value="Quit!!" name="quit">
+        </form>
         <script src="./main.js"></script>
     </body>
 </html>
