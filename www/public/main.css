@@ -18,10 +18,6 @@ html, body {
     color: inherit;
 }
 
-#status {
-    text-align: center;
-}
-
 #safeties {
     text-align: center;
 }
@@ -96,4 +92,14 @@ html, body {
     border-bottom-left-radius: 0px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
+}
+
+table {
+    margin: 0 auto;
+}
+
+table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+    padding: 3px;
 }

@@ -7,7 +7,30 @@
     <body onload="refreshData()">
         <%- include('trial.html') -%>
         <div id="title"><a href='./'>Hestia Web Portal</a></div>
-        <div id="status">Auger: <span id="auger-status"></span> | On Time: <span id="auger-on"></span> | Off Time: <span id="auger-off"></span> | Feed Rate: <span id="feed-rate"></span></div>
+        <div id="status">
+            <!--
+                | Auger     | rows[0].cells[1] | On Time  | rows[0].cells[3] |
+                | Feed Rate | rows[1].cells[1] | Off Time | rows[1].cells[3] |
+            -->
+
+            <table id="status-table">
+                <tr>
+                    <td>Auger</td>
+                    <td></td>
+                    <td>On Time</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Feed Rate</td>
+                    <td></td>
+                    <td>Off Time</td>
+                    <td></td>
+                </tr>
+            </table>            
+        </div>
+        
+        
+        
         <div class="controls-container">
             <form action="/" method="post">
                 <!-- Start | Shutdown | Reload Settings -->

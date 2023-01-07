@@ -36,10 +36,11 @@ function refreshData() {
     });
 
     // Get the elements we need to update
-    const augerStatus = document.getElementById('auger-status');
-    const augerOn = document.getElementById('auger-on');
-    const augerOff = document.getElementById('auger-off');
-    const feedRate = document.getElementById('feed-rate');
+    const statusTable = document.getElementById('status-table');
+    const augerStatus = statusTable.rows[0].cells[1];
+    const augerOn = statusTable.rows[0].cells[3];
+    const augerOff = statusTable.rows[1].cells[3];
+    const feedRate = statusTable.rows[1].cells[1];
     
     // Get the config file
     const config = readJSON('./config.json');
