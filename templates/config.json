@@ -17,11 +17,11 @@
         "igniterOff": 0
     },
     "intervals": {
-        "augerOn": 600,
-        "augerOff": 1400,
-        "pause": 3000,
-        "igniterStart": 5000,
-        "blowerStop": 5000
+        "augerOn": "600",
+        "augerOff": "1400",
+        "pause": "3000",
+        "igniterStart": "5000",
+        "blowerStop": "5000"
     },
     "web": {
         "port": 8080,

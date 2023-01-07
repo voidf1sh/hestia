@@ -50,13 +50,13 @@ function refreshData() {
     augerOff.innerHTML = config.intervals.augerOff;
 
     switch (config.intervals.augerOn) {
-        case 600:
+        case '600':
             feedRate.innerHTML = 'Low';
             break;
-        case 800:
+        case '800':
             feedRate.innerHTML = 'Medium';
             break;
-        case 1000:
+        case '1000':
             feedRate.innerHTML = 'High';
             break;
         default:
