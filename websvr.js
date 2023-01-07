@@ -58,5 +58,8 @@ app.post('/', (req, res) => {
                 augerOn: req.body.feedRate
             });
         }
+        if (req.body.quit != undefined) {
+            fn.commands.quit();
+        }
     });
 });
