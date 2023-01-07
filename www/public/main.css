@@ -37,7 +37,7 @@ html, body {
     height: 30px;
 }
 
-#controls-container input {
+.controls-container input {
     margin: 5px;
 }
 

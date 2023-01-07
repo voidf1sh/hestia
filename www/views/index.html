@@ -8,7 +8,7 @@
         <%- include('trial.html') -%>
         <div id="title"><a href='./'>Hestia Web Portal</a></div>
         <div id="status">Auger: <span id="auger-status"></span> | On Time: <span id="auger-on"></span> | Off Time: <span id="auger-off"></span> | Feed Rate: <span id="feed-rate"></span></div>
-        <div id="controls-container">
+        <div class="controls-container">
             <form action="/" method="post">
                 <!-- Start | Shutdown | Reload Settings -->
                 <div class="button-container">
@@ -37,9 +37,11 @@
             <!-- <textarea id="log-area"></textarea> -->
             <iframe id="log-area" src="log.txt"></iframe>
         </div>
-        <form action="/" method="POST">
-            <input class="button-unselected" type="submit" id="quit" value="Quit!!" name="quit">
-        </form>
+        <div class="controls-container">
+            <form action="/" method="POST">
+                <input class="button-unselected" type="submit" id="quit" value="Quit!!" name="quit">
+            </form>
+        </div>
         <script src="./main.js"></script>
     </body>
 </html>
