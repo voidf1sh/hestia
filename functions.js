@@ -24,14 +24,18 @@ const main = (gpio) => {
             functions.auger.cycle(gpio).then(res => {
                 if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                 // Recursion ecursion cursion ursion rsion sion ion on n
-                main(gpio);
+                functions.checkForQuit().then(n => {
+                    main(gpio);
+                });
             }).catch(err => {
                 if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${err}`);
             });
         } else {
         // If the auger is disabled
             functions.commands.pause().then(res => {
-                main(gpio);
+                functions.checkForQuit().then(n => {
+                    main(gpio);
+                });
             }).catch(err => {
                 if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${err}`);
                 main(gpio);
@@ -231,6 +235,19 @@ const functions = {
             } else {
                 // Resolve the promise
                 resolve('== GPIO Not Available');
+            }
+        });
+    },
+    checkForQuit() {
+        if (config.status.shutdownNextCycle == 1) process.exit();
+        return new Promise((resolve, reject) => {
+            if (fs.existsSync('./quit')) {
+                fs.unlink('./quit', err => {
+                    if (err) console.log('Error removing the quit file: ' + err);
+                    config.status.shutdownNextCycle = 1;
+                    config.status.auger = 0;
+                    resolve();
+                });
             }
         });
     },
