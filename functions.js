@@ -132,7 +132,10 @@ const functions = {
             return new Promise((resolve) => {
                 if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Pausing for ${config.intervals.pause}ms`);
                                
-                functions.sleep(config.intervals.pause).then(() => { resolve(); });
+                functions.sleep(config.intervals.pause).then((res) => { 
+                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Pause finished.`);
+                    resolve();
+                });
             });
         },
         // Reload the environment variables on the fly
@@ -239,7 +242,10 @@ const functions = {
         });
     },
     checkForQuit() {
-        if (config.status.shutdownNextCycle == 1) process.exit();
+        if (config.status.shutdownNextCycle == 1) {
+            console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Exiting Process!`);
+            process.exit();
+        }
         return new Promise((resolve, reject) => {
             if (fs.existsSync('./quit')) {
                 fs.unlink('./quit', err => {
@@ -248,6 +254,8 @@ const functions = {
                     config.status.auger = 0;
                     resolve();
                 });
+            } else {
+                resolve('Not shutting down');
             }
         });
     },

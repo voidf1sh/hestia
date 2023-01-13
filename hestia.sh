@@ -35,6 +35,7 @@ echo -e "
 [ Hestia Control Panel ]
   
 This script is being run from: '$(pwd)'
+Active Nodes: $(ps ax -o pid,user,command | grep 'node websvr.js' | grep -v grep)
 
 Please enter an option from below:
 
@@ -45,7 +46,7 @@ Please enter an option from below:
   [0] Quit Control Panel"
 
 # Wait for input
-read -p "  Option: " opt
+read -p "Option: " opt
 
 # Execute the correct commands based on input.
 case "$opt" in
@@ -64,7 +65,7 @@ case "$opt" in
 	3)
 		# View logs
 		clear
-		cat log.txt | less
+		less log.txt
 		;;
 	0)
 		# Exit the script
