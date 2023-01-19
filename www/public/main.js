@@ -29,11 +29,11 @@ function parseStatus(data) {
 }
 
 function refreshData() {
-    const log = document.getElementById('log-area');
-    log.contentWindow.location.reload();
-    sleep(100).then(() => {
-        document.getElementById('log-area').contentWindow.scrollTo(0, 9999999999);
-    });
+    // const log = document.getElementById('log-area');
+    // log.contentWindow.location.reload();
+    // sleep(100).then(() => {
+        // document.getElementById('log-area').contentWindow.scrollTo(0, 9999999999);
+    // });
 
     // Get the elements we need to update
     const statusTable = document.getElementById('status-table');
