@@ -67,7 +67,7 @@ function refreshData() {
     feedRate.value = config.intervals.augerOn;
     
     // Run this again after 2 seconds
-    sleep(1000).then(() => {
+    sleep(5000).then(() => {
         refreshData();
     });
 };

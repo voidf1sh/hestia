@@ -22,13 +22,13 @@ const main = (gpio) => {
         if (config.status.auger == 1) {
             // Run a cycle of the auger
             functions.auger.cycle(gpio).then(res => {
-                if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
+                if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                 // Recursion ecursion cursion ursion rsion sion ion on n
                 functions.checkForQuit().then(n => {
                     main(gpio);
                 });
             }).catch(err => {
-                if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${err}`);
+                if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${err}`);
             });
         } else {
         // If the auger is disabled
@@ -37,7 +37,7 @@ const main = (gpio) => {
                     main(gpio);
                 });
             }).catch(err => {
-                if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${err}`);
+                if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${err}`);
                 main(gpio);
             });
         }
@@ -92,19 +92,19 @@ const functions = {
                 // Turn the auger on
                 this.on(gpio).then((res) => {
                     // Log action if in debug mode
-                    // if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
+                    // if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                     // Sleep for the time set in env variables
                     functions.sleep(config.intervals.augerOn).then((res) => {
                         // Log action if in debug mode
-                        // if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
+                        // if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                         // Turn the auger off
                         this.off(gpio).then((res) => {
                             // Log action if in debug mode
-                            // if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
+                            // if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                             // Sleep for the time set in env variables
                             functions.sleep(config.intervals.augerOff).then((res) => {
                                 // Log action if in debug mode
-                                // if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
+                                // if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
                                 // Resolve the promise, letting the main script know the cycle is complete
                                 resolve(`Auger cycled (${config.intervals.augerOn}/${config.intervals.augerOff})`);
                             });
@@ -130,10 +130,10 @@ const functions = {
         // Pauses the script for the time defined in env variables
         pause() {
             return new Promise((resolve) => {
-                if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Pausing for ${config.intervals.pause}ms`);
+                if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Pausing for ${config.intervals.pause}ms`);
                                
                 functions.sleep(config.intervals.pause).then((res) => { 
-                    if (config.debugMode) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Pause finished.`);
+                    if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Pause finished.`);
                     resolve();
                 });
             });
@@ -146,12 +146,12 @@ const functions = {
                 // Delete the reload file
                 fs.unlink('./reload', (err) => {
                     if (err) throw err;
-                    if (config.debugMode) console.log('Deleted reload file.');
+                    if (process.env.DEBUG) console.log('Deleted reload file.');
                 });
                 // Print out the new environment variables
                 // This should be printed regardless of debug status, maybe prettied up TODO?
                 console.log('Reloaded environment variables.');
-                console.log(`ONTIME=${config.intervals.augerOn}\nOFFTIME=${config.intervals.augerOff}\nPAUSETIME=${config.intervals.pause}\nDEBUG=${config.debugMode}\nONPI=${process.env.ONPI}`);
+                console.log(`ONTIME=${config.intervals.augerOn}\nOFFTIME=${config.intervals.augerOff}\nPAUSETIME=${config.intervals.pause}\nDEBUG=${process.env.DEBUG}\nONPI=${process.env.ONPI}`);
                 // Resolve the promise, letting the main script know we're done reloading the variables and the cycle can continue
                 resolve();
             });
@@ -192,7 +192,7 @@ const functions = {
     // Sleeps for any given milliseconds
     sleep(ms) {
         return new Promise((resolve) => {
-            // if (config.debugMode) console.log(`Sleeping for ${ms}ms`);
+            // if (process.env.DEBUG) console.log(`Sleeping for ${ms}ms`);
             // Function to be called when setTimeout finishes
             const finish = () => {
                 // Resolve the promise 
@@ -224,14 +224,14 @@ const functions = {
 == == ONTIME=${config.intervals.augerOn}
 == == OFFTIME=${config.intervals.augerOff}
 == == PAUSETIME=${config.intervals.pause}
-== == DEBUG=${config.debugMode}
+== == DEBUG=${process.env.DEBUG}
 == == ONPI=${process.env.ONPI}`);
             // Set up GPIO 4 (pysical pin 7) as output, then call functions.auger.ready()
             if (process.env.ONPI == 'true') {
                 // Init the Auger pin
                 gpio.setup(augerPin, gpio.DIR_OUT, (err) => {
                     if (err) reject(err);
-                    if (config.debugMode) console.log('== Auger pin initialized.');
+                    if (process.env.DEBUG) console.log('== Auger pin initialized.');
                     // Resolve the promise now that all pins have been initialized
                     resolve('== GPIO Initialized.');
                 });

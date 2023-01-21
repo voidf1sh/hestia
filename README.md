@@ -54,3 +54,53 @@ For ease of adaption, connection, and prototyping I've decided to use Cat 5 ethe
     * Vacuum Switch OPEN after igniter start.
 4. Test manipulation of feed rates.
 5. Test shutdown sequence.
+
+# SQLite Database Tables
+
+## status
+| Field | Type | Null | Key | Default | Extra |
+| ----- | ---- | ---- | --- | ------- | ----- |
+| id | int(10) | No | PRI | NULL | auto_increment |
+| key | varchar(100) | No |   |   |
+| value | varchar(1000) | No |   |   |
+
+| id | key | value |
+| -- | --- | ----- |
+0 | igniter | 0
+1 | blower | 0
+2 | auger | 0
+3 | igniter_finished | false
+4 | shutdown_initiated | 0
+5 | vacuum | 0
+6 | proof_of_fire | 0
+7 | shutdown_next_cycle | 0
+
+## timestamps
+| Field | Type | Null | Key | Default | Extra |
+| ----- | ---- | ---- | --- | ------- | ----- |
+| id | int(10) | No | PRI | NULL | auto_increment |
+| key | varchar(100) | No |   |   |
+| value | varchar(1000) | No |   |   |
+
+| id | key | value |
+| -- | --- | ----- |
+0 | process_start | 0
+1 | blower_on | 0
+2 | blower_off | 0
+3 | igniter_on | 0
+4 | igniter_off | 0
+
+## intervals
+| Field | Type | Null | Key | Default | Extra |
+| ----- | ---- | ---- | --- | ------- | ----- |
+| id | int(10) | No | PRI | NULL | auto_increment |
+| key | varchar(100) | No |   |   |
+| value | varchar(1000) | No |   |   |
+
+| id | key | value |
+| -- | --- | ----- |
+0 | auger_on | 600
+1 | auger_off | 1400
+2 | pause | 5000
+3 | igniter_start | 420000
+4 | blower_stop | 600000
