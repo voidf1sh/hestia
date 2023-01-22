@@ -54,7 +54,8 @@ case "$opt" in
 		# Launch Hestia Web Portal
 		clear
 		echo "Launching Hestia Web Portal"
-		nohup node websvr.js > log.txt &
+		nohup node main.js > log.txt &
+		nohup node modules/_server.js &
 		;;
 	2)
 		# Quit Hestia Web Portal

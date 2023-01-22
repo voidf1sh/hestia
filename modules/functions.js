@@ -85,14 +85,20 @@ const functions = {
         // Prepare the stove for starting
         startup() {
             // Basic startup just enables the auger
-            config.status.auger = 1;
-            console.log(`[${(Date.now() - config.timestamps.procStart) / 1000}] I: Auger enabled.`);
-            return;
+            const enableAugerQuery = "UPDATE status SET value = 1 WHERE key = 'auger'";
+            dbfn.run(enableAugerQuery).then(res => {
+                console.log(`[${(Date.now() - config.timestamps.procStart) / 1000}] I: Auger enabled.`);
+                return;
+            }).catch(err => console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${err}`));
         },
         shutdown() {
             // Basic shutdown only needs to disable the auger
-            config.status.auger = 0;
-            console.log(`[${(Date.now() - config.timestamps.procStart) / 1000}] I: Auger disabled.`);
+            const disableAugerQuery = "UPDATE status SET value = 0 WHERE key = 'auger'";
+            dbfn.run(disableAugerQuery).then(res => {
+                if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res.status}`);
+                console.log(`[${(Date.now() - config.timestamps.procStart) / 1000}] I: Auger disabled.`);
+                return;
+            }).catch(err => console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${err}`));
         },
         // Pauses the script for the time defined in env variables
         pause() {
@@ -146,7 +152,6 @@ const functions = {
                 // Get status
                 const selectStatusQuery = "SELECT * FROM status";
                 dbfn.all(selectStatusQuery).then(res => {
-                    console.log(JSON.stringify(res));
                     let { status } = config;
                     let { rows } = res;
                     status.auger = rows.auger;
@@ -160,7 +165,6 @@ const functions = {
                     // Get timestamps
                     const selectTimestampsQuery = "SELECT * FROM timestamps";
                     dbfn.all(selectTimestampsQuery).then(res => {
-                        console.log(JSON.stringify(res));
                         let { timestamps } = config;
                         let { rows } = res;
                         timestamps.blowerOff = rows.blower_off;
@@ -172,7 +176,6 @@ const functions = {
                         // Get intervals
                         const selectIntervalsQuery = "SELECT * FROM intervals";
                         dbfn.all(selectIntervalsQuery).then(res => {
-                            console.log(JSON.stringify(res));
                             let { intervals } = config;
                             let { rows } = res;
                             intervals.augerOff = rows.auger_off;
@@ -282,7 +285,5 @@ const functions = {
     }
 }
 
-
-
 // Export the above object, functions, as a module
-module.exports = { functions };
+module.exports = { functions, dbfn };

@@ -1,10 +1,4 @@
 const dbfn = require('../modules/database.js');
-const sqlite3 = require('sqlite3');
-// Connect to or create the database.
-let db = new sqlite3.Database('../data/config.db', (err) => {
-    if (err) console.error("DB Connect: " + err);
-    console.log("Connected to database.");
-});
 
 // Create `status` table
 /*
@@ -33,7 +27,7 @@ CREATE TABLE IF NOT EXISTS status (
 */
 
 const createStatusTableQuery = "CREATE TABLE IF NOT EXISTS status (key varchar(100) NOT NULL,value varchar(1000) NOT NULL);";
-dbfn.run(db, createStatusTableQuery).then(res => {
+dbfn.run(createStatusTableQuery).then(res => {
     console.log(res.status);
     const statusEntries = {
         igniter: 0,
@@ -47,16 +41,13 @@ dbfn.run(db, createStatusTableQuery).then(res => {
     };
     for ( key in statusEntries ){
         const insertStatusEntryQuery = `INSERT INTO status (key, value) VALUES ("${key}", "${statusEntries[key]}")`;
-        dbfn.run(db, insertStatusEntryQuery).then(res => {
+        dbfn.run(insertStatusEntryQuery).then(res => {
             console.log(`${res.status}: ${res.data.lastID}: ${res.data.changes} changes`);
         }).catch(err => console.error(err));
     }
     const selectAllStatusEntriesQuery = "SELECT * FROM status";
-    dbfn.all(db, selectAllStatusEntriesQuery).then(res => {
+    dbfn.all(selectAllStatusEntriesQuery).then(res => {
         console.log(res.status);
-        res.rows.forEach(row => {
-            console.log(`${row.key} | ${row.value}`);
-        });
     }).catch(err => console.error(err));
 }).catch(err => {
     console.error(err);
@@ -86,7 +77,7 @@ CREATE TABLE IF NOT EXISTS timestamps (
 */
 
 const createTimestampsTableQuery = "CREATE TABLE IF NOT EXISTS timestamps (key varchar(100) NOT NULL,value varchar(1000) NOT NULL);";
-dbfn.run(db, createTimestampsTableQuery).then(res => {
+dbfn.run(createTimestampsTableQuery).then(res => {
     console.log(res.status);
     const timestampsEntries = {
         process_start: 0,
@@ -97,16 +88,13 @@ dbfn.run(db, createTimestampsTableQuery).then(res => {
     };
     for ( key in timestampsEntries ){
         const insertTimestampsEntryQuery = `INSERT INTO timestamps (key, value) VALUES ("${key}", "${timestampsEntries[key]}")`;
-        dbfn.run(db, insertTimestampsEntryQuery).then(res => {
+        dbfn.run(insertTimestampsEntryQuery).then(res => {
             console.log(`${res.status}: ${res.data.lastID}: ${res.data.changes} changes`);
         }).catch(err => console.error(err));
     }
     const selectAllTimestampsEntriesQuery = "SELECT * FROM timestamps";
-    dbfn.all(db, selectAllTimestampsEntriesQuery).then(res => {
+    dbfn.all(selectAllTimestampsEntriesQuery).then(res => {
         console.log(res.status);
-        res.rows.forEach(row => {
-            console.log(`${row.key} | ${row.value}`);
-        });
     }).catch(err => console.error(err));
 }).catch(err => {
     console.error(err);
@@ -136,27 +124,24 @@ CREATE TABLE IF NOT EXISTS intervals (
 */
 
 const createIntervalsTableQuery = "CREATE TABLE IF NOT EXISTS intervals (key varchar(100) NOT NULL,value varchar(1000) NOT NULL);";
-dbfn.run(db, createIntervalsTableQuery).then(res => {
+dbfn.run(createIntervalsTableQuery).then(res => {
     console.log(res.status);
     const intervalsEntries = {
-        process_start: 0,
-        blower_on: 0,
-        blower_off: 0,
-        igniter_on: 0,
-        igniter_off: 0
+        auger_on: 600,
+        auger_off: 1400,
+        pause: 5000,
+        igniter_start: 420000,
+        blower_stop: 600000
     };
     for ( key in intervalsEntries ){
         const insertIntervalsEntryQuery = `INSERT INTO intervals (key, value) VALUES ("${key}", "${intervalsEntries[key]}")`;
-        dbfn.run(db, insertIntervalsEntryQuery).then(res => {
+        dbfn.run(insertIntervalsEntryQuery).then(res => {
             console.log(`${res.status}: ${res.data.lastID}: ${res.data.changes} changes`);
         }).catch(err => console.error(err));
     }
     const selectAllIntervalsEntriesQuery = "SELECT * FROM intervals";
-    dbfn.all(db, selectAllIntervalsEntriesQuery).then(res => {
+    dbfn.all(selectAllIntervalsEntriesQuery).then(res => {
         console.log(res.status);
-        res.rows.forEach(row => {
-            console.log(`${row.key} | ${row.value}`);
-        });
     }).catch(err => console.error(err));
 }).catch(err => {
     console.error(err);
@@ -164,7 +149,7 @@ dbfn.run(db, createIntervalsTableQuery).then(res => {
 
 // Show the tables to confirm they were created properly:
 
-dbfn.showTables(db).then(res => {
+dbfn.showTables().then(res => {
     res.rows.forEach(row => {
         console.log("Table: " + JSON.stringify(row));
     });
