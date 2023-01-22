@@ -1,51 +1,18 @@
 // TODOs: Add tests for PoF and Vacuum switches, add delays for shutting down blower, test logic for igniter
 
-// TODO: Move these to config
-// Physical Pin numbers for GPIO
-const augerPin = 7;         // Pin for controlling the relay for the pellet auger motor.
-
 // Require the package for pulling version numbers
-const package = require('./package.json');
-// Import the config file
-var config = require('./config.json');
-config.timestamps.procStart = Date.now();
+const package = require('../package.json');
+// Database Functions
+const dbfn = require('./database.js');
+
 
 // Get environment variables
 const dotenv = require('dotenv').config();
 // Module for working with files
 const fs = require('fs');
 const { exec } = require('child_process');
+var config = require('../templates/config.json');
 
-const main = (gpio) => {
-    functions.commands.refreshConfig().then(res => {
-        // If the auger is enabled
-        if (config.status.auger == 1) {
-            // Run a cycle of the auger
-            functions.auger.cycle(gpio).then(res => {
-                if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
-                // Recursion ecursion cursion ursion rsion sion ion on n
-                functions.checkForQuit().then(n => {
-                    main(gpio);
-                });
-            }).catch(err => {
-                if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${err}`);
-            });
-        } else {
-        // If the auger is disabled
-            functions.commands.pause().then(res => {
-                functions.checkForQuit().then(n => {
-                    main(gpio);
-                });
-            }).catch(err => {
-                if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: ${err}`);
-                main(gpio);
-            });
-        }
-    }).catch(rej => {
-        console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: Problem refreshing the config file.`);
-        main(gpio);
-    });
-}
 
 // The functions we'll export to be used in other files
 const functions = {
@@ -60,7 +27,7 @@ const functions = {
         on(gpio) {
             return new Promise((resolve) => {
                 if (process.env.ONPI == 'true') {
-                    gpio.write(augerPin, true, function(err) {
+                    gpio.write(augerPin, true, function (err) {
                         if (err) throw err;
                         resolve('Auger turned on.');
                     });
@@ -68,13 +35,13 @@ const functions = {
                     resolve('Simulated auger turned on.');
                 }
             });
-            
+
         },
         // Turns the auger off (pin 7 low)
         off(gpio) {
             return new Promise((resolve) => {
                 if (process.env.ONPI == 'true') {
-                    gpio.write(augerPin, false, function(err) {
+                    gpio.write(augerPin, false, function (err) {
                         if (err) throw err;
                         resolve('Auger turned off.');
 
@@ -116,24 +83,24 @@ const functions = {
     },
     commands: {
         // Prepare the stove for starting
-        startup () {
+        startup() {
             // Basic startup just enables the auger
             config.status.auger = 1;
-            console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Auger enabled.`);
+            console.log(`[${(Date.now() - config.timestamps.procStart) / 1000}] I: Auger enabled.`);
             return;
         },
         shutdown() {
             // Basic shutdown only needs to disable the auger
             config.status.auger = 0;
-            console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Auger disabled.`);
+            console.log(`[${(Date.now() - config.timestamps.procStart) / 1000}] I: Auger disabled.`);
         },
         // Pauses the script for the time defined in env variables
         pause() {
             return new Promise((resolve) => {
-                if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Pausing for ${config.intervals.pause}ms`);
-                               
-                functions.sleep(config.intervals.pause).then((res) => { 
-                    if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Pause finished.`);
+                if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart) / 1000}] I: Pausing for ${config.intervals.pause}ms`);
+
+                functions.sleep(config.intervals.pause).then((res) => {
+                    if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart) / 1000}] I: Pause finished.`);
                     resolve();
                 });
             });
@@ -155,9 +122,9 @@ const functions = {
                 // Resolve the promise, letting the main script know we're done reloading the variables and the cycle can continue
                 resolve();
             });
-            
+
         },
-        refreshConfig(newSettings) {
+        refreshConfig() {
             return new Promise((resolve, reject) => {
                 // When the reload button is pressed, the call to this function will contain new config values
                 // {
@@ -165,26 +132,76 @@ const functions = {
                 //     augerOn: 1500,
                 //     pause: 5000
                 // }
-                if (newSettings != undefined) {
-                    config.intervals.augerOff = newSettings.augerOff;
-                    config.intervals.augerOn = newSettings.augerOn;
-                    console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Intervals updated: (${newSettings.augerOn}/${newSettings.augerOff})`);
-                    
-                }
-                fs.writeFile('./config.json', JSON.stringify(config), (err) => {
-                    if (err) reject(err);
-                    resolve();
+                // if (newSettings != undefined) {
+                //     config.intervals.augerOff = newSettings.augerOff;
+                //     config.intervals.augerOn = newSettings.augerOn;
+                //     console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Intervals updated: (${newSettings.augerOn}/${newSettings.augerOff})`);
+
+                // }
+                // fs.writeFile('./config.json', JSON.stringify(config), (err) => {
+                //     if (err) reject(err);
+                //     resolve();
+                // });
+
+                // Get status
+                const selectStatusQuery = "SELECT * FROM status";
+                dbfn.all(selectStatusQuery).then(res => {
+                    console.log(JSON.stringify(res));
+                    let { status } = config;
+                    let { rows } = res;
+                    status.auger = rows.auger;
+                    status.blower = rows.blower;
+                    status.igniter = rows.igniter;
+                    status.igniterFinished = rows.igniter_finished;
+                    status.pof = rows.proof_of_fire;
+                    status.shutdownNextCycle = rows.shutdown_next_cycle;
+                    status.vacuum = rows.vacuum;
+
+                    // Get timestamps
+                    const selectTimestampsQuery = "SELECT * FROM timestamps";
+                    dbfn.all(selectTimestampsQuery).then(res => {
+                        console.log(JSON.stringify(res));
+                        let { timestamps } = config;
+                        let { rows } = res;
+                        timestamps.blowerOff = rows.blower_off;
+                        timestamps.blowerOn = rows.blower_on;
+                        timestamps.igniterOff = rows.igniter_off;
+                        timestamps.igniterOn = rows.igniter_on;
+                        timestamps.procStart = rows.process_start;
+
+                        // Get intervals
+                        const selectIntervalsQuery = "SELECT * FROM intervals";
+                        dbfn.all(selectIntervalsQuery).then(res => {
+                            console.log(JSON.stringify(res));
+                            let { intervals } = config;
+                            let { rows } = res;
+                            intervals.augerOff = rows.auger_off;
+                            intervals.augerOn = rows.auger_on;
+                            intervals.blowerStop = rows.blower_stop;
+                            intervals.igniterStart = rows.igniter_start;
+                            intervals.pause = rows.pause;
+                            resolve({ "status": "Refreshed the config", "config": config });
+                        }).catch(err => {
+                            reject(err);
+                            return;
+                        });
+                    }).catch(err => {
+                        reject(err);
+                        return;
+                    });
+                }).catch(err => {
+                    reject(err);
+                    return;
                 });
-            })
-            
+            });
         },
         quit() {
             functions.commands.shutdown();
             functions.auger.off(gpio).then(res => {
-                console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Exiting app...`);
+                console.log(`[${(Date.now() - config.timestamps.procStart) / 1000}] I: Exiting app...`);
                 process.exit(0);
             }).catch(err => {
-                console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: Unable to shut off auger, rebooting Pi!`);
+                console.log(`[${(Date.now() - config.timestamps.procStart) / 1000}] E: Unable to shut off auger, rebooting Pi!`);
                 exec('shutdown -r 0');
             });
         }
@@ -207,7 +224,7 @@ const functions = {
         fs.readFile('./templates/config.json', (err, data) => {
             fs.writeFile('./config.json', data, (err) => {
                 if (err) throw err;
-                config = require('./config.json');
+                config = require('../config.json');
             })
         })
         // TODO this boot splash needs updating
@@ -243,7 +260,7 @@ const functions = {
     },
     checkForQuit() {
         if (config.status.shutdownNextCycle == 1) {
-            console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: Exiting Process!`);
+            console.log(`[${(Date.now() - config.timestamps.procStart) / 1000}] I: Exiting Process!`);
             process.exit();
         }
         return new Promise((resolve, reject) => {
@@ -265,35 +282,7 @@ const functions = {
     }
 }
 
-// Setup for use with the Pi's GPIO pins
-switch (process.env.ONPI) {
-    case 'true':
-        console.log(`== Running on a Raspberry Pi.`);
-        var gpio = require('rpi-gpio');
-        functions.init(gpio).then((res) => {
-            console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
-            main(gpio);
-        }).catch(rej => {
-            console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: Error during initialization: ${rej}`);
-            process.exit(1);
-        });
-        break;
-    case 'false':
-        console.log(`I: Not running on a Raspberry Pi.`);
-        var gpio = 'gpio';
-        functions.init(gpio).then(res => {
-            console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
-            main(gpio);
-        }).catch(rej => {
-            console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: Error during initialization: ${rej}`);
-            process.exit(1);
-        });
-        break;
-    default:
-        console.log(`[${Date.now() - config.timestamps.procStart}] E: Problem with ENV file.`);
-        process.exit(1);
-        break;
-}
+
 
 // Export the above object, functions, as a module
 module.exports = { functions };

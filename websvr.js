@@ -13,8 +13,14 @@ const http = require('http');
 const server = http.createServer(app);
 const fs = require('fs');
 // const bodyParser = require('body-parser');
-var config;
+var config = require('./templates/config.json');
 var fn;
+const sqlite3 = require('sqlite3');
+
+const db = new sqlite3.Database('./data/config.db', (err) => {
+    if (err) throw `E: DB Connection: ${err.message}`;
+    console.log(`I: Connected to the database.`);
+});
 
 // First thing is to copy the template config to main config file
 fs.readFile('./templates/config.json', (err, data) => {
@@ -22,7 +28,7 @@ fs.readFile('./templates/config.json', (err, data) => {
         if (err) throw err;
         console.log(`I: Config Template copied.`);
         config = require('./config.json');
-        fn = require('./functions.js').functions;
+        fn = require('./modules/functions.js').functions;
         server.listen(config.web.port, config.web.ip);
     });
 });
