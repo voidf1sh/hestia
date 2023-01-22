@@ -1,7 +1,4 @@
 const fn = require('./modules/functions.js').functions;
-// TODO: Move these to config
-// Physical Pin numbers for GPIO
-const augerPin = 7;         // Pin for controlling the relay for the pellet auger motor.
 // Import the config file
 var config = require('./templates/config.json');
 // Database Functions

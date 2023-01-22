@@ -1,4 +1,7 @@
 // TODOs: Add tests for PoF and Vacuum switches, add delays for shutting down blower, test logic for igniter
+// TODO: Move these to config
+// Physical Pin numbers for GPIO
+const augerPin = 7;         // Pin for controlling the relay for the pellet auger motor.
 
 // Require the package for pulling version numbers
 const package = require('../package.json');
