@@ -16,7 +16,7 @@ fn.commands.refreshConfig().then(res => {
             var gpio = require('rpi-gpio');
             fn.init(gpio).then((res) => {
                 console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${res}`);
-                main(gpio, db);
+                main(gpio);
             }).catch(rej => {
                 console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] E: Error during initialization: ${rej}`);
                 process.exit(1);
