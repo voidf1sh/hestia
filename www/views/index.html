@@ -10,6 +10,11 @@
         <link rel="stylesheet" href="/main.css">
     </head>
     <body onload="refreshData()" class="container">
+        <script>
+                // Get the config file
+                const config = <%- config %>;
+                console.log(<%- config %>);
+        </script>
         <%- include('trial.html') -%>
         <div id="title" class="text-center mb-4">
             <a href='./'>Hestia Web Portal</a>
@@ -48,7 +53,7 @@
                 <!-- Set feed rates -->
                 <div class="form-group">
                     <label for="feedRate">Feed Rate: </label>
-                    <select name="feedRate" class="form-control">
+                    <select name="feedRate" class="form-control" id="feed-rate-select">
                         <option value="600">Low</option>
                         <option value="800">Medium</option>
                         <option value="1000">High</option>
@@ -67,7 +72,84 @@
                 <input class="btn btn-danger" type="submit" id="quit" value="Quit!!" name="quit" style="visibility: hidden;">
             </form>
         </div>
-        <script src="./main.js"></script>
+        <!-- <script src="./main.js"></script> -->
+        <script>
+            function sleep(ms) {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve();
+                    }, ms);
+                });
+            }
+
+            function readJSON(path) {
+                var request = new XMLHttpRequest();
+                request.open("GET", path, false);
+                request.send(null)
+                var JSONObj = JSON.parse(request.responseText);
+                return JSONObj;
+            }
+
+            function parseStatus(data) {
+                switch (data) {
+                    case "0":
+                        return "Off";
+                        break;
+                    case "1":
+                        return "On";
+                        break
+                    default:
+                        return "Error: " + data;
+                        break;
+                }
+            }
+
+            function refreshData() {
+                // const log = document.getElementById('log-area');
+                // log.contentWindow.location.reload();
+                // sleep(100).then(() => {
+                    // document.getElementById('log-area').contentWindow.scrollTo(0, 9999999999);
+                // });
+
+                // Get the elements we need to update
+                const statusTable = document.getElementById('status-table');
+                const augerStatus = statusTable.rows[0].cells[1];
+                const augerOn = statusTable.rows[0].cells[3];
+                const augerOff = statusTable.rows[1].cells[3];
+                const feedRate = statusTable.rows[1].cells[1];
+                const feedRateSelect = document.getElementById('feed-rate-select');
+
+                // console.log(config);
+
+                augerStatus.innerHTML = parseStatus(config.status.auger);
+                augerOn.innerHTML = config.intervals.augerOn;
+                augerOff.innerHTML = config.intervals.augerOff;
+
+                switch (config.intervals.augerOn) {
+                    case '600':
+                        feedRate.innerHTML = 'Low';
+                        feedRateSelect.selectedIndex = 0;
+                        break;
+                    case '800':
+                        feedRate.innerHTML = 'Medium';
+                        feedRateSelect.selectedIndex = 1;
+                        break;
+                    case '1000':
+                        feedRate.innerHTML = 'High';
+                        feedRateSelect.selectedIndex = 2;
+                        break;
+                    default:
+                        feedRate.innerHTML = 'Unknown';
+                        break;
+                }
+                feedRate.value = config.intervals.augerOn;
+                
+                // Run this again after 2 seconds
+                sleep(5000).then(() => {
+                    refreshData();
+                });
+            };
+        </script>
     </body>
 </html>
 

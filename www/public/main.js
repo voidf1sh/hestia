@@ -41,9 +41,7 @@ function refreshData() {
     const augerOn = statusTable.rows[0].cells[3];
     const augerOff = statusTable.rows[1].cells[3];
     const feedRate = statusTable.rows[1].cells[1];
-    
-    // Get the config file
-    const config = readJSON('./config.json');
+
     // console.log(config);
 
     augerStatus.innerHTML = parseStatus(config.status.auger);

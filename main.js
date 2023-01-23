@@ -3,6 +3,9 @@ const fn = require('./modules/functions.js').functions;
 var config = require('./templates/config.json');
 // Database Functions
 const dbfn = require('./modules/database.js');
+// Web Portal
+const portal = require('./modules/_server.js');
+portal.start();
 
 dbfn.run(`UPDATE timestamps SET value = ${Date.now()} WHERE key = 'process_start'`).catch(err => console.error(`Error setting process start time: ${err}`));
 

@@ -29,12 +29,13 @@ app.set('view engine', 'html');
 
 // A normal load of the root page
 app.get('/', (req, res) => {
-    res.render('index', config);
+    if (process.env.DEBUG) console.log(`[${(Date.now() - config.timestamps.procStart)/1000}] I: ${JSON.stringify(config)}`);
+    res.render('index', { config: JSON.stringify(config) });
 });
 
 // A POST form submission to the root page
 app.post('/', (req, res) => {
-    res.render('index', config);
+    res.render('index', { config });
     if (req.body.start != undefined) {
         fn.commands.startup();
     }
@@ -57,4 +58,8 @@ app.post('/', (req, res) => {
     }
 });
 
-server.listen(8080, "0.0.0.0");
+module.exports = {
+    start: () => {
+        server.listen(8080, "0.0.0.0");
+    }
+};
