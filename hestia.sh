@@ -67,7 +67,7 @@ case "$opt" in
 	3)
 		# View logs
 		clear
-		tail -f log.txt
+		less +F log.txt
 		;;
 	4)
 		# Update Hestia
