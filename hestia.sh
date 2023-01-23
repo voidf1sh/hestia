@@ -42,6 +42,7 @@ Please enter an option from below:
   [1] Launch Hestia Web Portal
   [2] Quit Hestia Web Portal
   [3] View the logs
+  [4] Update Hestia
   
   [0] Quit Control Panel"
 
@@ -66,6 +67,10 @@ case "$opt" in
 		# View logs
 		clear
 		less log.txt
+		;;
+	4)
+		# Update Hestia
+		git pull && ./hestia.sh
 		;;
 	0)
 		# Exit the script
