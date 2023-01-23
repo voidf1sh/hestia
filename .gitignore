@@ -13,6 +13,7 @@ config.json
 log.txt
 nohup.out
 data/config.db
+config.db
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
