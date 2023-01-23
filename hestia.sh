@@ -70,6 +70,7 @@ case "$opt" in
 		;;
 	4)
 		# Update Hestia
+		rm data/config.db
 		git pull && ./hestia.sh
 		;;
 	0)
