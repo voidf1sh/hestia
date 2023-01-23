@@ -35,7 +35,7 @@ echo -e "
 [ Hestia Control Panel ]
   
 This script is being run from: '$(pwd)'
-Active Nodes: $(ps ax -o pid,user,command | grep 'node websvr.js' | grep -v grep)
+Active Nodes: $(ps ax -o pid,user,command | grep 'node main.js' | grep -v grep)
 
 Please enter an option from below:
 
