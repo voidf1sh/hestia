@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
 
 // A POST form submission to the root page
 app.post('/', (req, res) => {
-    res.render('index', { config });
+    res.render('index', { config: JSON.stringify(config) });
     if (req.body.start != undefined) {
         fn.commands.startup();
     }
