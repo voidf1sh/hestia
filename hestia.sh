@@ -43,6 +43,7 @@ Please enter an option from below:
   [2] Quit Hestia Web Portal
   [3] View the logs
   [4] Update Hestia
+  [5] Set up database
   
   [0] Quit Control Panel"
 
@@ -72,6 +73,10 @@ case "$opt" in
 		# Update Hestia
 		rm data/config.db
 		git pull && ./hestia.sh
+		;;
+	5)
+		# Set up database
+		node modules/_setupdb.js
 		;;
 	0)
 		# Exit the script
