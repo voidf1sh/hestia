@@ -37,13 +37,19 @@ app.get('/', (req, res) => {
 app.post('/', (req, response) => {
     if (req.body.start != undefined) {
         fn.commands.startup();
-        response.render('index', { config: JSON.stringify(config) });
-        return;
+        fn.commands.refreshConfig().then(res => {
+            config = res.config;
+            response.render('index', { config: JSON.stringify(config) });
+            return;
+        });
     }
     if (req.body.shutdown != undefined) {
         fn.commands.shutdown();
-        response.render('index', { config: JSON.stringify(config) });
-        return;
+        fn.commands.refreshConfig().then(res => {
+            config = res.config;
+            response.render('index', { config: JSON.stringify(config) });
+            return;
+        });
     }
     if (req.body.reload != undefined) {
         const updateAugerOffIntervalQuery = `UPDATE intervals SET value = '${2000 - req.body.feedRate}' WHERE key = 'auger_off'`;
@@ -62,8 +68,11 @@ app.post('/', (req, response) => {
     }
     if (req.body.quit != undefined) {
         fn.commands.quit();
-        response.render('index', { config: JSON.stringify(config) });
-        return;
+        fn.commands.refreshConfig().then(res => {
+            config = res.config;
+            response.render('index', { config: JSON.stringify(config) });
+            return;
+        });
     }
 });
 
